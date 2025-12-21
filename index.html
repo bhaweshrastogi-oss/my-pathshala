@@ -1,0 +1,1507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Transform your career with India's premier Product Management courses. Learn from Bhawesh Rastogi, Sr. AVP AI Product Management at EXL with 15+ years experience. Basic to Advanced PM & AI PM courses.">
+    <meta name="keywords" content="product management course, AI product manager, PM course India, product management training, Bhawesh Rastogi, product management certification, PMpathshala">
+    <meta name="author" content="Bhawesh Rastogi">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Social Media -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://pmpathshala.com/">
+    <meta property="og:title" content="PMpathshala | Premier Product Management Courses in India">
+    <meta property="og:description" content="Transform your career with India's premier Product Management courses. Learn from industry experts with 15+ years experience.">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1552664730-d307ca884978?w=1200">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="PMpathshala | Premier Product Management Courses">
+    <meta name="twitter:description" content="Transform your career with India's premier Product Management courses.">
+    
+    <title>PMpathshala | Premier Product Management Courses in India</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='grad' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' style='stop-color:%23667eea'/><stop offset='100%' style='stop-color:%23764ba2'/></linearGradient></defs><circle cx='50' cy='50' r='45' fill='url(%23grad)'/><text x='50' y='68' font-size='50' text-anchor='middle' fill='white' font-family='Arial' font-weight='bold'>P</text></svg>">
+    
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Schema.org Markup -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "EducationalOrganization",
+        "name": "PMpathshala",
+        "description": "Premier Product Management courses in India",
+        "url": "https://pmpathshala.com",
+        "logo": "https://pmpathshala.com/logo.png",
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+91-9667783900",
+            "contactType": "admissions",
+            "email": "BhaweshRastogi@gmail.com"
+        },
+        "founder": {
+            "@type": "Person",
+            "name": "Bhawesh Rastogi",
+            "jobTitle": "Sr. AVP - AI Product Management at EXL"
+        }
+    }
+    </script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        * { font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 5px; }
+        ::-webkit-scrollbar-thumb:hover { background: #764ba2; }
+        
+        .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .gradient-text { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        
+        .card-hover { transition: all 0.3s ease; }
+        .card-hover:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+        
+        .week-card { transition: all 0.3s ease; }
+        .week-card:hover { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
+        .week-card:hover .week-number { background: white; color: #764ba2; }
+        .week-card:hover .week-topics { color: rgba(255,255,255,0.9); }
+        
+        .pulse-btn { animation: pulse 2s infinite; }
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(102, 126, 234, 0.7); }
+            50% { box-shadow: 0 0 0 15px rgba(102, 126, 234, 0); }
+        }
+        
+        .float-animation { animation: float 3s ease-in-out infinite; }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .modal { backdrop-filter: blur(5px); }
+        
+        /* Page Load Animation */
+        .fade-in { animation: fadeIn 0.6s ease-out forwards; opacity: 0; }
+        @keyframes fadeIn {
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in { transform: translateY(20px); }
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; }
+        
+        /* WhatsApp Button */
+        .whatsapp-btn {
+            position: fixed;
+            bottom: 90px;
+            right: 24px;
+            z-index: 40;
+            width: 60px;
+            height: 60px;
+            background: #25D366;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+            transition: all 0.3s ease;
+        }
+        .whatsapp-btn:hover { transform: scale(1.1); box-shadow: 0 6px 20px rgba(37, 211, 102, 0.5); }
+        
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 40;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .back-to-top.visible { opacity: 1; visibility: visible; }
+        .back-to-top:hover { transform: translateY(-3px); }
+        
+        /* Dark Mode Styles */
+        .dark body { background-color: #0f172a; }
+        .dark .bg-white { background-color: #1e293b !important; }
+        .dark .bg-gray-50 { background-color: #0f172a !important; }
+        .dark .bg-gray-100 { background-color: #1e293b !important; }
+        .dark .text-gray-800, .dark .text-gray-700 { color: #e2e8f0 !important; }
+        .dark .text-gray-600, .dark .text-gray-500 { color: #94a3b8 !important; }
+        .dark .text-gray-400 { color: #64748b !important; }
+        .dark .border-gray-300 { border-color: #475569 !important; }
+        .dark .border-gray-800 { border-color: #334155 !important; }
+        .dark .shadow-sm { box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3) !important; }
+        .dark .shadow-lg { box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.4) !important; }
+        .dark .shadow-xl { box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4) !important; }
+        .dark nav { background-color: rgba(30, 41, 59, 0.95) !important; }
+        .dark .bg-purple-50, .dark .from-purple-50 { background-color: #1e293b !important; }
+        .dark .bg-cyan-50, .dark .from-cyan-50 { background-color: #1e293b !important; }
+        .dark .border-purple-100 { border-color: #4c1d95 !important; }
+        .dark .border-cyan-100 { border-color: #164e63 !important; }
+        .dark .bg-purple-100 { background-color: #4c1d95 !important; }
+        .dark .bg-cyan-100 { background-color: #164e63 !important; }
+        .dark .bg-green-100 { background-color: #14532d !important; }
+        .dark .bg-orange-100 { background-color: #7c2d12 !important; }
+        .dark .text-purple-700 { color: #c4b5fd !important; }
+        .dark .text-cyan-700 { color: #67e8f9 !important; }
+        .dark .text-green-700 { color: #86efac !important; }
+        .dark .text-orange-700 { color: #fdba74 !important; }
+        .dark #mobileMenu { background-color: #1e293b !important; }
+        .dark .week-card { background-color: #1e293b !important; }
+        .dark .week-card:hover { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important; }
+        .dark .curriculum-content { background-color: #0f172a !important; }
+        .dark .cookie-banner { background-color: #1e293b !important; border-color: #334155 !important; }
+        .dark ::-webkit-scrollbar-track { background: #1e293b; }
+        
+        /* Curriculum Toggle Styles */
+        .curriculum-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out, opacity 0.3s ease-out;
+            opacity: 0;
+        }
+        .curriculum-content.active {
+            max-height: 3000px;
+            opacity: 1;
+            transition: max-height 0.5s ease-in, opacity 0.3s ease-in;
+        }
+        .curriculum-toggle {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .curriculum-toggle:hover {
+            transform: scale(1.01);
+        }
+        .curriculum-toggle .toggle-icon {
+            transition: transform 0.3s ease;
+        }
+        .curriculum-toggle.active .toggle-icon {
+            transform: rotate(180deg);
+        }
+        
+        /* Cookie Banner */
+        .cookie-banner {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 50;
+            transform: translateY(100%);
+            transition: transform 0.5s ease;
+        }
+        .cookie-banner.show { transform: translateY(0); }
+        
+        /* Instructor Image */
+        .instructor-img {
+            object-fit: cover;
+            object-position: center top;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 transition-colors duration-300">
+    <!-- Navigation -->
+    <nav class="fixed w-full bg-white/95 backdrop-blur-sm shadow-sm z-50 transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <a href="#" class="flex items-center space-x-2">
+                    <div class="w-10 h-10 gradient-bg rounded-lg flex items-center justify-center">
+                        <i class="fas fa-cubes text-white"></i>
+                    </div>
+                    <span class="text-xl font-bold gradient-text">PMpathshala</span>
+                </a>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#courses" class="text-gray-600 hover:text-purple-600 transition">Courses</a>
+                    <a href="#curriculum" class="text-gray-600 hover:text-purple-600 transition">Curriculum</a>
+                    <a href="#instructor" class="text-gray-600 hover:text-purple-600 transition">Instructor</a>
+                    <a href="#pricing" class="text-gray-600 hover:text-purple-600 transition">Pricing</a>
+                    <a href="#testimonials" class="text-gray-600 hover:text-purple-600 transition">Reviews</a>
+                    <a href="#certificate" class="text-gray-600 hover:text-purple-600 transition">Certificate</a>
+                    <a href="#faq" class="text-gray-600 hover:text-purple-600 transition">FAQ</a>
+                    <button onclick="toggleTheme()" id="themeToggle" class="p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition" title="Toggle Dark Mode" aria-label="Toggle dark mode">
+                        <i class="fas fa-moon text-gray-600" id="themeIcon"></i>
+                    </button>
+                    <button onclick="openModal('basic')" class="gradient-bg text-white px-5 py-2 rounded-full font-medium hover:opacity-90 transition">Enroll Now</button>
+                </div>
+                <div class="flex items-center space-x-4 md:hidden">
+                    <button onclick="toggleTheme()" class="p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition" aria-label="Toggle dark mode">
+                        <i class="fas fa-moon text-gray-600" id="themeIconMobile"></i>
+                    </button>
+                    <button class="text-gray-600" onclick="toggleMobileMenu()" aria-label="Toggle menu">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="hidden md:hidden bg-white border-t transition-colors duration-300">
+            <div class="px-4 py-4 space-y-3">
+                <a href="#courses" class="block text-gray-600 hover:text-purple-600" onclick="toggleMobileMenu()">Courses</a>
+                <a href="#curriculum" class="block text-gray-600 hover:text-purple-600" onclick="toggleMobileMenu()">Curriculum</a>
+                <a href="#instructor" class="block text-gray-600 hover:text-purple-600" onclick="toggleMobileMenu()">Instructor</a>
+                <a href="#pricing" class="block text-gray-600 hover:text-purple-600" onclick="toggleMobileMenu()">Pricing</a>
+                <a href="#testimonials" class="block text-gray-600 hover:text-purple-600" onclick="toggleMobileMenu()">Reviews</a>
+                <a href="#certificate" class="block text-gray-600 hover:text-purple-600" onclick="toggleMobileMenu()">Certificate</a>
+                <a href="#faq" class="block text-gray-600 hover:text-purple-600" onclick="toggleMobileMenu()">FAQ</a>
+                <a href="tel:+919667783900" class="block text-purple-600 font-medium"><i class="fas fa-phone mr-2"></i>+91-9667783900</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-24 pb-16 gradient-bg min-h-screen flex items-center">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div class="text-white">
+                    <div class="inline-block bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full text-sm mb-6 fade-in">
+                        🚀 New Batch Starting January 15, 2025 - Limited Seats!
+                    </div>
+                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 fade-in delay-1">
+                        Transform Your Career in <span class="text-yellow-300">Product Management</span>
+                    </h1>
+                    <p class="text-xl text-purple-100 mb-8 leading-relaxed fade-in delay-2">
+                        Master the art and science of building world-class products. Learn from an experienced professional with hands-on assignments, real-world case studies, and personalized mentorship.
+                    </p>
+                    <div class="flex flex-wrap gap-4 mb-8 fade-in delay-3">
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-check-circle text-yellow-300"></i>
+                            <span>Live Weekend Sessions</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-check-circle text-yellow-300"></i>
+                            <span>Real Case Studies</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-check-circle text-yellow-300"></i>
+                            <span>1:1 Mentorship</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-check-circle text-yellow-300"></i>
+                            <span>Certificate of Completion</span>
+                        </div>
+                    </div>
+                    <div class="flex flex-wrap gap-4 fade-in delay-4">
+                        <a href="#courses" class="bg-white text-purple-600 px-8 py-4 rounded-full font-semibold hover:bg-yellow-300 hover:text-purple-700 transition pulse-btn">
+                            Explore Courses <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                        <a href="https://wa.me/919667783900?text=Hi%20Bhawesh,%20I'm%20interested%20in%20the%20Product%20Management%20course" target="_blank" class="border-2 border-white text-white px-8 py-4 rounded-full font-semibold hover:bg-white hover:text-purple-600 transition">
+                            <i class="fab fa-whatsapp mr-2"></i>Chat with Us
+                        </a>
+                    </div>
+                </div>
+                <div class="relative hidden lg:block">
+                    <div class="bg-white/10 backdrop-blur-sm rounded-3xl p-8 float-animation">
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="bg-white rounded-2xl p-6 text-center card-hover">
+                                <div class="text-4xl font-bold gradient-text">150+</div>
+                                <div class="text-gray-600">Students Trained</div>
+                            </div>
+                            <div class="bg-white rounded-2xl p-6 text-center card-hover">
+                                <div class="text-4xl font-bold gradient-text">4.9</div>
+                                <div class="text-gray-600">Course Rating</div>
+                            </div>
+                            <div class="bg-white rounded-2xl p-6 text-center card-hover">
+                                <div class="text-4xl font-bold gradient-text">8</div>
+                                <div class="text-gray-600">Weeks Per Course</div>
+                            </div>
+                            <div class="bg-white rounded-2xl p-6 text-center card-hover">
+                                <div class="text-4xl font-bold gradient-text">32+</div>
+                                <div class="text-gray-600">Hours of Learning</div>
+                            </div>
+                        </div>
+                        <div class="mt-6 bg-white rounded-2xl p-4 text-center">
+                            <p class="text-gray-600 text-sm mb-1">Next Batch Starts</p>
+                            <p class="font-bold text-gray-800">January 15, 2025 • Weekends</p>
+                            <p class="text-purple-600 font-medium">11 AM - 2 PM IST</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Courses Overview -->
+    <section id="courses" class="py-20 bg-white transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <span class="text-purple-600 font-semibold text-sm uppercase tracking-wider">Our Programs</span>
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4 mt-2">Choose Your Learning Path</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">Whether you're starting your PM journey or looking to specialize in AI, we have the perfect course for you.</p>
+            </div>
+            <div class="grid lg:grid-cols-2 gap-8">
+                <!-- Course 1 -->
+                <div class="bg-gradient-to-br from-purple-50 to-indigo-50 rounded-3xl p-8 border-2 border-purple-100 card-hover relative overflow-hidden transition-colors duration-300">
+                    <div class="absolute top-4 right-4 bg-yellow-400 text-yellow-900 px-3 py-1 rounded-full text-sm font-semibold">BESTSELLER</div>
+                    <div class="w-16 h-16 gradient-bg rounded-2xl flex items-center justify-center mb-6">
+                        <i class="fas fa-layer-group text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-800 mb-3">Basic to Advanced Product Management</h3>
+                    <div class="flex items-center space-x-4 mb-4">
+                        <span class="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm font-medium">8 Weeks</span>
+                        <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-medium">Beginner Friendly</span>
+                    </div>
+                    <p class="text-gray-600 mb-6">A comprehensive journey from PM fundamentals to advanced strategies. Perfect for aspiring PMs, career switchers, and professionals looking to formalize their skills.</p>
+                    <ul class="space-y-3 mb-6">
+                        <li class="flex items-center text-gray-700"><i class="fas fa-check text-green-500 mr-3"></i>32+ Hours of Live Sessions</li>
+                        <li class="flex items-center text-gray-700"><i class="fas fa-check text-green-500 mr-3"></i>Hands-on Assignments</li>
+                        <li class="flex items-center text-gray-700"><i class="fas fa-check text-green-500 mr-3"></i>1:1 Mentorship Sessions</li>
+                        <li class="flex items-center text-gray-700"><i class="fas fa-check text-green-500 mr-3"></i>Certificate of Completion</li>
+                        <li class="flex items-center text-gray-700"><i class="fas fa-check text-green-500 mr-3"></i>Lifetime Access to Resources</li>
+                    </ul>
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <span class="text-gray-400 line-through text-lg">₹29,999</span>
+                            <span class="text-3xl font-bold gradient-text ml-2">₹20,000</span>
+                        </div>
+                        <button onclick="openModal('basic')" class="gradient-bg text-white px-6 py-3 rounded-full font-semibold hover:opacity-90 transition">
+                            Enroll Now <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                </div>
+                <!-- Course 2 -->
+                <div class="bg-gradient-to-br from-cyan-50 to-blue-50 rounded-3xl p-8 border-2 border-cyan-100 card-hover relative overflow-hidden transition-colors duration-300">
+                    <div class="absolute top-4 right-4 bg-cyan-400 text-cyan-900 px-3 py-1 rounded-full text-sm font-semibold">HOT 🔥</div>
+                    <div class="w-16 h-16 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-2xl flex items-center justify-center mb-6">
+                        <i class="fas fa-brain text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-800 mb-3">AI Product Manager</h3>
+                    <div class="flex items-center space-x-4 mb-4">
+                        <span class="bg-cyan-100 text-cyan-700 px-3 py-1 rounded-full text-sm font-medium">8 Weeks</span>
+                        <span class="bg-orange-100 text-orange-700 px-3 py-1 rounded-full text-sm font-medium">Intermediate</span>
+                    </div>
+                    <p class="text-gray-600 mb-6">Specialize in AI/ML product management. Learn to build, launch, and scale AI-powered products. Perfect for PMs looking to enter the AI space.</p>
+                    <ul class="space-y-3 mb-6">
+                        <li class="flex items-center text-gray-700"><i class="fas fa-check text-green-500 mr-3"></i>40+ Hours of Live Sessions</li>
+                        <li class="flex items-center text-gray-700"><i class="fas fa-check text-green-500 mr-3"></i>Hands-on AI Assignments</li>
+                        <li class="flex items-center text-gray-700"><i class="fas fa-check text-green-500 mr-3"></i>AI Tools & Frameworks</li>
+                        <li class="flex items-center text-gray-700"><i class="fas fa-check text-green-500 mr-3"></i>Certificate of Specialization</li>
+                        <li class="flex items-center text-gray-700"><i class="fas fa-check text-green-500 mr-3"></i>Lifetime Access to Resources</li>
+                    </ul>
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <span class="text-gray-400 line-through text-lg">₹35,000</span>
+                            <span class="text-3xl font-bold text-cyan-600 ml-2">₹25,000</span>
+                        </div>
+                        <button onclick="openModal('ai')" class="bg-gradient-to-r from-cyan-500 to-blue-500 text-white px-6 py-3 rounded-full font-semibold hover:opacity-90 transition">
+                            Enroll Now <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Curriculum Section -->
+    <section id="curriculum" class="py-20 bg-gray-50 transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <span class="text-purple-600 font-semibold text-sm uppercase tracking-wider">What You'll Learn</span>
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4 mt-2">Detailed Curriculum</h2>
+                <p class="text-xl text-gray-600">Click on a program to view the week-by-week breakdown</p>
+            </div>
+
+            <!-- Course 1 Curriculum -->
+            <div class="mb-8">
+                <div onclick="toggleCurriculum('basic-curriculum', this)" class="curriculum-toggle flex items-center justify-between bg-white rounded-2xl p-6 shadow-lg border-2 border-purple-200 hover:border-purple-400 transition-colors duration-300">
+                    <div class="flex items-center">
+                        <div class="w-14 h-14 gradient-bg rounded-xl flex items-center justify-center mr-5">
+                            <i class="fas fa-layer-group text-white text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl md:text-2xl font-bold text-gray-800">Basic to Advanced Product Management</h3>
+                            <p class="text-gray-500">8 Weeks • 32+ Hours • 4 Assignments • Weekends 11 AM - 2 PM</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <span class="hidden sm:inline-block bg-purple-100 text-purple-700 px-4 py-2 rounded-full text-sm font-semibold">Click to Expand</span>
+                        <i class="fas fa-chevron-down text-purple-600 text-xl toggle-icon"></i>
+                    </div>
+                </div>
+                <div id="basic-curriculum" class="curriculum-content mt-4 bg-white rounded-2xl p-6 shadow-sm">
+                    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <!-- Week 1 -->
+                        <div class="week-card bg-gray-50 rounded-2xl p-6 shadow-sm cursor-pointer transition-colors duration-300">
+                            <div class="week-number w-10 h-10 gradient-bg rounded-full flex items-center justify-center text-white font-bold mb-4">1</div>
+                            <h4 class="font-bold text-lg mb-2">PM Foundations & User Research</h4>
+                            <ul class="week-topics text-gray-600 text-sm space-y-1">
+                                <li>• What is Product Management?</li>
+                                <li>• PM Roles & Responsibilities</li>
+                                <li>• Product Lifecycle Overview</li>
+                                <li>• User Interview Techniques</li>
+                                <li>• Creating User Personas</li>
+                                <li>• Jobs-to-be-Done Framework</li>
+                            </ul>
+                        </div>
+                        <!-- Week 2 -->
+                        <div class="week-card bg-gray-50 rounded-2xl p-6 shadow-sm cursor-pointer transition-colors duration-300">
+                            <div class="week-number w-10 h-10 gradient-bg rounded-full flex items-center justify-center text-white font-bold mb-4">2</div>
+                            <h4 class="font-bold text-lg mb-2">Market Analysis & Strategy</h4>
+                            <ul class="week-topics text-gray-600 text-sm space-y-1">
+                                <li>• Market Sizing (TAM/SAM/SOM)</li>
+                                <li>• Competitive Analysis & SWOT</li>
+                                <li>• Porter's Five Forces</li>
+                                <li>• Crafting Product Vision</li>
+                                <li>• OKRs & North Star Metrics</li>
+                                <li>• Strategic Roadmapping</li>
+                            </ul>
+                        </div>
+                        <!-- Week 3 -->
+                        <div class="week-card bg-gray-50 rounded-2xl p-6 shadow-sm cursor-pointer transition-colors duration-300">
+                            <div class="week-number w-10 h-10 gradient-bg rounded-full flex items-center justify-center text-white font-bold mb-4">3</div>
+                            <h4 class="font-bold text-lg mb-2">Prioritization & Requirements</h4>
+                            <ul class="week-topics text-gray-600 text-sm space-y-1">
+                                <li>• RICE Scoring Model</li>
+                                <li>• MoSCoW & Kano Model</li>
+                                <li>• Value vs Effort Matrix</li>
+                                <li>• Writing User Stories</li>
+                                <li>• PRD Structure & Best Practices</li>
+                                <li>• Acceptance Criteria</li>
+                            </ul>
+                        </div>
+                        <!-- Week 4 -->
+                        <div class="week-card bg-gray-50 rounded-2xl p-6 shadow-sm cursor-pointer transition-colors duration-300">
+                            <div class="week-number w-10 h-10 gradient-bg rounded-full flex items-center justify-center text-white font-bold mb-4">4</div>
+                            <h4 class="font-bold text-lg mb-2">UX Design & Prototyping</h4>
+                            <ul class="week-topics text-gray-600 text-sm space-y-1">
+                                <li>• UX Fundamentals for PMs</li>
+                                <li>• Wireframing & Prototyping</li>
+                                <li>• Design Thinking Process</li>
+                                <li>• Usability Testing</li>
+                                <li>• Working with Designers</li>
+                                <li>• Design Review Best Practices</li>
+                            </ul>
+                        </div>
+                        <!-- Week 5 -->
+                        <div class="week-card bg-gray-50 rounded-2xl p-6 shadow-sm cursor-pointer transition-colors duration-300">
+                            <div class="week-number w-10 h-10 gradient-bg rounded-full flex items-center justify-center text-white font-bold mb-4">5</div>
+                            <h4 class="font-bold text-lg mb-2">Agile & Development</h4>
+                            <ul class="week-topics text-gray-600 text-sm space-y-1">
+                                <li>• Agile Methodology Deep Dive</li>
+                                <li>• Scrum Framework</li>
+                                <li>• Sprint Planning & Execution</li>
+                                <li>• Working with Engineers</li>
+                                <li>• Technical Debt Management</li>
+                                <li>• Release Management</li>
+                            </ul>
+                        </div>
+                        <!-- Week 6 -->
+                        <div class="week-card bg-gray-50 rounded-2xl p-6 shadow-sm cursor-pointer transition-colors duration-300">
+                            <div class="week-number w-10 h-10 gradient-bg rounded-full flex items-center justify-center text-white font-bold mb-4">6</div>
+                            <h4 class="font-bold text-lg mb-2">Analytics & Metrics</h4>
+                            <ul class="week-topics text-gray-600 text-sm space-y-1">
+                                <li>• Key Product Metrics</li>
+                                <li>• Analytics Tools (Mixpanel, Amplitude)</li>
+                                <li>• Funnel & Cohort Analysis</li>
+                                <li>• A/B Testing Methodology</li>
+                                <li>• Data-Driven Decisions</li>
+                                <li>• Experiment Design</li>
+                            </ul>
+                        </div>
+                        <!-- Week 7 -->
+                        <div class="week-card bg-gray-50 rounded-2xl p-6 shadow-sm cursor-pointer transition-colors duration-300">
+                            <div class="week-number w-10 h-10 gradient-bg rounded-full flex items-center justify-center text-white font-bold mb-4">7</div>
+                            <h4 class="font-bold text-lg mb-2">Go-to-Market & Growth</h4>
+                            <ul class="week-topics text-gray-600 text-sm space-y-1">
+                                <li>• GTM Strategy Framework</li>
+                                <li>• Launch Planning</li>
+                                <li>• Positioning & Messaging</li>
+                                <li>• Growth Frameworks</li>
+                                <li>• Feature Flags & Rollouts</li>
+                                <li>• Viral & Network Effects</li>
+                            </ul>
+                        </div>
+                        <!-- Week 8 -->
+                        <div class="week-card bg-gray-50 rounded-2xl p-6 shadow-sm cursor-pointer transition-colors duration-300">
+                            <div class="week-number w-10 h-10 gradient-bg rounded-full flex items-center justify-center text-white font-bold mb-4">8</div>
+                            <h4 class="font-bold text-lg mb-2">Leadership & Career Growth</h4>
+                            <ul class="week-topics text-gray-600 text-sm space-y-1">
+                                <li>• Stakeholder Management</li>
+                                <li>• Executive Communication</li>
+                                <li>• PM Career Ladder</li>
+                                <li>• Building Your PM Portfolio</li>
+                                <li>• Interview Preparation</li>
+                                <li>• Capstone Project Presentation</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Course 2 Curriculum -->
+            <div>
+                <div onclick="toggleCurriculum('ai-curriculum', this)" class="curriculum-toggle flex items-center justify-between bg-white rounded-2xl p-6 shadow-lg border-2 border-cyan-200 hover:border-cyan-400 transition-colors duration-300">
+                    <div class="flex items-center">
+                        <div class="w-14 h-14 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-xl flex items-center justify-center mr-5">
+                            <i class="fas fa-brain text-white text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl md:text-2xl font-bold text-gray-800">AI Product Manager</h3>
+                            <p class="text-gray-500">8 Weeks • 40+ Hours • 4 Assignments • Weekends 11 AM - 2 PM</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <span class="hidden sm:inline-block bg-cyan-100 text-cyan-700 px-4 py-2 rounded-full text-sm font-semibold">Click to Expand</span>
+                        <i class="fas fa-chevron-down text-cyan-600 text-xl toggle-icon"></i>
+                    </div>
+                </div>
+                <div id="ai-curriculum" class="curriculum-content mt-4 bg-white rounded-2xl p-6 shadow-sm">
+                    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <!-- Week 1 -->
+                        <div class="week-card bg-gray-50 rounded-2xl p-6 shadow-sm cursor-pointer transition-colors duration-300">
+                            <div class="week-number w-10 h-10 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full flex items-center justify-center text-white font-bold mb-4">1</div>
+                            <h4 class="font-bold text-lg mb-2">AI/ML Fundamentals for PMs</h4>
+                            <ul class="week-topics text-gray-600 text-sm space-y-1">
+                                <li>• AI vs ML vs Deep Learning</li>
+                                <li>• Types of ML Algorithms</li>
+                                <li>• Understanding Neural Networks</li>
+                                <li>• AI Capabilities & Limitations</li>
+                                <li>• Key AI Terminology</li>
+                            </ul>
+                        </div>
+                        <!-- Week 2 -->
+                        <div class="week-card bg-gray-50 rounded-2xl p-6 shadow-sm cursor-pointer transition-colors duration-300">
+                            <div class="week-number w-10 h-10 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full flex items-center justify-center text-white font-bold mb-4">2</div>
+                            <h4 class="font-bold text-lg mb-2">AI Product Discovery</h4>
+                            <ul class="week-topics text-gray-600 text-sm space-y-1">
+                                <li>• Identifying AI Opportunities</li>
+                                <li>• AI Feasibility Assessment</li>
+                                <li>• Data Availability Analysis</li>
+                                <li>• Build vs Buy vs Partner</li>
+                                <li>• AI Use Case Prioritization</li>
+                            </ul>
+                        </div>
+                        <!-- Week 3 -->
+                        <div class="week-card bg-gray-50 rounded-2xl p-6 shadow-sm cursor-pointer transition-colors duration-300">
+                            <div class="week-number w-10 h-10 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full flex items-center justify-center text-white font-bold mb-4">3</div>
+                            <h4 class="font-bold text-lg mb-2">Data Strategy & Management</h4>
+                            <ul class="week-topics text-gray-600 text-sm space-y-1">
+                                <li>• Data Collection Strategies</li>
+                                <li>• Data Quality & Labeling</li>
+                                <li>• Data Pipelines Overview</li>
+                                <li>• Privacy & Compliance (GDPR)</li>
+                                <li>• Working with Data Teams</li>
+                            </ul>
+                        </div>
+                        <!-- Week 4 -->
+                        <div class="week-card bg-gray-50 rounded-2xl p-6 shadow-sm cursor-pointer transition-colors duration-300">
+                            <div class="week-number w-10 h-10 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full flex items-center justify-center text-white font-bold mb-4">4</div>
+                            <h4 class="font-bold text-lg mb-2">AI Product Development</h4>
+                            <ul class="week-topics text-gray-600 text-sm space-y-1">
+                                <li>• ML Product Development Lifecycle</li>
+                                <li>• Model Requirements & Specs</li>
+                                <li>• Working with ML Engineers</li>
+                                <li>• Experiment Tracking</li>
+                                <li>• Model Versioning</li>
+                            </ul>
+                        </div>
+                        <!-- Week 5 -->
+                        <div class="week-card bg-gray-50 rounded-2xl p-6 shadow-sm cursor-pointer transition-colors duration-300">
+                            <div class="week-number w-10 h-10 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full flex items-center justify-center text-white font-bold mb-4">5</div>
+                            <h4 class="font-bold text-lg mb-2">AI Metrics & Evaluation</h4>
+                            <ul class="week-topics text-gray-600 text-sm space-y-1">
+                                <li>• ML Model Metrics</li>
+                                <li>• Precision, Recall, F1 Score</li>
+                                <li>• Business vs Model Metrics</li>
+                                <li>• A/B Testing for AI Products</li>
+                                <li>• Continuous Monitoring</li>
+                            </ul>
+                        </div>
+                        <!-- Week 6 -->
+                        <div class="week-card bg-gray-50 rounded-2xl p-6 shadow-sm cursor-pointer transition-colors duration-300">
+                            <div class="week-number w-10 h-10 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full flex items-center justify-center text-white font-bold mb-4">6</div>
+                            <h4 class="font-bold text-lg mb-2">LLMs & Generative AI</h4>
+                            <ul class="week-topics text-gray-600 text-sm space-y-1">
+                                <li>• Understanding LLMs (GPT, Claude)</li>
+                                <li>• Prompt Engineering</li>
+                                <li>• Fine-tuning vs RAG</li>
+                                <li>• Building GenAI Products</li>
+                                <li>• LLM Evaluation Methods</li>
+                            </ul>
+                        </div>
+                        <!-- Week 7 -->
+                        <div class="week-card bg-gray-50 rounded-2xl p-6 shadow-sm cursor-pointer transition-colors duration-300">
+                            <div class="week-number w-10 h-10 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full flex items-center justify-center text-white font-bold mb-4">7</div>
+                            <h4 class="font-bold text-lg mb-2">AI Ethics & Responsible AI</h4>
+                            <ul class="week-topics text-gray-600 text-sm space-y-1">
+                                <li>• Bias in AI Systems</li>
+                                <li>• Fairness & Transparency</li>
+                                <li>• Explainable AI (XAI)</li>
+                                <li>• AI Governance Frameworks</li>
+                                <li>• Risk Management</li>
+                            </ul>
+                        </div>
+                        <!-- Week 8 -->
+                        <div class="week-card bg-gray-50 rounded-2xl p-6 shadow-sm cursor-pointer transition-colors duration-300">
+                            <div class="week-number w-10 h-10 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full flex items-center justify-center text-white font-bold mb-4">8</div>
+                            <h4 class="font-bold text-lg mb-2">AI Product Launch & Scale</h4>
+                            <ul class="week-topics text-gray-600 text-sm space-y-1">
+                                <li>• MLOps Fundamentals</li>
+                                <li>• Model Deployment Strategies</li>
+                                <li>• Scaling AI Products</li>
+                                <li>• AI Product Roadmapping</li>
+                                <li>• Capstone Project Presentation</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Instructor Section -->
+    <section id="instructor" class="py-20 bg-white transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <span class="text-purple-600 font-semibold text-sm uppercase tracking-wider">Meet Your Mentor</span>
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4 mt-2">Learn from Experienced Professional</h2>
+                <p class="text-xl text-gray-600">Get trained by a seasoned product leader with real-world experience</p>
+            </div>
+            <div class="max-w-4xl mx-auto">
+                <div class="bg-gradient-to-br from-purple-50 to-indigo-50 rounded-3xl p-8 md:p-12 border-2 border-purple-100 card-hover transition-colors duration-300">
+                    <div class="flex flex-col md:flex-row items-center gap-8">
+                        <div class="relative flex-shrink-0">
+                            <div class="w-48 h-48 rounded-full bg-gradient-to-br from-purple-500 to-indigo-600 p-1 shadow-2xl">
+                                <div class="w-full h-full rounded-full bg-gradient-to-br from-purple-500 to-indigo-600 flex items-center justify-center overflow-hidden">
+                                    <span class="text-6xl font-bold text-white">BR</span>
+                                </div>
+                            </div>
+                            <div class="absolute -bottom-2 -right-2 w-16 h-16 bg-yellow-400 rounded-full flex items-center justify-center shadow-lg">
+                                <i class="fas fa-award text-yellow-900 text-2xl"></i>
+                            </div>
+                        </div>
+                        <div class="flex-1 text-center md:text-left">
+                            <h3 class="text-3xl font-bold text-gray-800 mb-2">Bhawesh Rastogi</h3>
+                            <p class="text-xl text-purple-600 font-semibold mb-4">Sr. AVP - AI Product Management at EXL</p>
+                            <div class="flex flex-wrap justify-center md:justify-start gap-3 mb-6">
+                                <span class="bg-purple-100 text-purple-700 px-4 py-2 rounded-full text-sm font-medium">
+                                    <i class="fas fa-briefcase mr-2"></i>15+ Years Experience
+                                </span>
+                                <span class="bg-blue-100 text-blue-700 px-4 py-2 rounded-full text-sm font-medium">
+                                    <i class="fas fa-robot mr-2"></i>AI/ML Expert
+                                </span>
+                                <span class="bg-green-100 text-green-700 px-4 py-2 rounded-full text-sm font-medium">
+                                    <i class="fas fa-users mr-2"></i>150+ Students Trained
+                                </span>
+                            </div>
+                            <p class="text-gray-600 leading-relaxed mb-6">
+                                With over 15 years of experience in product management and AI, Bhawesh has led multiple successful AI product launches at Fortune 500 companies. His expertise spans across building AI-powered solutions, driving product strategy, and mentoring the next generation of product leaders. Currently leading AI Product Management at EXL, he brings real-world insights directly to the classroom.
+                            </p>
+                            <div class="flex flex-wrap justify-center md:justify-start gap-4">
+                                <a href="tel:+919667783900" class="inline-flex items-center text-green-600 hover:text-green-700 font-medium">
+                                    <i class="fas fa-phone mr-2"></i>+91-9667783900
+                                </a>
+                                <a href="mailto:BhaweshRastogi@gmail.com" class="inline-flex items-center text-purple-600 hover:text-purple-700 font-medium">
+                                    <i class="fas fa-envelope mr-2"></i>BhaweshRastogi@gmail.com
+                                </a>
+                                <a href="https://www.linkedin.com/in/bhawesh-rastogi-sep3009/" target="_blank" class="inline-flex items-center text-blue-600 hover:text-blue-700 font-medium">
+                                    <i class="fab fa-linkedin mr-2"></i>Connect on LinkedIn
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="py-20 bg-gray-50 transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <span class="text-purple-600 font-semibold text-sm uppercase tracking-wider">Pricing</span>
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4 mt-2">Invest in Your Future</h2>
+                <p class="text-xl text-gray-600">Flexible payment options to suit your needs</p>
+            </div>
+            <div class="grid lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <!-- Basic Course Pricing -->
+                <div class="bg-white rounded-3xl shadow-lg overflow-hidden card-hover transition-colors duration-300">
+                    <div class="gradient-bg p-6 text-center text-white">
+                        <h3 class="text-xl font-bold">Basic to Advanced PM</h3>
+                        <p class="text-purple-200">8-Week Program</p>
+                    </div>
+                    <div class="p-8">
+                        <div class="text-center mb-6">
+                            <span class="text-gray-400 line-through text-xl">₹29,999</span>
+                            <div class="text-5xl font-bold gradient-text">₹20,000</div>
+                            <p class="text-gray-500">One-time payment</p>
+                        </div>
+                        <ul class="space-y-3 mb-8">
+                            <li class="flex items-center text-gray-700"><i class="fas fa-check text-green-500 mr-3"></i>32+ Hours Live Sessions</li>
+                            <li class="flex items-center text-gray-700"><i class="fas fa-check text-green-500 mr-3"></i>Hands-on Assignments</li>
+                            <li class="flex items-center text-gray-700"><i class="fas fa-check text-green-500 mr-3"></i>1:1 Mentorship Sessions</li>
+                            <li class="flex items-center text-gray-700"><i class="fas fa-check text-green-500 mr-3"></i>Real-world Case Studies</li>
+                            <li class="flex items-center text-gray-700"><i class="fas fa-check text-green-500 mr-3"></i>Lifetime Access</li>
+                            <li class="flex items-center text-gray-700"><i class="fas fa-check text-green-500 mr-3"></i>Certificate</li>
+                        </ul>
+                        <button onclick="openModal('basic')" class="w-full gradient-bg text-white py-4 rounded-full font-semibold hover:opacity-90 transition">
+                            Enroll Now
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Bundle Pricing -->
+                <div class="bg-white rounded-3xl shadow-xl overflow-hidden card-hover transform lg:scale-105 border-4 border-yellow-400 relative transition-colors duration-300">
+                    <div class="absolute top-0 left-0 right-0 bg-yellow-400 text-yellow-900 text-center py-2 font-bold">
+                        🎉 BEST VALUE - SAVE ₹10,000
+                    </div>
+                    <div class="bg-gradient-to-r from-purple-600 to-cyan-500 p-6 text-center text-white mt-8">
+                        <h3 class="text-xl font-bold">Complete PM Bundle</h3>
+                        <p class="text-purple-100">Both Courses Included</p>
+                    </div>
+                    <div class="p-8">
+                        <div class="text-center mb-6">
+                            <span class="text-gray-400 line-through text-xl">₹45,000</span>
+                            <div class="text-5xl font-bold bg-gradient-to-r from-purple-600 to-cyan-500 bg-clip-text text-transparent">₹35,000</div>
+                            <p class="text-gray-500">One-time payment</p>
+                        </div>
+                        <ul class="space-y-3 mb-8">
+                            <li class="flex items-center text-gray-700"><i class="fas fa-check text-green-500 mr-3"></i>72+ Hours Live Sessions</li>
+                            <li class="flex items-center text-gray-700"><i class="fas fa-check text-green-500 mr-3"></i>Comprehensive Assignments</li>
+                            <li class="flex items-center text-gray-700"><i class="fas fa-check text-green-500 mr-3"></i>Priority 1:1 Mentorship</li>
+                            <li class="flex items-center text-gray-700"><i class="fas fa-check text-green-500 mr-3"></i>Real-world Case Studies</li>
+                            <li class="flex items-center text-gray-700"><i class="fas fa-check text-green-500 mr-3"></i>Lifetime Access</li>
+                            <li class="flex items-center text-gray-700"><i class="fas fa-check text-green-500 mr-3"></i>Both Certificates</li>
+                            <li class="flex items-center text-gray-700"><i class="fas fa-star text-yellow-500 mr-3"></i>PM Community Access</li>
+                        </ul>
+                        <button onclick="openModal('bundle')" class="w-full bg-gradient-to-r from-purple-600 to-cyan-500 text-white py-4 rounded-full font-semibold hover:opacity-90 transition pulse-btn">
+                            Get The Bundle
+                        </button>
+                    </div>
+                </div>
+
+                <!-- AI Course Pricing -->
+                <div class="bg-white rounded-3xl shadow-lg overflow-hidden card-hover transition-colors duration-300">
+                    <div class="bg-gradient-to-r from-cyan-500 to-blue-500 p-6 text-center text-white">
+                        <h3 class="text-xl font-bold">AI Product Manager</h3>
+                        <p class="text-cyan-100">8-Week Program</p>
+                    </div>
+                    <div class="p-8">
+                        <div class="text-center mb-6">
+                            <span class="text-gray-400 line-through text-xl">₹35,000</span>
+                            <div class="text-5xl font-bold text-cyan-600">₹25,000</div>
+                            <p class="text-gray-500">One-time payment</p>
+                        </div>
+                        <ul class="space-y-3 mb-8">
+                            <li class="flex items-center text-gray-700"><i class="fas fa-check text-green-500 mr-3"></i>40+ Hours Live Sessions</li>
+                            <li class="flex items-center text-gray-700"><i class="fas fa-check text-green-500 mr-3"></i>Hands-on AI Assignments</li>
+                            <li class="flex items-center text-gray-700"><i class="fas fa-check text-green-500 mr-3"></i>AI Tools Training</li>
+                            <li class="flex items-center text-gray-700"><i class="fas fa-check text-green-500 mr-3"></i>1:1 Mentorship Sessions</li>
+                            <li class="flex items-center text-gray-700"><i class="fas fa-check text-green-500 mr-3"></i>Lifetime Access</li>
+                            <li class="flex items-center text-gray-700"><i class="fas fa-check text-green-500 mr-3"></i>Specialization Certificate</li>
+                        </ul>
+                        <button onclick="openModal('ai')" class="w-full bg-gradient-to-r from-cyan-500 to-blue-500 text-white py-4 rounded-full font-semibold hover:opacity-90 transition">
+                            Enroll Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Payment Options -->
+            <div class="mt-12 text-center">
+                <p class="text-gray-600 mb-4">We accept all major payment methods</p>
+                <div class="flex justify-center items-center space-x-6 mb-4">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/UPI-Logo-vector.svg/1200px-UPI-Logo-vector.svg.png" alt="UPI" class="h-8 opacity-70">
+                    <i class="fab fa-cc-visa text-4xl text-gray-400"></i>
+                    <i class="fab fa-cc-mastercard text-4xl text-gray-400"></i>
+                    <i class="fas fa-building-columns text-3xl text-gray-400"></i>
+                </div>
+                <p class="text-sm text-gray-500">30-day money-back guarantee • EMI options available</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section id="testimonials" class="py-20 bg-white transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <span class="text-purple-600 font-semibold text-sm uppercase tracking-wider">Success Stories</span>
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4 mt-2">What Our Students Say</h2>
+                <p class="text-xl text-gray-600">Join 150+ successful product managers</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-gray-50 rounded-2xl p-8 card-hover transition-colors duration-300">
+                    <div class="flex items-center text-yellow-400 mb-4">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-gray-700 mb-6">"This course transformed my career. I went from being a software engineer to landing a PM role at a top tech company within 3 months of completing the course. Bhawesh's mentorship was invaluable."</p>
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 bg-purple-200 rounded-full flex items-center justify-center mr-4">
+                            <span class="text-purple-700 font-bold">AK</span>
+                        </div>
+                        <div>
+                            <h5 class="font-bold text-gray-800">Arun Kumar</h5>
+                            <p class="text-gray-500 text-sm">PM at Microsoft</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-gray-50 rounded-2xl p-8 card-hover transition-colors duration-300">
+                    <div class="flex items-center text-yellow-400 mb-4">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-gray-700 mb-6">"The AI PM course is exactly what I needed to transition into AI products. Bhawesh's real-world experience at EXL and his mentorship were game-changers for my career."</p>
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 bg-cyan-200 rounded-full flex items-center justify-center mr-4">
+                            <span class="text-cyan-700 font-bold">PS</span>
+                        </div>
+                        <div>
+                            <h5 class="font-bold text-gray-800">Priya Sharma</h5>
+                            <p class="text-gray-500 text-sm">AI PM at Flipkart</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-gray-50 rounded-2xl p-8 card-hover transition-colors duration-300">
+                    <div class="flex items-center text-yellow-400 mb-4">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-gray-700 mb-6">"Best investment I've made in my career. The curriculum is comprehensive, the instructor is amazing, and the community support is incredible. Highly recommend!"</p>
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 bg-pink-200 rounded-full flex items-center justify-center mr-4">
+                            <span class="text-pink-700 font-bold">RV</span>
+                        </div>
+                        <div>
+                            <h5 class="font-bold text-gray-800">Rahul Verma</h5>
+                            <p class="text-gray-500 text-sm">Senior PM at Razorpay</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Certificate Section -->
+    <section id="certificate" class="py-20 bg-gray-50 transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <span class="text-purple-600 font-semibold text-sm uppercase tracking-wider">Recognition</span>
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4 mt-2">Earn Your Certificate</h2>
+                <p class="text-xl text-gray-600">Upon successful completion, receive a verified certificate to showcase your skills</p>
+            </div>
+            <div class="max-w-4xl mx-auto">
+                <!-- Sample Certificate -->
+                <div class="bg-white rounded-3xl shadow-2xl overflow-hidden card-hover">
+                    <div class="p-2 bg-gradient-to-r from-purple-600 via-indigo-600 to-cyan-500"></div>
+                    <div class="p-8 md:p-12 relative">
+                        <!-- Certificate Border Design -->
+                        <div class="absolute inset-4 md:inset-8 border-4 border-purple-200 rounded-2xl pointer-events-none"></div>
+                        <div class="absolute inset-6 md:inset-10 border border-purple-100 rounded-xl pointer-events-none"></div>
+                        
+                        <!-- Certificate Content -->
+                        <div class="relative text-center py-8">
+                            <!-- Logo -->
+                            <div class="flex justify-center mb-6">
+                                <div class="w-16 h-16 gradient-bg rounded-xl flex items-center justify-center">
+                                    <i class="fas fa-cubes text-white text-2xl"></i>
+                                </div>
+                            </div>
+                            <h3 class="text-purple-600 font-semibold text-lg tracking-widest mb-2">PMPATHSHALA</h3>
+                            
+                            <div class="my-6">
+                                <p class="text-gray-500 text-lg mb-2">This is to certify that</p>
+                                <p class="text-3xl md:text-4xl font-bold text-gray-800 font-serif italic my-4">[Your Name]</p>
+                                <p class="text-gray-500 text-lg">has successfully completed the</p>
+                            </div>
+                            
+                            <div class="my-6">
+                                <h4 class="text-2xl md:text-3xl font-bold gradient-text mb-2">Basic to Advanced Product Management</h4>
+                                <p class="text-gray-600">8-Week Intensive Program</p>
+                            </div>
+                            
+                            <div class="flex flex-col md:flex-row justify-center items-center gap-8 mt-8 mb-4">
+                                <div class="text-center">
+                                    <div class="w-32 border-b-2 border-gray-400 mb-2"></div>
+                                    <p class="text-sm text-gray-500">Date of Completion</p>
+                                </div>
+                                <div class="text-center">
+                                    <div class="w-40 mb-2">
+                                        <p class="font-bold text-gray-700 italic text-lg">Bhawesh Rastogi</p>
+                                        <div class="border-b-2 border-gray-400"></div>
+                                    </div>
+                                    <p class="text-sm text-gray-500">Instructor & Mentor</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Verification Badge -->
+                            <div class="absolute bottom-4 right-4 md:bottom-8 md:right-8">
+                                <div class="w-20 h-20 md:w-24 md:h-24 rounded-full border-4 border-purple-200 flex items-center justify-center bg-purple-50">
+                                    <div class="text-center">
+                                        <i class="fas fa-award text-purple-500 text-2xl md:text-3xl"></i>
+                                        <p class="text-xs text-purple-600 font-semibold">VERIFIED</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Certificate ID -->
+                            <div class="absolute bottom-4 left-4 md:bottom-8 md:left-8 text-left">
+                                <p class="text-xs text-gray-400">Certificate ID</p>
+                                <p class="text-sm text-gray-500 font-mono">PMP-2025-XXXXX</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-2 bg-gradient-to-r from-purple-600 via-indigo-600 to-cyan-500"></div>
+                </div>
+                
+                <!-- Certificate Benefits -->
+                <div class="grid md:grid-cols-3 gap-6 mt-12">
+                    <div class="bg-white rounded-2xl p-6 text-center card-hover transition-colors duration-300">
+                        <div class="w-14 h-14 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-check-circle text-purple-600 text-2xl"></i>
+                        </div>
+                        <h4 class="font-bold text-gray-800 mb-2">Verified Certificate</h4>
+                        <p class="text-gray-600 text-sm">Each certificate has a unique ID that can be verified online</p>
+                    </div>
+                    <div class="bg-white rounded-2xl p-6 text-center card-hover transition-colors duration-300">
+                        <div class="w-14 h-14 bg-cyan-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fab fa-linkedin text-cyan-600 text-2xl"></i>
+                        </div>
+                        <h4 class="font-bold text-gray-800 mb-2">LinkedIn Ready</h4>
+                        <p class="text-gray-600 text-sm">Add directly to your LinkedIn profile to showcase your skills</p>
+                    </div>
+                    <div class="bg-white rounded-2xl p-6 text-center card-hover transition-colors duration-300">
+                        <div class="w-14 h-14 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-share-alt text-green-600 text-2xl"></i>
+                        </div>
+                        <h4 class="font-bold text-gray-800 mb-2">Shareable</h4>
+                        <p class="text-gray-600 text-sm">Share your achievement on social media and with employers</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="py-20 bg-white transition-colors duration-300">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <span class="text-purple-600 font-semibold text-sm uppercase tracking-wider">Got Questions?</span>
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4 mt-2">Frequently Asked Questions</h2>
+            </div>
+            <div class="space-y-4">
+                <div class="bg-white rounded-2xl overflow-hidden shadow-sm transition-colors duration-300">
+                    <button onclick="toggleFAQ(this)" class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50" aria-expanded="false">
+                        <span class="font-semibold text-gray-800">Do I need prior experience in Product Management?</span>
+                        <i class="fas fa-chevron-down text-gray-400 transition-transform"></i>
+                    </button>
+                    <div class="faq-content hidden px-6 pb-4 text-gray-600">
+                        No! Our Basic to Advanced PM course is designed for complete beginners. We start from the fundamentals and progressively build up to advanced topics. However, for the AI PM course, we recommend having some basic PM knowledge or taking our foundational course first.
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl overflow-hidden shadow-sm transition-colors duration-300">
+                    <button onclick="toggleFAQ(this)" class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50" aria-expanded="false">
+                        <span class="font-semibold text-gray-800">What are the class timings?</span>
+                        <i class="fas fa-chevron-down text-gray-400 transition-transform"></i>
+                    </button>
+                    <div class="faq-content hidden px-6 pb-4 text-gray-600">
+                        Classes are held on <strong>weekends (Saturday & Sunday) from 11 AM to 2 PM IST</strong>. This schedule is designed to accommodate working professionals. All sessions are recorded and available for lifetime access.
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl overflow-hidden shadow-sm transition-colors duration-300">
+                    <button onclick="toggleFAQ(this)" class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50" aria-expanded="false">
+                        <span class="font-semibold text-gray-800">Are the sessions live or recorded?</span>
+                        <i class="fas fa-chevron-down text-gray-400 transition-transform"></i>
+                    </button>
+                    <div class="faq-content hidden px-6 pb-4 text-gray-600">
+                        All sessions are conducted live via Zoom with full interaction. However, all sessions are recorded and available for lifetime access so you can revisit them anytime.
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl overflow-hidden shadow-sm transition-colors duration-300">
+                    <button onclick="toggleFAQ(this)" class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50" aria-expanded="false">
+                        <span class="font-semibold text-gray-800">What kind of job support do you provide?</span>
+                        <i class="fas fa-chevron-down text-gray-400 transition-transform"></i>
+                    </button>
+                    <div class="faq-content hidden px-6 pb-4 text-gray-600">
+                        We provide comprehensive career support including resume review, LinkedIn optimization, mock interviews, referrals to our 50+ hiring partners, and access to our exclusive job board with PM opportunities.
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl overflow-hidden shadow-sm transition-colors duration-300">
+                    <button onclick="toggleFAQ(this)" class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50" aria-expanded="false">
+                        <span class="font-semibold text-gray-800">Is there a refund policy?</span>
+                        <i class="fas fa-chevron-down text-gray-400 transition-transform"></i>
+                    </button>
+                    <div class="faq-content hidden px-6 pb-4 text-gray-600">
+                        Yes! We offer a 30-day money-back guarantee. If you're not satisfied with the course within the first 30 days, we'll provide a full refund, no questions asked.
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl overflow-hidden shadow-sm transition-colors duration-300">
+                    <button onclick="toggleFAQ(this)" class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50" aria-expanded="false">
+                        <span class="font-semibold text-gray-800">How many seats are available per batch?</span>
+                        <i class="fas fa-chevron-down text-gray-400 transition-transform"></i>
+                    </button>
+                    <div class="faq-content hidden px-6 pb-4 text-gray-600">
+                        Each batch is limited to <strong>30 students</strong> to ensure personalized attention, meaningful interactions, and quality mentorship for every participant.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 gradient-bg">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">Ready to Start Your PM Journey?</h2>
+            <p class="text-xl text-purple-100 mb-8">Join our next cohort and transform your career in product management</p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <button onclick="openModal('bundle')" class="bg-white text-purple-600 px-8 py-4 rounded-full font-semibold hover:bg-yellow-300 transition text-lg pulse-btn">
+                    Enroll Now - Save ₹10,000 <i class="fas fa-arrow-right ml-2"></i>
+                </button>
+                <a href="https://wa.me/919667783900?text=Hi%20Bhawesh,%20I'm%20interested%20in%20the%20Product%20Management%20course" target="_blank" class="border-2 border-white text-white px-8 py-4 rounded-full font-semibold hover:bg-white hover:text-purple-600 transition text-lg">
+                    <i class="fab fa-whatsapp mr-2"></i>Chat on WhatsApp
+                </a>
+            </div>
+            <p class="text-purple-200 mt-6">Next batch starts: January 15, 2025 • Only 30 seats available</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-400 py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div class="w-10 h-10 gradient-bg rounded-lg flex items-center justify-center">
+                            <i class="fas fa-cubes text-white"></i>
+                        </div>
+                        <span class="text-xl font-bold text-white">ProductVerse</span>
+                    </div>
+                    <p class="text-sm mb-4">Empowering the next generation of product leaders through world-class education and mentorship.</p>
+                    <div class="flex space-x-4">
+                        <a href="https://www.linkedin.com/in/bhawesh-rastogi-sep3009/" target="_blank" class="text-2xl hover:text-white transition" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://wa.me/919667783900" target="_blank" class="text-2xl hover:text-white transition" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Courses</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#courses" class="hover:text-white transition">Basic to Advanced PM</a></li>
+                        <li><a href="#courses" class="hover:text-white transition">AI Product Manager</a></li>
+                        <li><a href="#pricing" class="hover:text-white transition">Bundle Package</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#curriculum" class="hover:text-white transition">Curriculum</a></li>
+                        <li><a href="#instructor" class="hover:text-white transition">Instructor</a></li>
+                        <li><a href="#faq" class="hover:text-white transition">FAQ</a></li>
+                        <li><a href="terms.html" class="hover:text-white transition">Terms of Service</a></li>
+                        <li><a href="privacy.html" class="hover:text-white transition">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Contact</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="tel:+919667783900" class="hover:text-white transition"><i class="fas fa-phone mr-2"></i>+91-9667783900</a></li>
+                        <li><a href="mailto:BhaweshRastogi@gmail.com" class="hover:text-white transition"><i class="fas fa-envelope mr-2"></i>BhaweshRastogi@gmail.com</a></li>
+                        <li><a href="https://www.linkedin.com/in/bhawesh-rastogi-sep3009/" target="_blank" class="hover:text-white transition"><i class="fab fa-linkedin mr-2"></i>LinkedIn Profile</a></li>
+                    </ul>
+
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-12 pt-8 text-center text-sm">
+                <p>&copy; 2024 PMpathshala. All rights reserved. | Made with ❤️ in India</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Button -->
+    <a href="https://wa.me/919667783900?text=Hi%20Bhawesh,%20I'm%20interested%20in%20the%20Product%20Management%20course" target="_blank" class="whatsapp-btn" aria-label="Chat on WhatsApp">
+        <i class="fab fa-whatsapp text-white text-3xl"></i>
+    </a>
+
+    <!-- Back to Top Button -->
+    <div onclick="scrollToTop()" class="back-to-top" aria-label="Back to top">
+        <i class="fas fa-arrow-up text-white"></i>
+    </div>
+
+    <!-- Cookie Banner -->
+    <div id="cookieBanner" class="cookie-banner bg-white border-t shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p class="text-gray-600 text-sm text-center sm:text-left">
+                <i class="fas fa-cookie-bite text-yellow-500 mr-2"></i>
+                We use cookies to enhance your experience. By continuing to visit this site you agree to our use of cookies.
+                <a href="privacy.html" class="text-purple-600 hover:underline ml-1">Learn more</a>
+            </p>
+            <div class="flex gap-3">
+                <button onclick="acceptCookies()" class="gradient-bg text-white px-6 py-2 rounded-full text-sm font-medium hover:opacity-90 transition">Accept</button>
+                <button onclick="declineCookies()" class="bg-gray-200 text-gray-700 px-6 py-2 rounded-full text-sm font-medium hover:bg-gray-300 transition">Decline</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Enrollment Modal -->
+    <div id="paymentModal" class="modal fixed inset-0 bg-black/50 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full max-h-[90vh] overflow-y-auto transition-colors duration-300">
+            <div class="p-6 border-b">
+                <div class="flex justify-between items-center">
+                    <h3 class="text-2xl font-bold text-gray-800">Enroll Now</h3>
+                    <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600" aria-label="Close modal">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="p-6">
+                <!-- Course Selection -->
+                <div id="courseSelection" class="mb-6">
+                    <label class="block text-sm font-medium text-gray-700 mb-3">Select Course *</label>
+                    <div class="space-y-3">
+                        <label class="flex items-center justify-between p-4 border-2 rounded-xl cursor-pointer hover:border-purple-500 has-[:checked]:border-purple-500 has-[:checked]:bg-purple-50 transition">
+                            <div class="flex items-center">
+                                <input type="radio" name="course" value="basic" class="mr-3" onchange="updateCourseSelection()" checked>
+                                <div>
+                                    <p class="font-semibold text-gray-800">Basic to Advanced PM</p>
+                                    <p class="text-sm text-gray-500">8 Weeks Program</p>
+                                </div>
+                            </div>
+                            <span class="font-bold text-purple-600">₹20,000</span>
+                        </label>
+                        <label class="flex items-center justify-between p-4 border-2 rounded-xl cursor-pointer hover:border-cyan-500 has-[:checked]:border-cyan-500 has-[:checked]:bg-cyan-50 transition">
+                            <div class="flex items-center">
+                                <input type="radio" name="course" value="ai" class="mr-3" onchange="updateCourseSelection()">
+                                <div>
+                                    <p class="font-semibold text-gray-800">AI Product Manager</p>
+                                    <p class="text-sm text-gray-500">8 Weeks Program</p>
+                                </div>
+                            </div>
+                            <span class="font-bold text-cyan-600">₹25,000</span>
+                        </label>
+                        <label class="flex items-center justify-between p-4 border-2 border-yellow-400 rounded-xl cursor-pointer hover:border-yellow-500 has-[:checked]:border-yellow-500 has-[:checked]:bg-yellow-50 transition relative">
+                            <div class="absolute -top-2 left-4 bg-yellow-400 text-yellow-900 text-xs font-bold px-2 py-0.5 rounded">BEST VALUE</div>
+                            <div class="flex items-center">
+                                <input type="radio" name="course" value="bundle" class="mr-3" onchange="updateCourseSelection()">
+                                <div>
+                                    <p class="font-semibold text-gray-800">Complete Bundle</p>
+                                    <p class="text-sm text-gray-500">Both Courses - 16 Weeks</p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <span class="text-gray-400 line-through text-sm">₹45,000</span>
+                                <span class="font-bold text-green-600 block">₹35,000</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Enrollment Form - Integrated with Web3Forms -->
+                <form id="enrollmentForm" action="https://api.web3forms.com/submit" method="POST">
+                    <!-- Web3Forms Access Key - Replace with your key -->
+                    <input type="hidden" name="access_key" value="cf83d387-9bb4-4849-a2aa-d982c809155e">
+                    
+                    <!-- Form Configuration -->
+                    <input type="hidden" name="subject" value="New Course Enrollment - PMpathshala">
+                    <input type="hidden" name="from_name" value="PMpathshala Website">
+                    <input type="hidden" name="redirect" value="">
+                    
+                    <!-- Hidden field for selected course -->
+                    <input type="hidden" name="selected_course" id="selectedCourseHidden" value="Basic to Advanced PM - ₹20,000">
+                    
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Full Name *</label>
+                            <input type="text" name="name" required class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors" placeholder="Enter your full name">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Email Address *</label>
+                            <input type="email" name="email" required class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors" placeholder="you@example.com">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Phone Number (WhatsApp) *</label>
+                            <input type="tel" name="phone" required class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors" placeholder="+91 98765 43210">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Current Role / Background</label>
+                            <input type="text" name="background" class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors" placeholder="e.g., Software Engineer at TCS">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">How did you hear about us?</label>
+                            <select name="referral_source" class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors">
+                                <option value="">Select an option</option>
+                                <option value="LinkedIn">LinkedIn</option>
+                                <option value="Google Search">Google Search</option>
+                                <option value="Friend/Colleague">Friend / Colleague</option>
+                                <option value="Social Media">Social Media</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Any questions or message?</label>
+                            <textarea name="message" rows="2" class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors" placeholder="Optional: Any specific questions about the course?"></textarea>
+                        </div>
+
+                        <div class="flex items-start">
+                            <input type="checkbox" required id="terms" name="agreed_to_terms" value="Yes" class="mt-1 mr-2">
+                            <label for="terms" class="text-sm text-gray-600">I agree to the <a href="terms.html" class="text-purple-600 hover:underline">Terms of Service</a> and <a href="privacy.html" class="text-purple-600 hover:underline">Privacy Policy</a></label>
+                        </div>
+
+                        <!-- Honeypot for spam protection -->
+                        <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
+
+                        <button type="submit" id="submitButton" class="w-full gradient-bg text-white py-4 rounded-xl font-semibold hover:opacity-90 transition text-lg">
+                            <i class="fas fa-paper-plane mr-2"></i>Submit Enrollment Request
+                        </button>
+
+                        <div class="text-center">
+                            <p class="text-sm text-gray-500 mb-2">
+                                <i class="fas fa-info-circle text-blue-500 mr-1"></i>
+                                You'll receive payment details via email/WhatsApp
+                            </p>
+                            <p class="text-xs text-gray-400">
+                                Or contact directly: <a href="tel:+919667783900" class="text-purple-600">+91-9667783900</a>
+                            </p>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="modal fixed inset-0 bg-black/50 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-8 text-center transition-colors duration-300">
+            <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <i class="fas fa-check text-green-500 text-4xl"></i>
+            </div>
+            <h3 class="text-2xl font-bold text-gray-800 mb-4">Enrollment Request Submitted! 🎉</h3>
+            <p class="text-gray-600 mb-4">Thank you for your interest in <strong id="successCourseName">PMpathshala</strong>!</p>
+            <p class="text-gray-600 mb-6">Bhawesh will contact you within 24 hours with payment details and next steps.</p>
+            <div class="bg-gray-50 rounded-xl p-4 mb-6 text-left">
+                <p class="text-sm text-gray-600 mb-2"><strong>What happens next?</strong></p>
+                <ul class="text-sm text-gray-500 space-y-1">
+                    <li>✅ You'll receive a confirmation email</li>
+                    <li>✅ Payment details via WhatsApp/Email</li>
+                    <li>✅ Course access within 24 hours of payment</li>
+                </ul>
+            </div>
+            <p class="text-sm text-gray-500 mb-6">Need immediate help? <a href="tel:+919667783900" class="text-purple-600 font-semibold">+91-9667783900</a> | <a href="https://wa.me/919667783900" class="text-green-600 font-semibold">WhatsApp</a></p>
+            <button onclick="closeSuccessModal()" class="gradient-bg text-white px-8 py-3 rounded-full font-semibold hover:opacity-90 transition">
+                Got it!
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Theme Toggle
+        function toggleTheme() {
+            const html = document.documentElement;
+            const themeIcon = document.getElementById('themeIcon');
+            const themeIconMobile = document.getElementById('themeIconMobile');
+            
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+                if (themeIconMobile) {
+                    themeIconMobile.classList.remove('fa-sun');
+                    themeIconMobile.classList.add('fa-moon');
+                }
+                localStorage.setItem('theme', 'light');
+            } else {
+                html.classList.add('dark');
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+                if (themeIconMobile) {
+                    themeIconMobile.classList.remove('fa-moon');
+                    themeIconMobile.classList.add('fa-sun');
+                }
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        // Check for saved theme preference
+        if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+            document.getElementById('themeIcon').classList.remove('fa-moon');
+            document.getElementById('themeIcon').classList.add('fa-sun');
+            const mobileIcon = document.getElementById('themeIconMobile');
+            if (mobileIcon) {
+                mobileIcon.classList.remove('fa-moon');
+                mobileIcon.classList.add('fa-sun');
+            }
+        }
+
+        // Curriculum Toggle
+        function toggleCurriculum(id, toggleElement) {
+            const content = document.getElementById(id);
+            const allContents = document.querySelectorAll('.curriculum-content');
+            const allToggles = document.querySelectorAll('.curriculum-toggle');
+            
+            allContents.forEach(c => {
+                if (c.id !== id) c.classList.remove('active');
+            });
+            allToggles.forEach(t => {
+                if (t !== toggleElement) t.classList.remove('active');
+            });
+            
+            content.classList.toggle('active');
+            toggleElement.classList.toggle('active');
+        }
+
+        // Mobile Menu Toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+        }
+
+        // FAQ Toggle
+        function toggleFAQ(button) {
+            const content = button.nextElementSibling;
+            const icon = button.querySelector('i');
+            const isExpanded = !content.classList.contains('hidden');
+            
+            content.classList.toggle('hidden');
+            icon.classList.toggle('rotate-180');
+            button.setAttribute('aria-expanded', !isExpanded);
+        }
+
+        // Course Data
+        const courses = {
+            basic: { name: 'Basic to Advanced PM', duration: '8 Weeks', price: 20000, originalPrice: 29999 },
+            ai: { name: 'AI Product Manager', duration: '8 Weeks', price: 25000, originalPrice: 35000 },
+            bundle: { name: 'Complete PM Bundle (Both Courses)', duration: '16 Weeks', price: 35000, originalPrice: 45000 }
+        };
+
+        function formatINR(amount) {
+            return '₹' + amount.toLocaleString('en-IN');
+        }
+
+        // Update hidden field when course selection changes
+        function updateCourseSelection() {
+            const selectedCourse = document.querySelector('input[name="course"]:checked').value;
+            const course = courses[selectedCourse];
+            document.getElementById('selectedCourseHidden').value = `${course.name} - ${formatINR(course.price)}`;
+        }
+
+        function openModal(courseType = null) {
+            const modal = document.getElementById('paymentModal');
+            
+            // Pre-select course if specified
+            if (courseType && document.querySelector(`input[name="course"][value="${courseType}"]`)) {
+                document.querySelector(`input[name="course"][value="${courseType}"]`).checked = true;
+                updateCourseSelection();
+            }
+            
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('paymentModal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        function closeSuccessModal() {
+            document.getElementById('successModal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Handle form submission with Web3Forms
+        const form = document.getElementById('enrollmentForm');
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const submitButton = document.getElementById('submitButton');
+            const originalText = submitButton.innerHTML;
+            submitButton.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Submitting...';
+            submitButton.disabled = true;
+
+            const formData = new FormData(form);
+            
+            fetch('https://api.web3forms.com/submit', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Update success modal with selected course
+                    const selectedCourse = document.querySelector('input[name="course"]:checked').value;
+                    document.getElementById('successCourseName').textContent = courses[selectedCourse].name;
+                    
+                    // Show success modal
+                    document.getElementById('paymentModal').classList.add('hidden');
+                    document.getElementById('successModal').classList.remove('hidden');
+                    
+                    // Reset form
+                    form.reset();
+                    document.querySelector('input[name="course"][value="basic"]').checked = true;
+                    updateCourseSelection();
+                } else {
+                    alert('Something went wrong. Please try again or contact us directly at +91-9667783900');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Something went wrong. Please try again or contact us directly at +91-9667783900');
+            })
+            .finally(() => {
+                submitButton.innerHTML = originalText;
+                submitButton.disabled = false;
+            });
+        });
+
+        // Modal close on outside click
+        document.getElementById('paymentModal').addEventListener('click', function(e) { if (e.target === this) closeModal(); });
+        document.getElementById('successModal').addEventListener('click', function(e) { if (e.target === this) closeSuccessModal(); });
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    document.getElementById('mobileMenu').classList.add('hidden');
+                }
+            });
+        });
+
+        // Back to top
+        function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+        
+        window.addEventListener('scroll', function() {
+            const backToTop = document.querySelector('.back-to-top');
+            if (window.pageYOffset > 500) backToTop.classList.add('visible');
+            else backToTop.classList.remove('visible');
+        });
+
+        // Cookie Banner
+        function showCookieBanner() {
+            if (!localStorage.getItem('cookieConsent')) {
+                setTimeout(() => document.getElementById('cookieBanner').classList.add('show'), 2000);
+            }
+        }
+        function acceptCookies() {
+            localStorage.setItem('cookieConsent', 'accepted');
+            document.getElementById('cookieBanner').classList.remove('show');
+        }
+        function declineCookies() {
+            localStorage.setItem('cookieConsent', 'declined');
+            document.getElementById('cookieBanner').classList.remove('show');
+        }
+        showCookieBanner();
+
+        // Close mobile menu on escape
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+                closeSuccessModal();
+                document.getElementById('mobileMenu').classList.add('hidden');
+            }
+        });
+    </script>
+</body>
+</html>
