@@ -1,0 +1,26 @@
+# robots.txt for PMpathshala.com
+# Learn more: https://www.robotstxt.org/
+
+# Allow all search engines to crawl everything
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://pmpathshala.com/sitemap.xml
+
+# Specific crawler rules
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+# Block common bot crawlers that waste bandwidth
+User-agent: AhrefsBot
+Crawl-delay: 10
+
+User-agent: SemrushBot
+Crawl-delay: 10
+
+# Host
+Host: https://pmpathshala.com
