@@ -23,7 +23,7 @@
     <title>PMpathshala | Premier Product Management Courses in India</title>
     
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='grad' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' style='stop-color:%23667eea'/><stop offset='100%' style='stop-color:%23764ba2'/></linearGradient></defs><rect x='10' y='10' width='80' height='80' rx='16' fill='url(%23grad)'/><rect x='35' y='25' width='30' height='22' rx='4' fill='white' opacity='0.9'/><rect x='20' y='53' width='26' height='22' rx='4' fill='white' opacity='0.8'/><rect x='54' y='53' width='26' height='22' rx='4' fill='white' opacity='0.7'/></svg>">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='grad' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' style='stop-color:%23667eea'/><stop offset='100%' style='stop-color:%23764ba2'/></linearGradient></defs><circle cx='50' cy='50' r='45' fill='url(%23grad)'/><text x='50' y='68' font-size='50' text-anchor='middle' fill='white' font-family='Arial' font-weight='bold'>P</text></svg>">
     
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -41,7 +41,7 @@
             "@type": "ContactPoint",
             "telephone": "+91-9667783900",
             "contactType": "admissions",
-            "email": "BhaweshRastogi@gmail.com"
+            "email": "support@pmpathshala.com"
         },
         "founder": {
             "@type": "Person",
@@ -169,17 +169,6 @@
         .dark .curriculum-content { background-color: #0f172a !important; }
         .dark .cookie-banner { background-color: #1e293b !important; border-color: #334155 !important; }
         .dark ::-webkit-scrollbar-track { background: #1e293b; }
-        .dark .bg-gray-900 { background-color: #0f172a !important; }
-        .dark .text-white { color: #f8fafc !important; }
-        .dark .faq-content { color: #cbd5e1 !important; }
-        .dark .bg-green-50 { background-color: #14532d !important; }
-        .dark .bg-blue-50 { background-color: #1e3a5f !important; }
-        .dark .text-green-800 { color: #86efac !important; }
-        .dark .text-blue-800 { color: #93c5fd !important; }
-        .dark input, .dark select, .dark textarea { background-color: #334155 !important; color: #e2e8f0 !important; border-color: #475569 !important; }
-        .dark input::placeholder, .dark textarea::placeholder { color: #94a3b8 !important; }
-        .dark .border-yellow-400 { border-color: #ca8a04 !important; }
-        .dark .bg-yellow-50 { background-color: #422006 !important; }
         
         /* Curriculum Toggle Styles */
         .curriculum-content {
@@ -233,11 +222,7 @@
             <div class="flex justify-between items-center h-16">
                 <a href="#" class="flex items-center space-x-2">
                     <div class="w-10 h-10 gradient-bg rounded-lg flex items-center justify-center">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                            <rect x="7" y="2" width="10" height="8" rx="1.5" fill="white" opacity="0.9"/>
-                            <rect x="2" y="12" width="9" height="8" rx="1.5" fill="white" opacity="0.8"/>
-                            <rect x="13" y="12" width="9" height="8" rx="1.5" fill="white" opacity="0.7"/>
-                        </svg>
+                        <i class="fas fa-cubes text-white"></i>
                     </div>
                     <span class="text-xl font-bold gradient-text">PMpathshala</span>
                 </a>
@@ -246,7 +231,7 @@
                     <a href="#curriculum" class="text-gray-600 hover:text-purple-600 transition">Curriculum</a>
                     <a href="#instructor" class="text-gray-600 hover:text-purple-600 transition">Instructor</a>
                     <a href="#pricing" class="text-gray-600 hover:text-purple-600 transition">Pricing</a>
-
+                    <a href="#testimonials" class="text-gray-600 hover:text-purple-600 transition">Reviews</a>
                     <a href="#faq" class="text-gray-600 hover:text-purple-600 transition">FAQ</a>
                     <button onclick="toggleTheme()" id="themeToggle" class="p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition" title="Toggle Dark Mode" aria-label="Toggle dark mode">
                         <i class="fas fa-moon text-gray-600" id="themeIcon"></i>
@@ -270,7 +255,7 @@
                 <a href="#curriculum" class="block text-gray-600 hover:text-purple-600" onclick="toggleMobileMenu()">Curriculum</a>
                 <a href="#instructor" class="block text-gray-600 hover:text-purple-600" onclick="toggleMobileMenu()">Instructor</a>
                 <a href="#pricing" class="block text-gray-600 hover:text-purple-600" onclick="toggleMobileMenu()">Pricing</a>
-
+                <a href="#testimonials" class="block text-gray-600 hover:text-purple-600" onclick="toggleMobileMenu()">Reviews</a>
                 <a href="#faq" class="block text-gray-600 hover:text-purple-600" onclick="toggleMobileMenu()">FAQ</a>
                 <a href="tel:+919667783900" class="block text-purple-600 font-medium"><i class="fas fa-phone mr-2"></i>+91-9667783900</a>
             </div>
@@ -339,9 +324,9 @@
                             </div>
                         </div>
                         <div class="mt-6 bg-white rounded-2xl p-4 text-center">
-                            <p class="text-gray-600 text-sm mb-1">Next Batches Starting</p>
+                            <p class="text-gray-600 text-sm mb-1">Next Batch Starts</p>
                             <p class="font-bold text-gray-800">Basic to Advanced PM: Mar 7 • 11 AM - 2 PM</p>
-                            <p class="font-bold text-gray-800">AI PM: Mar 21 • 5 PM - 8 PM</p>
+                            <p class="text-purple-600 font-medium">AI PM: Mar 21 • 5 PM - 8 PM</p>
                         </div>
                     </div>
                 </div>
@@ -398,7 +383,7 @@
                         <span class="bg-cyan-100 text-cyan-700 px-3 py-1 rounded-full text-sm font-medium">8 Weeks</span>
                         <span class="bg-orange-100 text-orange-700 px-3 py-1 rounded-full text-sm font-medium">Intermediate</span>
                     </div>
-                    <p class="text-gray-600 mb-6">Specialize in AI/ML product management. Learn to build, launch, and scale AI-powered products. Perfect for PMs looking to enter the AI space. <strong>Weekend classes: 5 PM - 8 PM IST</strong></p>
+                    <p class="text-gray-600 mb-6">Specialize in AI/ML product management. Learn to build, launch, and scale AI-powered products. Perfect for PMs looking to enter the AI space.</p>
                     <ul class="space-y-3 mb-6">
                         <li class="flex items-center text-gray-700"><i class="fas fa-check text-green-500 mr-3"></i>40+ Hours of Live Sessions</li>
                         <li class="flex items-center text-gray-700"><i class="fas fa-check text-green-500 mr-3"></i>Hands-on AI Assignments</li>
@@ -829,9 +814,8 @@
                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/UPI-Logo-vector.svg/1200px-UPI-Logo-vector.svg.png" alt="UPI" class="h-8 opacity-70">
                     <i class="fab fa-cc-visa text-4xl text-gray-400"></i>
                     <i class="fab fa-cc-mastercard text-4xl text-gray-400"></i>
-                    <i class="fas fa-building-columns text-3xl text-gray-400"></i>
                 </div>
-                <p class="text-sm text-gray-500">15 days money-back guarantee</p>
+                <p class="text-sm text-gray-500">15 days money-back guarantee </p>
             </div>
         </div>
     </section>
@@ -917,12 +901,10 @@
                         <i class="fas fa-chevron-down text-gray-400 transition-transform"></i>
                     </button>
                     <div class="faq-content hidden px-6 pb-4 text-gray-600">
-                        Classes are held on <strong>weekends (Saturday & Sunday)</strong>. Timings vary by course:
-                        <ul class="mt-2 space-y-1">
-                            <li>• <strong>Basic to Advanced PM:</strong> 11 AM - 2 PM IST</li>
-                            <li>• <strong>AI Product Manager:</strong> 5 PM - 8 PM IST</li>
-                        </ul>
-                        This schedule is designed to accommodate working professionals. All sessions are recorded and available for lifetime access.
+                        Classes are held on weekends (Saturday & Sunday). Timings vary by course:
+• Basic to Advanced PM: 11 AM - 2 PM IST
+• AI Product Manager: 5 PM - 8 PM IST
+This schedule is designed to accommodate working professionals. All sessions are recorded and available for lifetime access.
                     </div>
                 </div>
                 <div class="bg-white rounded-2xl overflow-hidden shadow-sm transition-colors duration-300">
@@ -940,7 +922,7 @@
                         <i class="fas fa-chevron-down text-gray-400 transition-transform"></i>
                     </button>
                     <div class="faq-content hidden px-6 pb-4 text-gray-600">
-                        We provide comprehensive career support including resume review, LinkedIn optimization, and mock interviews.
+                        We provide comprehensive career support that includes resume review, LinkedIn optimization, and mock interviews.
                     </div>
                 </div>
                 <div class="bg-white rounded-2xl overflow-hidden shadow-sm transition-colors duration-300">
@@ -949,7 +931,7 @@
                         <i class="fas fa-chevron-down text-gray-400 transition-transform"></i>
                     </button>
                     <div class="faq-content hidden px-6 pb-4 text-gray-600">
-                        Yes! We offer a 15 days money-back guarantee. If you're not satisfied with the course within the first 15 days, we'll provide a full refund, no questions asked.
+                        Yes! We offer 15 days money-back guarantee. If you're not satisfied with the course within the first 15 days, we'll provide a full refund, no questions asked.
                     </div>
                 </div>
                 <div class="bg-white rounded-2xl overflow-hidden shadow-sm transition-colors duration-300">
@@ -978,7 +960,7 @@
                     <i class="fab fa-whatsapp mr-2"></i>Chat on WhatsApp
                 </a>
             </div>
-            <p class="text-purple-200 mt-6">Next batch: Basic PM - Mar 7 | AI PM - Mar 21, 2026 • Only 30 seats available</p>
+            <p class="text-purple-200 mt-6">Next batch starts: Basic PM - Mar 7 | AI PM - Mar 21, 2026 • Only 30 seats available</p>
         </div>
     </section>
 
@@ -989,11 +971,7 @@
                 <div>
                     <div class="flex items-center space-x-2 mb-4">
                         <div class="w-10 h-10 gradient-bg rounded-lg flex items-center justify-center">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                <rect x="7" y="2" width="10" height="8" rx="1.5" fill="white" opacity="0.9"/>
-                                <rect x="2" y="12" width="9" height="8" rx="1.5" fill="white" opacity="0.8"/>
-                                <rect x="13" y="12" width="9" height="8" rx="1.5" fill="white" opacity="0.7"/>
-                            </svg>
+                            <i class="fas fa-cubes text-white"></i>
                         </div>
                         <span class="text-xl font-bold text-white">PMpathshala</span>
                     </div>
@@ -1032,7 +1010,7 @@
                 </div>
             </div>
             <div class="border-t border-gray-800 mt-12 pt-8 text-center text-sm">
-                <p>&copy; 2025 PMpathshala. All rights reserved. | Made with ❤️ in India</p>
+                <p>&copy; 2024 PMpathshala. All rights reserved. | Made with ❤️ in India</p>
             </div>
         </div>
     </footer>
@@ -1062,7 +1040,7 @@
         </div>
     </div>
 
-    <!-- Enrollment Modal with PhonePe Payment -->
+    <!-- Enrollment Modal -->
     <div id="paymentModal" class="modal fixed inset-0 bg-black/50 z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white rounded-3xl max-w-md w-full max-h-[90vh] overflow-y-auto transition-colors duration-300">
             <div class="p-6 border-b">
@@ -1080,7 +1058,7 @@
                     <div class="space-y-3">
                         <label class="flex items-center justify-between p-4 border-2 rounded-xl cursor-pointer hover:border-purple-500 has-[:checked]:border-purple-500 has-[:checked]:bg-purple-50 transition">
                             <div class="flex items-center">
-                                <input type="radio" name="course" value="basic" class="mr-3" onchange="updatePaymentButton()" checked>
+                                <input type="radio" name="course" value="basic" class="mr-3" onchange="updateCourseSelection()" checked>
                                 <div>
                                     <p class="font-semibold text-gray-800">Basic to Advanced PM</p>
                                     <p class="text-sm text-gray-500">8 Weeks Program</p>
@@ -1090,7 +1068,7 @@
                         </label>
                         <label class="flex items-center justify-between p-4 border-2 rounded-xl cursor-pointer hover:border-cyan-500 has-[:checked]:border-cyan-500 has-[:checked]:bg-cyan-50 transition">
                             <div class="flex items-center">
-                                <input type="radio" name="course" value="ai" class="mr-3" onchange="updatePaymentButton()">
+                                <input type="radio" name="course" value="ai" class="mr-3" onchange="updateCourseSelection()">
                                 <div>
                                     <p class="font-semibold text-gray-800">AI Product Manager</p>
                                     <p class="text-sm text-gray-500">8 Weeks Program</p>
@@ -1101,7 +1079,7 @@
                         <label class="flex items-center justify-between p-4 border-2 border-yellow-400 rounded-xl cursor-pointer hover:border-yellow-500 has-[:checked]:border-yellow-500 has-[:checked]:bg-yellow-50 transition relative">
                             <div class="absolute -top-2 left-4 bg-yellow-400 text-yellow-900 text-xs font-bold px-2 py-0.5 rounded">BEST VALUE</div>
                             <div class="flex items-center">
-                                <input type="radio" name="course" value="bundle" class="mr-3" onchange="updatePaymentButton()">
+                                <input type="radio" name="course" value="bundle" class="mr-3" onchange="updateCourseSelection()">
                                 <div>
                                     <p class="font-semibold text-gray-800">Complete Bundle</p>
                                     <p class="text-sm text-gray-500">Both Courses - 16 Weeks</p>
@@ -1115,35 +1093,67 @@
                     </div>
                 </div>
 
-                <!-- Enrollment Form -->
-                <form id="enrollmentForm" onsubmit="proceedToPayment(event)">
+                <!-- Enrollment Form - Integrated with Web3Forms -->
+                <form id="enrollmentForm" action="https://api.web3forms.com/submit" method="POST">
+                    <!-- Web3Forms Access Key - Replace with your key -->
+                    <input type="hidden" name="access_key" value="cf83d387-9bb4-4849-a2aa-d982c809155e">
+                    
+                    <!-- Form Configuration -->
+                    <input type="hidden" name="subject" value="New Course Enrollment - PMpathshala">
+                    <input type="hidden" name="from_name" value="PMpathshala Website">
+                    <input type="hidden" name="redirect" value="">
+                    
+                    <!-- Hidden field for selected course -->
+                    <input type="hidden" name="selected_course" id="selectedCourseHidden" value="Basic to Advanced PM - ₹20,000">
+                    
                     <div class="space-y-4">
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">Full Name *</label>
-                            <input type="text" id="studentName" name="name" required class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors" placeholder="Enter your full name">
+                            <input type="text" name="name" required class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors" placeholder="Enter your full name">
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">Email Address *</label>
-                            <input type="email" id="studentEmail" name="email" required class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors" placeholder="you@example.com">
+                            <input type="email" name="email" required class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors" placeholder="you@example.com">
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Phone Number *</label>
-                            <input type="tel" id="studentPhone" name="phone" required class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors" placeholder="+91 98765 43210">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Phone Number (WhatsApp) *</label>
+                            <input type="tel" name="phone" required class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors" placeholder="+91 98765 43210">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Current Role / Background</label>
+                            <input type="text" name="background" class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors" placeholder="e.g., Software Engineer at TCS">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">How did you hear about us?</label>
+                            <select name="referral_source" class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors">
+                                <option value="">Select an option</option>
+                                <option value="LinkedIn">LinkedIn</option>
+                                <option value="Google Search">Google Search</option>
+                                <option value="Friend/Colleague">Friend / Colleague</option>
+                                <option value="Social Media">Social Media</option>
+                                <option value="Other">Other</option>
+                            </select>
                         </div>
 
                         <div class="flex items-start">
-                            <input type="checkbox" required id="terms" class="mt-1 mr-2">
+                            <input type="checkbox" required id="terms" name="agreed_to_terms" value="Yes" class="mt-1 mr-2">
                             <label for="terms" class="text-sm text-gray-600">I agree to the <a href="terms.html" class="text-purple-600 hover:underline">Terms of Service</a> and <a href="privacy.html" class="text-purple-600 hover:underline">Privacy Policy</a></label>
                         </div>
 
-                        <button type="submit" id="paymentButton" class="w-full gradient-bg text-white py-4 rounded-xl font-semibold hover:opacity-90 transition text-lg">
-                            <i class="fas fa-lock mr-2"></i>Proceed to Payment - ₹20,000
+                        <!-- Honeypot for spam protection -->
+                        <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
+
+                        <button type="submit" id="submitButton" class="w-full gradient-bg text-white py-4 rounded-xl font-semibold hover:opacity-90 transition text-lg">
+                            <i class="fas fa-paper-plane mr-2"></i>Proceed to Payment
                         </button>
 
                         <div class="text-center">
                             <p class="text-sm text-gray-500">
                                 <i class="fas fa-shield-alt text-green-500 mr-1"></i>
                                 Secure payment via PhonePe
+                            </p>
+                            <p class="text-xs text-gray-400">
+                                Or contact directly: <a href="tel:+919667783900" class="text-purple-600">+91-9667783900</a>
                             </p>
                         </div>
                     </div>
@@ -1354,33 +1364,22 @@
             button.setAttribute('aria-expanded', !isExpanded);
         }
 
-        // Course Data with Fixed Prices
+        // Course Data
         const courses = {
-            basic: { name: 'Basic to Advanced PM', duration: '8 Weeks', price: 20000 },
-            ai: { name: 'AI Product Manager', duration: '8 Weeks', price: 25000 },
-            bundle: { name: 'Complete PM Bundle (Both Courses)', duration: '16 Weeks', price: 35000 }
+            basic: { name: 'Basic to Advanced PM', duration: '8 Weeks', price: 20000, originalPrice: 29999 },
+            ai: { name: 'AI Product Manager', duration: '8 Weeks', price: 25000, originalPrice: 35000 },
+            bundle: { name: 'Complete PM Bundle (Both Courses)', duration: '16 Weeks', price: 35000, originalPrice: 45000 }
         };
 
-       // Payment Configuration
-        const PAYEE_NAME = 'PMpathshala';
-
-	// Store current order details
-        let currentOrder = {
-            name: '',
-            email: '',
-            phone: '',
-            course: null
-        };
         function formatINR(amount) {
             return '₹' + amount.toLocaleString('en-IN');
         }
 
-        // Update payment button when course selection changes
-        function updatePaymentButton() {
+        // Update hidden field when course selection changes
+        function updateCourseSelection() {
             const selectedCourse = document.querySelector('input[name="course"]:checked').value;
             const course = courses[selectedCourse];
-            document.getElementById('paymentButton').innerHTML = 
-                `<i class="fas fa-lock mr-2"></i>Proceed to Payment - ${formatINR(course.price)}`;
+            document.getElementById('selectedCourseHidden').value = `${course.name} - ${formatINR(course.price)}`;
         }
 
         function openModal(courseType = null) {
@@ -1389,8 +1388,8 @@
             // Pre-select course if specified
             if (courseType && document.querySelector(`input[name="course"][value="${courseType}"]`)) {
                 document.querySelector(`input[name="course"][value="${courseType}"]`).checked = true;
+                updateCourseSelection();
             }
-            updatePaymentButton();
             
             modal.classList.remove('hidden');
             document.body.style.overflow = 'hidden';
@@ -1401,128 +1400,59 @@
             document.body.style.overflow = 'auto';
         }
 
-        function closePaymentPage() {
-            document.getElementById('paymentPageModal').classList.add('hidden');
+        function closeSuccessModal() {
+            document.getElementById('successModal').classList.add('hidden');
             document.body.style.overflow = 'auto';
         }
 
-        // Proceed to payment page
-        function proceedToPayment(e) {
+        // Handle form submission with Web3Forms
+        const form = document.getElementById('enrollmentForm');
+        form.addEventListener('submit', function(e) {
             e.preventDefault();
             
-            const name = document.getElementById('studentName').value.trim();
-            const email = document.getElementById('studentEmail').value.trim();
-            const phone = document.getElementById('studentPhone').value.trim();
-            const termsChecked = document.getElementById('terms').checked;
+            const submitButton = document.getElementById('submitButton');
+            const originalText = submitButton.innerHTML;
+            submitButton.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Submitting...';
+            submitButton.disabled = true;
+
+            const formData = new FormData(form);
             
-            if (!name || !email || !phone) {
-                alert('Please fill in all required fields');
-                return;
-            }
-            
-            if (!termsChecked) {
-                alert('Please agree to the Terms of Service and Privacy Policy');
-                return;
-            }
-            
-            const selectedCourse = document.querySelector('input[name="course"]:checked').value;
-            const course = courses[selectedCourse];
-
-	
-            // Store order details
-            currentOrder = { name, email, phone, course };
-
-            
-            // Update payment page with details
-            document.getElementById('paymentCourseName').textContent = course.name;
-            document.getElementById('paymentAmount').textContent = formatINR(course.price);
-            document.getElementById('paymentTotal').textContent = formatINR(course.price);
-            
-            document.getElementById('confirmName').textContent = name;
-            document.getElementById('confirmEmail').textContent = email;
-            document.getElementById('confirmPhone').textContent = phone;
-            
-           
-            // Reset payment method to UPI
-            document.querySelector('input[name="paymentMethod"][value="upi"]').checked = true;
-            togglePaymentMethod();
-
-            // Clear UPI input
-            document.getElementById('userUpiId').value = '';
-
-            
-            // Close enrollment modal, show payment page
-            document.getElementById('paymentModal').classList.add('hidden');
-            document.getElementById('paymentPageModal').classList.remove('hidden');
-        }
-
-        // Toggle between payment methods
-        function togglePaymentMethod() {
-            const selectedMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
-            const upiSection = document.getElementById('upiPaymentSection');
-            const netbankingSection = document.getElementById('netbankingSection');
-
-            if (selectedMethod === 'upi') {
-                upiSection.classList.remove('hidden');
-                netbankingSection.classList.add('hidden');
-            } else {
-                upiSection.classList.add('hidden');
-                netbankingSection.classList.remove('hidden');
-            }
-        }
-
-        // Initiate UPI payment
-        function initiateUpiPayment() {
-            const upiId = document.getElementById('userUpiId').value.trim();
-
-            if (!upiId) {
-                alert('Please enter your UPI ID');
-                return;
-            }
-
-            // Basic UPI ID validation
-            if (!upiId.includes('@')) {
-                alert('Please enter a valid UPI ID (e.g., yourname@upi)');
-                return;
-            }
-
-            const course = currentOrder.course;
-
-            // Create UPI payment request - this would typically integrate with a payment gateway
-            // For now, we'll show a confirmation and simulate the flow
-            const confirmPayment = confirm(`You will receive a payment request of ${formatINR(course.price)} on your UPI ID: ${upiId}\n\nClick OK to proceed.`);
-
-            if (confirmPayment) {
-                // In a real implementation, this would call a payment API
-                alert(`Payment request sent to ${upiId}!\n\nPlease check your UPI app and complete the payment.\n\nYou will receive a confirmation email at ${currentOrder.email} once payment is verified.`);
-            }
-        }
-
-        // Initiate Net Banking payment
-        function initiateNetbanking() {
-            const bankSelect = document.getElementById('bankSelect');
-            const selectedBank = bankSelect.value;
-
-            if (!selectedBank) {
-                alert('Please select your bank');
-                return;
-            }
-
-            const course = currentOrder.course;
-            const bankName = bankSelect.options[bankSelect.selectedIndex].text;
-
-            // In a real implementation, this would redirect to the payment gateway
-            const confirmPayment = confirm(`You will be redirected to ${bankName}'s secure payment page to complete the payment of ${formatINR(course.price)}.\n\nClick OK to proceed.`);
-
-            if (confirmPayment) {
-                // In a real implementation, this would redirect to the bank's net banking page
-                alert(`Redirecting to ${bankName}'s secure payment page...\n\nNote: In production, this would integrate with a payment gateway like Razorpay, PayU, or similar.`);
-            }
-        }
+            fetch('https://api.web3forms.com/submit', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Update success modal with selected course
+                    const selectedCourse = document.querySelector('input[name="course"]:checked').value;
+                    document.getElementById('successCourseName').textContent = courses[selectedCourse].name;
+                    
+                    // Show success modal
+                    document.getElementById('paymentModal').classList.add('hidden');
+                    document.getElementById('successModal').classList.remove('hidden');
+                    
+                    // Reset form
+                    form.reset();
+                    document.querySelector('input[name="course"][value="basic"]').checked = true;
+                    updateCourseSelection();
+                } else {
+                    alert('Something went wrong. Please try again or contact us directly at +91-9667783900');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Something went wrong. Please try again or contact us directly at +91-9667783900');
+            })
+            .finally(() => {
+                submitButton.innerHTML = originalText;
+                submitButton.disabled = false;
+            });
+        });
 
         // Modal close on outside click
         document.getElementById('paymentModal').addEventListener('click', function(e) { if (e.target === this) closeModal(); });
-        document.getElementById('paymentPageModal').addEventListener('click', function(e) { if (e.target === this) closePaymentPage(); });
+        document.getElementById('successModal').addEventListener('click', function(e) { if (e.target === this) closeSuccessModal(); });
 
         // Smooth scroll
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -1561,11 +1491,11 @@
         }
         showCookieBanner();
 
-        // Close modals on escape
+        // Close mobile menu on escape
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
                 closeModal();
-                closePaymentPage();
+                closeSuccessModal();
                 document.getElementById('mobileMenu').classList.add('hidden');
             }
         });
