@@ -252,11 +252,21 @@ function switchPayTab(tab, btn) {
 // ── NET BANKING PROCEED ───────────────────────
 function proceedNetBanking() {
   const bank = document.getElementById('nb-bank').value;
-  if (!bank) { alert('Please select your bank to continue.'); return; }
-  // In production: call your backend to initiate a PhonePe net banking session
-  // and redirect to the bank's payment URL returned by PhonePe API.
-  // For now, we show the completion confirmation.
-  alert('Redirecting to ' + document.getElementById('nb-bank').options[document.getElementById('nb-bank').selectedIndex].text + ' payment page...\n\nNote: Connect your PhonePe backend to enable live bank redirects.');
+  if (!bank) { alert('Please select a bank'); return; }
+
+  const res = await fetch('https://YOUR-PROJECT.vercel.app/api/create-payment', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      amount: COURSES[selectedCourse].amount,
+      name: document.getElementById('pa-name').textContent,
+      phone: document.getElementById('pa-phone').textContent,
+      email: document.getElementById('pa-email').textContent,
+      course: COURSES[selectedCourse].name,
+    })
+  });
+  const data = await res.json();
+  if (data.redirectUrl) window.location.href = data.redirectUrl;
 }
 
 // ── CONFIRM PAYMENT ───────────────────────────
