@@ -12,8 +12,8 @@ const CFG = {
   // ⚠️  CLIENT SECRET must only ever be used server-side (see payment-server/server.js)
   //     These identifiers are safe to reference here for your own records.
   phonepe: {
-    merchant_id    : 'M23RVERLHV32L',
-    client_id      : 'SU2512261330453294206129',
+  //  merchant_id    : 'M23RVERLHV32L',
+  //  client_id      : 'SU2512261330453294206129',
     // redirect target after PhonePe payment completes
     redirect_url   : () => `${window.location.origin}${window.location.pathname}?payment=success`,
     callback_url   : () => `${window.location.origin}/api/phonepe-callback`,  // your backend
