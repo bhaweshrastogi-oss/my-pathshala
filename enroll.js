@@ -283,7 +283,7 @@ function showPayPage() {
 // See DEPLOYMENT_GUIDE.html for the full step-by-step walkthrough.
 // ─────────────────────────────────────────────────────────────────
 
-const BACKEND_URL = 'https://my-pathshala-q4lxh1c7j-bhaweshrastogi-oss-projects.vercel.app'; // ← Replace after deploying server.js
+const BACKEND_URL = 'https://my-pathshala-8arfw9mrf-bhaweshrastogi-oss-projects.vercel.app'; // ← Replace after deploying server.js
 
 async function initiatePhonePePayment() {
   const btn = document.getElementById('pay-cta-btn');
