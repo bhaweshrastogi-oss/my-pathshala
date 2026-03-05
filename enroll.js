@@ -450,7 +450,7 @@ function showPaymentFallback() {
       <p style="font-weight:700;color:var(--ink);margin-bottom:0.6rem;font-size:0.9rem">🔧 Payment gateway is being activated</p>
       <p style="font-size:0.82rem;color:var(--ink2);margin-bottom:1rem">Our PhonePe integration is being set up. In the meantime, please complete payment via:</p>
       <div style="background:var(--bg2);border-radius:10px;padding:0.9rem 1rem;margin-bottom:1rem;font-size:0.83rem">
-        <strong>UPI Transfer:</strong> pmpathshala@ybl<br>
+        <strong>UPI Transfer:</strong> bhaweshrastogi@okhdfcbank<br>
         <strong>Amount:</strong> ${course.price}<br>
         <strong>Ref:</strong> ${enrollData.orderRef}
       </div>
