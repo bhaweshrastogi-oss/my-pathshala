@@ -25,8 +25,8 @@ const CFG = {
   courses: {
     basic: {
       name   : 'Basic to Advanced Product Management',
-      price  : '₹20,000',
-      amount : 20000,
+      price  : '₹25,000',
+      amount : 25000,
       batch  : 'Apr 3, 2026 · Weekends 12–3 PM IST',
     }
   },
@@ -72,7 +72,6 @@ const FAQS = [
   { q:'What is the refund policy?',     a:'15-day money-back guarantee from the course start date. If you\'ve attended fewer than 3 sessions and aren\'t satisfied, we\'ll refund 100% — no questions asked. Email support@pmpathshala.com to request.' },
   { q:'How many students per batch?',   a:'Maximum 30 students per batch — this is a firm cap, not a sales tactic. It ensures every student gets direct attention from Bhawesh during sessions and 1:1s.' },
   { q:'Can I pay in instalments?',      a:'We currently offer one-time payment via PhonePe (UPI, Net Banking, Cards, Wallets). Reach out via WhatsApp if you\'d like to discuss alternative arrangements.' },
-  { q:'Will I get a certificate?',      a:'Yes — a certificate of completion (Basic PM) or certificate of specialisation (AI PM), issued upon completing at least 6 of 8 sessions and submitting the capstone project.' },
 ];
 
 // ── CURRICULUM RENDER ─────────────────────────────────────────────
