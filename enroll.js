@@ -12,8 +12,8 @@ const CFG = {
   // ⚠️  CLIENT SECRET must only ever be used server-side (see payment-server/server.js)
   //     These identifiers are safe to reference here for your own records.
   phonepe: {
-  //  merchant_id    : 'M23RVERLHV32L',
-  //  client_id      : 'SU2512261330453294206129',
+    merchant_id    : 'M23RVERLHV32L',
+    client_id      : 'SU2512261330453294206129',
     // redirect target after PhonePe payment completes
     redirect_url   : () => `${window.location.origin}${window.location.pathname}?payment=success`,
     callback_url   : () => `${window.location.origin}/api/phonepe-callback`,  // your backend
@@ -25,8 +25,8 @@ const CFG = {
   courses: {
     basic: {
       name   : 'Basic to Advanced Product Management',
-      price  : '₹25,000',
-      amount : 25000,
+      price  : '₹20,000',
+      amount : 20000,
       batch  : 'Apr 3, 2026 · Weekends 12–3 PM IST',
     }
   },
@@ -72,6 +72,7 @@ const FAQS = [
   { q:'What is the refund policy?',     a:'15-day money-back guarantee from the course start date. If you\'ve attended fewer than 3 sessions and aren\'t satisfied, we\'ll refund 100% — no questions asked. Email support@pmpathshala.com to request.' },
   { q:'How many students per batch?',   a:'Maximum 30 students per batch — this is a firm cap, not a sales tactic. It ensures every student gets direct attention from Bhawesh during sessions and 1:1s.' },
   { q:'Can I pay in instalments?',      a:'We currently offer one-time payment via PhonePe (UPI, Net Banking, Cards, Wallets). Reach out via WhatsApp if you\'d like to discuss alternative arrangements.' },
+  { q:'Will I get a certificate?',      a:'Yes — a certificate of completion (Basic PM) or certificate of specialisation (AI PM), issued upon completing at least 6 of 8 sessions and submitting the capstone project.' },
 ];
 
 // ── CURRICULUM RENDER ─────────────────────────────────────────────
@@ -283,22 +284,38 @@ function showPayPage() {
 // See DEPLOYMENT_GUIDE.html for the full step-by-step walkthrough.
 // ─────────────────────────────────────────────────────────────────
 
-const BACKEND_URL = 'https://my-pathshala-8arfw9mrf-bhaweshrastogi-oss-projects.vercel.app'; // ← Replace after deploying server.js
+// ── YOUR VERCEL BACKEND URL ────────────────────────────────────────
+// Replace this with your actual Vercel URL after deployment.
+// Example: 'https://pm-backend-abc123.vercel.app'
+// Once set, the Pay button will call this backend which creates a
+// PhonePe session and redirects the student to PhonePe's full
+// checkout page (UPI, QR, Net Banking, Cards, Wallets).
+const BACKEND_URL = 'https://my-pathshala-q4lxh1c7j-bhaweshrastogi-oss-projects.vercel.app';
+
+function isBackendReady() {
+  return typeof BACKEND_URL === 'string' && BACKEND_URL.length > 10 && !BACKEND_URL.includes('YOUR');
+}
 
 async function initiatePhonePePayment() {
+  if (isBackendReady()) {
+    await initiatePhonePeRedirect();
+  } else {
+    showContactFallback();
+  }
+}
+
+async function initiatePhonePeRedirect() {
   const btn = document.getElementById('pay-cta-btn');
   btn.disabled = true;
-  btn.innerHTML = '<span>Creating secure payment…</span>';
+  btn.innerHTML = '<span style="display:flex;align-items:center;gap:0.5rem"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>Creating secure session…</span>';
 
   const { name, email, phone, course, orderRef, timestamp } = enrollData;
-
   try {
-    // Call your backend to create a PhonePe payment session
     const res = await fetch(`${BACKEND_URL}/api/create-payment`, {
       method : 'POST',
       headers: { 'Content-Type': 'application/json' },
       body   : JSON.stringify({
-        amount   : course.amount,        // in INR (server will convert to paise)
+        amount   : course.amount,   // in INR — backend converts to paise
         order_id : orderRef,
         name, email, phone,
         course   : course.name,
@@ -306,27 +323,74 @@ async function initiatePhonePePayment() {
       })
     });
 
-    if (!res.ok) throw new Error(`Server error ${res.status}`);
+    if (!res.ok) {
+      const errText = await res.text().catch(() => '');
+      throw new Error(`Backend responded ${res.status}: ${errText}`);
+    }
+
     const data = await res.json();
 
     if (data.redirectUrl) {
-      // ── 2. Also push a "Payment Initiated" notification to Web3Forms
-      notifyPaymentInitiated(orderRef, name, email, course, timestamp).catch(()=>{});
-
-      // ── 3. Redirect to PhonePe checkout ──────────────────────
+      // Fire Web3Forms notification (non-blocking)
+      notifyPaymentInitiated(orderRef, name, email, course, timestamp).catch(() => {});
+      // Redirect to PhonePe full checkout
       window.location.href = data.redirectUrl;
     } else {
-      throw new Error(data.error || 'No redirect URL received');
+      throw new Error('No redirectUrl in response: ' + JSON.stringify(data));
     }
 
-  } catch(err) {
-    console.error('PhonePe initiation error:', err);
+  } catch (err) {
+    console.error('[PhonePe] Payment initiation failed:', err);
     btn.disabled = false;
-    btn.innerHTML = '<span>Pay ₹' + course.price.replace('₹','') + ' via PhonePe →</span>';
-
-    // Graceful fallback: show UPI instructions while backend is being set up
-    showPaymentFallback();
+    btn.innerHTML = '<span>Pay ' + course.price + ' via PhonePe →</span>';
+    showContactFallback(err.message);
   }
+}
+
+// ── CONTACT FALLBACK (shown when backend is not yet configured) ────
+// This replaces the old UPI fallback — no fake UPI IDs, no confusion.
+// Students are directed to WhatsApp/phone to complete payment manually.
+function showContactFallback(debugMsg) {
+  const { course, orderRef } = enrollData;
+  const info = document.querySelector('.phonepe-info');
+  if (!info) return;
+
+  // Log debug info to console only (not shown to user)
+  if (debugMsg) console.warn('[Payment backend]', debugMsg);
+
+  const waMsg = encodeURIComponent(
+    `Hi Bhawesh! I'd like to enrol in ${course.name}.\n\nMy details:\nName: ${enrollData.name}\nEmail: ${enrollData.email}\nPhone: ${enrollData.phone}\nOrder Ref: ${orderRef}\nAmount: ${course.price}\n\nPlease share payment details.`
+  );
+
+  info.innerHTML = `
+    <div style="text-align:center;padding:0.3rem 0">
+      <div style="font-size:2.2rem;margin-bottom:0.8rem">⚙️</div>
+      <p style="font-weight:700;font-size:0.95rem;color:var(--ink);margin-bottom:0.5rem">Payment gateway is being activated</p>
+      <p style="font-size:0.84rem;color:var(--ink2);line-height:1.7;margin-bottom:1.3rem">
+        Our PhonePe checkout is being set up. Please contact Bhawesh directly to complete your enrolment — he will share payment details and confirm your seat immediately.
+      </p>
+      <div style="background:var(--bg2);border:1px solid var(--border2);border-radius:12px;padding:0.9rem 1rem;margin-bottom:1.2rem;font-size:0.82rem;text-align:left">
+        <div style="display:flex;justify-content:space-between;padding:0.25rem 0;border-bottom:1px solid var(--border)"><span style="color:var(--ink3)">Course</span><span style="font-weight:700;color:var(--ink)">${course.name}</span></div>
+        <div style="display:flex;justify-content:space-between;padding:0.25rem 0;border-bottom:1px solid var(--border)"><span style="color:var(--ink3)">Amount</span><span style="font-weight:700;color:var(--indigo)">${course.price}</span></div>
+        <div style="display:flex;justify-content:space-between;padding:0.25rem 0"><span style="color:var(--ink3)">Your Ref</span><span style="font-weight:700;font-family:monospace;font-size:0.78rem;color:var(--ink)">${orderRef}</span></div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:0.6rem">
+        <a href="https://wa.me/919667783900?text=${waMsg}"
+           target="_blank"
+           style="display:flex;align-items:center;justify-content:center;gap:0.6rem;background:linear-gradient(135deg,#25D366,#128C7E);color:#fff;padding:0.85rem 1.5rem;border-radius:50px;font-weight:700;font-size:0.9rem;text-decoration:none;box-shadow:0 4px 16px rgba(37,211,102,0.35)">
+          💬 Message Bhawesh on WhatsApp
+        </a>
+        <a href="tel:+919667783900"
+           style="display:flex;align-items:center;justify-content:center;gap:0.6rem;background:var(--bg2);border:1.5px solid var(--border2);color:var(--ink2);padding:0.75rem 1.5rem;border-radius:50px;font-weight:600;font-size:0.87rem;text-decoration:none">
+          📞 Call +91-9667783900
+        </a>
+      </div>
+      <p style="font-size:0.73rem;color:var(--ink3);margin-top:1rem">Your details and order reference have been saved. Bhawesh will confirm your seat within a few hours.</p>
+    </div>`;
+
+  // Update the Pay button to hide it (contact links above are the CTAs now)
+  const btn = document.getElementById('pay-cta-btn');
+  if (btn) btn.style.display = 'none';
 }
 
 // ── PAYMENT INITIATED NOTIFICATION ───────────────────────────────
@@ -438,34 +502,7 @@ async function confirmPaymentSuccess() {
   } catch(e) { console.warn('Confirmation notifications:', e); }
 }
 
-// ── PAYMENT FALLBACK (while backend not yet deployed) ─────────────
-function showPaymentFallback() {
-  // Replace PhonePe button area with manual payment instructions
-  const info = document.querySelector('.phonepe-info');
-  if (!info) return;
-  const { course } = enrollData;
-  info.innerHTML = `
-    <div style="text-align:left">
-      <p style="font-weight:700;color:var(--ink);margin-bottom:0.6rem;font-size:0.9rem">🔧 Payment gateway is being activated</p>
-      <p style="font-size:0.82rem;color:var(--ink2);margin-bottom:1rem">Our PhonePe integration is being set up. In the meantime, please complete payment via:</p>
-      <div style="background:var(--bg2);border-radius:10px;padding:0.9rem 1rem;margin-bottom:1rem;font-size:0.83rem">
-        <strong>UPI Transfer:</strong> bhaweshrastogi@okhdfcbank<br>
-        <strong>Amount:</strong> ${course.price}<br>
-        <strong>Ref:</strong> ${enrollData.orderRef}
-      </div>
-      <p style="font-size:0.79rem;color:var(--ink3)">After payment, send a screenshot on <a href="https://wa.me/919667783900" style="color:var(--indigo)">WhatsApp</a> with your order ref.</p>
-    </div>`;
-  const btn = document.getElementById('pay-cta-btn');
-  if (btn) {
-    btn.textContent = '✓ I have completed the payment';
-    btn.disabled = false;
-    btn.onclick = manualPaymentConfirmed;
-  }
-}
 
-async function manualPaymentConfirmed() {
-  await confirmPaymentSuccess();
-}
 
 // ── SAVE ENROLL DATA TO SESSION (for post-redirect retrieval) ──────
 function saveEnrollSession() {
