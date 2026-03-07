@@ -359,7 +359,7 @@ function showContactFallback(debugMsg) {
   if (debugMsg) console.warn('[Payment backend]', debugMsg);
 
   const waMsg = encodeURIComponent(
-    `Hi Bhawesh! I'd like to enrol in ${course.name}.\n\nMy details:\nName: ${enrollData.name}\nEmail: ${enrollData.email}\nPhone: ${enrollData.phone}\nOrder Ref: ${orderRef}\nAmount: ${course.price}\n\nPlease share payment details.`
+    `Hi Bhawesh! I'd like to enrol in ${course.name}.\n\nMy details:\nName: ${enrollData.name}\nEmail: ${enrollData.email}\nPhone: ${enrollData.phone}\nOrder Ref: ${orderRef}\nAmount: ${course.price}\n\nPlease find attached payment snapshot.`
   );
 
   info.innerHTML = `
