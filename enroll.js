@@ -66,13 +66,12 @@ const CURRICULUM = {
 
 const FAQS = [
   { q:'Do I need prior PM experience?', a:'No experience needed for Basic to Advanced PM — it starts from first principles. For the AI PM course we recommend having some PM foundations or completing the Basic course first.' },
-  { q:'What are the class timings?',    a:'Both courses run on weekends (Saturday & Sunday). Basic to Advanced PM: 12 PM – 3 PM IST. AI Product Manager: 5 PM – 8 PM IST. All sessions are recorded and shared within 24 hours.' },
-  { q:'Are sessions live or recorded?', a:'Every session is live on Zoom with full interaction — polls, breakouts, Q&A. Recordings are available within 24 hours and remain accessible for lifetime.' },
-  { q:'What career support is included?', a:'Resume reviews, LinkedIn profile critiques, mock PM interviews, and warm referrals to our hiring network of 50+ companies. Career support continues after graduation.' },
+  { q:'What are the class timings?',    a:'Both courses run on weekends (Saturday & Sunday). Basic to Advanced PM: 11 AM – 2 PM IST. AI Product Manager: 5 PM – 8 PM IST. All sessions are recorded and shared within 24 hours.' },
+  { q:'Are sessions live or recorded?', a:'Every session is live on Zoom with full interaction — polls, breakouts, Q&A. Recordings are available within 24 hours and remain accessible for 1 year.' },
+  { q:'What career support is included?', a:'Resume reviews, LinkedIn profile critiques, mock PM interviews, and warm referrals in our hiring network.' },
   { q:'What is the refund policy?',     a:'15-day money-back guarantee from the course start date. If you\'ve attended fewer than 3 sessions and aren\'t satisfied, we\'ll refund 100% — no questions asked. Email support@pmpathshala.com to request.' },
   { q:'How many students per batch?',   a:'Maximum 30 students per batch — this is a firm cap, not a sales tactic. It ensures every student gets direct attention from Bhawesh during sessions and 1:1s.' },
   { q:'Can I pay in instalments?',      a:'We currently offer one-time payment via PhonePe (UPI, Net Banking, Cards, Wallets). Reach out via WhatsApp if you\'d like to discuss alternative arrangements.' },
-  { q:'Will I get a certificate?',      a:'Yes — a certificate of completion (Basic PM) or certificate of specialisation (AI PM), issued upon completing at least 6 of 8 sessions and submitting the capstone project.' },
 ];
 
 // ── CURRICULUM RENDER ─────────────────────────────────────────────
