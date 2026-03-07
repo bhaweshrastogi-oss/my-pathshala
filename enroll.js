@@ -290,7 +290,7 @@ function showPayPage() {
 // Once set, the Pay button will call this backend which creates a
 // PhonePe session and redirects the student to PhonePe's full
 // checkout page (UPI, QR, Net Banking, Cards, Wallets).
-const BACKEND_URL = 'https://my-pathshala-q4lxh1c7j-bhaweshrastogi-oss-projects.vercel.app';
+const BACKEND_URL = 'https://my-pathshala-3i17b81mj-bhaweshrastogi-oss-projects.vercel.app';
 
 function isBackendReady() {
   return typeof BACKEND_URL === 'string' && BACKEND_URL.length > 10 && !BACKEND_URL.includes('YOUR');
