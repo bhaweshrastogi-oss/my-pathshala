@@ -27,7 +27,7 @@ const CFG = {
       name   : 'Basic to Advanced Product Management',
       price  : '₹25,000',
       amount : 25000,
-      batch  : 'Apr 3, 2026 · Weekends 12–3 PM IST',
+      batch  : 'Apr 3, 2026 · Weekends 11 AM – 2 PM IST',
     }
   },
 
@@ -37,7 +37,7 @@ const CFG = {
 // ── CURRICULUM ────────────────────────────────────────────────────
 const CURRICULUM = {
   basic: {
-    meta: '8 Weeks · 32+ Hours · 4 Assignments · Weekends 12 PM – 3 PM IST',
+    meta: '8 Weeks · 32+ Hours · 4 Assignments · Weekends 11 AM – 2 PM IST',
     weeks: [
       { t:'PM Foundations & User Research', i:['What is Product Management?','PM Roles & Responsibilities','Product Lifecycle Overview','User Interview Techniques','Creating User Personas','Jobs-to-be-Done Framework'] },
       { t:'Market Analysis & Strategy',     i:['Market Sizing (TAM/SAM/SOM)','Competitive Analysis & SWOT','Porter\'s Five Forces','Crafting Product Vision','OKRs & North Star Metrics','Strategic Roadmapping'] },
