@@ -25,8 +25,8 @@ const CFG = {
   courses: {
     basic: {
       name   : 'Basic to Advanced Product Management',
-      price  : '₹20,000',
-      amount : 20000,
+      price  : '₹25,000',
+      amount : 25000,
       batch  : 'Apr 3, 2026 · Weekends 12–3 PM IST',
     }
   },
@@ -367,10 +367,11 @@ function showContactFallback(debugMsg) {
       <div style="font-size:2.2rem;margin-bottom:0.8rem">⚙️</div>
       <p style="font-weight:700;font-size:0.95rem;color:var(--ink);margin-bottom:0.5rem">Payment gateway is being activated</p>
       <p style="font-size:0.84rem;color:var(--ink2);line-height:1.7;margin-bottom:1.3rem">
-        Our PhonePe checkout is being set up. Please contact Bhawesh directly to complete your enrolment — he will share payment details and confirm your seat immediately.
+        Our PhonePe checkout is currently being set up. Please make the payment on the UPI ID mentioned below and share the payment screenshot on WhatsApp to confirm your enrolment.
       </p>
       <div style="background:var(--bg2);border:1px solid var(--border2);border-radius:12px;padding:0.9rem 1rem;margin-bottom:1.2rem;font-size:0.82rem;text-align:left">
         <div style="display:flex;justify-content:space-between;padding:0.25rem 0;border-bottom:1px solid var(--border)"><span style="color:var(--ink3)">Course</span><span style="font-weight:700;color:var(--ink)">${course.name}</span></div>
+        <div style="display:flex;justify-content:space-between;padding:0.25rem 0;border-bottom:1px solid var(--border)"><span style="color:var(--ink3)">UPI ID</span><span style="font-weight:700;color:var(--ink)"> bhaweshrastogi@okhdfcbank</span></div>
         <div style="display:flex;justify-content:space-between;padding:0.25rem 0;border-bottom:1px solid var(--border)"><span style="color:var(--ink3)">Amount</span><span style="font-weight:700;color:var(--indigo)">${course.price}</span></div>
         <div style="display:flex;justify-content:space-between;padding:0.25rem 0"><span style="color:var(--ink3)">Your Ref</span><span style="font-weight:700;font-family:monospace;font-size:0.78rem;color:var(--ink)">${orderRef}</span></div>
       </div>
