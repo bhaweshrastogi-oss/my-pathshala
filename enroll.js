@@ -8,19 +8,8 @@
 const CFG = {
   web3forms_key : 'cf83d387-9bb4-4849-a2aa-d982c809155e',
 
-  // PhonePe Merchant Credentials
-  // ⚠️  CLIENT SECRET must only ever be used server-side (see payment-server/server.js)
-  //     These identifiers are safe to reference here for your own records.
-  phonepe: {
-    merchant_id    : 'M23RVERLHV32L',
-    client_id      : 'SU2512261330453294206129',
-    // redirect target after PhonePe payment completes
-    redirect_url   : () => `${window.location.origin}${window.location.pathname}?payment=success`,
-    callback_url   : () => `${window.location.origin}/api/phonepe-callback`,  // your backend
-    // UAT / Sandbox  → https://api-preprod.phonepe.com/apis/pg-sandbox
-    // Production     → https://api.phonepe.com/apis/hermes
-    pg_endpoint    : 'https://api.phonepe.com/apis/hermes',
-  },
+  // PhonePe: client_secret + OAuth happen only on the server (/api/create-payment).
+  // Deploy this repo (or /api folder) on Vercel and set env vars there.
 
   courses: {
     basic: {
@@ -275,25 +264,40 @@ function showPayPage() {
 //
 // WHAT YOU NEED TO DO (once only):
 // ─────────────────────────────────────────────────────────────────
-//   Step 1 → Deploy payment-server/server.js to Vercel/Railway/Render (free)
-//   Step 2 → Set env variables: PHONEPE_MERCHANT_ID, PHONEPE_CLIENT_SECRET
-//   Step 3 → Update BACKEND_URL below with your deployed server URL
-//   Step 4 → Test with PhonePe sandbox, then flip to production
-//
-// See DEPLOYMENT_GUIDE.html for the full step-by-step walkthrough.
+//   Step 1 → Deploy this repo on Vercel (includes /api serverless functions)
+//   Step 2 → Vercel → Settings → Env: PHONEPE_CLIENT_ID, PHONEPE_CLIENT_SECRET,
+//            PHONEPE_CLIENT_VERSION (from PhonePe dashboard), CORS_ORIGINS
+//   Step 3 → If the site is on GitHub Pages, set BACKEND_URL below to your Vercel URL
+//   Step 4 → PhonePe dashboard → webhook URL = https://<vercel>/api/phonepe-callback
+//   Step 5 → Sandbox: PHONEPE_ENV=sandbox on Vercel, then switch to production
 // ─────────────────────────────────────────────────────────────────
 
-// ── YOUR VERCEL BACKEND URL ────────────────────────────────────────
-// Replace this with your actual Vercel URL after deployment.
-// Example: 'https://pm-backend-abc123.vercel.app'
-// Once set, the Pay button will call this backend which creates a
-// PhonePe session and redirects the student to PhonePe's full
-// checkout page (UPI, QR, Net Banking, Cards, Wallets).
-const BACKEND_URL = 'https://my-pathshala-pqdolitmt-bhaweshrastogi-oss-projects.vercel.app';
+// ── PAYMENT API BASE URL ───────────────────────────────────────────
+// • '' (empty)     → same origin: deploy static site + /api on ONE Vercel project
+// • full URL       → e.g. GitHub Pages frontend calling a separate Vercel API project
+// Example: 'https://my-pathshala-api.vercel.app'
+const BACKEND_URL = '';
 
 function isBackendReady() {
-  return typeof BACKEND_URL === 'string' && BACKEND_URL.length > 10 && !BACKEND_URL.includes('YOUR');
+  if (typeof BACKEND_URL !== 'string' || BACKEND_URL.includes('YOUR')) return false;
+  if (BACKEND_URL === '') return true;
+  return BACKEND_URL.replace(/\/$/, '').length > 10;
 }
+
+function paymentApiUrl(path) {
+  const base = BACKEND_URL.replace(/\/$/, '');
+  return `${base}${path}`;
+}
+
+(function warnIfPagesNeedsBackendUrl() {
+  if (typeof window === 'undefined') return;
+  const h = window.location.hostname || '';
+  if (!BACKEND_URL && (h.endsWith('.github.io') || h === 'localhost')) {
+    console.warn(
+      '[PMpathshala] Payment API: BACKEND_URL is empty. On GitHub Pages set BACKEND_URL in enroll.js to your Vercel API URL. On localhost use PHONEPE_ALLOW_INSECURE_CORS=1 on Vercel or test from the Vercel preview URL.'
+    );
+  }
+})();
 
 async function initiatePhonePePayment() {
   if (isBackendReady()) {
@@ -310,15 +314,17 @@ async function initiatePhonePeRedirect() {
 
   const { name, email, phone, course, orderRef, timestamp } = enrollData;
   try {
-    const res = await fetch(`${BACKEND_URL}/api/create-payment`, {
+    const redirectUrl = `${window.location.origin}${window.location.pathname}?payment=success`;
+    const res = await fetch(paymentApiUrl('/api/create-payment'), {
       method : 'POST',
       headers: { 'Content-Type': 'application/json' },
       body   : JSON.stringify({
-        amount   : course.amount,   // in INR — backend converts to paise
+        amount   : course.amount,   // INR — server converts to paise for PhonePe
         order_id : orderRef,
         name, email, phone,
         course   : course.name,
         timestamp,
+        redirect_url: redirectUrl,
       })
     });
 
@@ -492,8 +498,8 @@ async function confirmPaymentSuccess() {
     // Your backend endpoint reads the payload and sends an email
     // from support@pmpathshala.com using your email provider
     // (e.g. Resend, SendGrid, Nodemailer+SMTP).
-    // See payment-server/server.js for the /api/send-confirmation route.
-    await fetch(`${BACKEND_URL}/api/send-confirmation`, {
+    // Optional student email: extend /api/send-confirmation (e.g. Resend).
+    await fetch(paymentApiUrl('/api/send-confirmation'), {
       method : 'POST',
       headers: { 'Content-Type': 'application/json' },
       body   : JSON.stringify({ name, email, course: course.name, amount: course.price, batch: course.batch, orderRef }),
