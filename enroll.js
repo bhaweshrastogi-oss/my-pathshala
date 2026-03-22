@@ -321,64 +321,62 @@ async function initiatePhonePeRedirect() {
     notifyPaymentInitiated(orderRef, name, email, course, timestamp).catch(() => {});
 
     if (window.PhonePeCheckout) {
-      let _pollTimer   = null;
-      let _concluded   = false;
+      let _done = false;
 
-      async function handleConcluded(fromCallback) {
-        if (_concluded) return;
-        _concluded = true;
-        clearInterval(_pollTimer);
+      // Force-close PhonePe's overlay by every means available
+      function forceClose() {
         try { window.PhonePeCheckout.closePage(); } catch (_) {}
+        // Remove any iframe/overlay PhonePe injected into the DOM
+        document.querySelectorAll('iframe').forEach(function (f) {
+          if ((f.src || '').includes('phonepe') || (f.src || '').includes('mercury')) f.remove();
+        });
+        document.querySelectorAll('[id*="phonepe"],[id*="PhonePe"],[class*="phonepe"],[class*="PhonePe"]')
+          .forEach(function (el) { el.remove(); });
+      }
 
-        // Give PhonePe's servers a moment to settle
-        await new Promise(r => setTimeout(r, 1200));
+      async function handleResult(status) {
+        if (_done) return;
+        _done = true;
+        forceClose();
 
-        try {
-          const statusRes = await fetch(
-            paymentApiUrl('/api/order-status?order_id=' + encodeURIComponent(orderRef))
-          );
-          const statusData = statusRes.ok ? await statusRes.json() : {};
-
-          if (statusData.state === 'FAILED') {
-            _concluded = false; // allow retry
-            btn.disabled = false;
-            btn.innerHTML = '<span>Pay ' + course.price + ' via PhonePe →</span>';
-            alert('Payment failed. Please try again or contact us.');
-          } else {
-            await confirmPaymentSuccess();
-          }
-        } catch (_e) {
+        if (status === 'failed') {
+          _done = false;
+          btn.disabled = false;
+          btn.innerHTML = '<span>Pay ' + course.price + ' via PhonePe →</span>';
+          alert('Payment failed. Please try again or contact us.');
+        } else {
           await confirmPaymentSuccess();
         }
       }
 
-      // Poll every 3 s — catches cases where the iframe callback never fires
-      _pollTimer = setInterval(async () => {
-        if (_concluded) { clearInterval(_pollTimer); return; }
-        try {
-          const r = await fetch(
-            paymentApiUrl('/api/order-status?order_id=' + encodeURIComponent(orderRef))
-          );
-          const d = r.ok ? await r.json() : {};
-          if (d.state === 'COMPLETED') await handleConcluded(false);
-          if (d.state === 'FAILED')    await handleConcluded(false);
-        } catch (_) {}
-      }, 3000);
+      // ── SSE stream: server polls PhonePe every 3 s and pushes one event ──
+      const _sse = new EventSource(
+        paymentApiUrl('/api/payment-stream?order_id=' + encodeURIComponent(orderRef))
+      );
+      _sse.onmessage = async function (e) {
+        const msg = JSON.parse(e.data);
+        if (msg.status === 'completed') { _sse.close(); await handleResult('completed'); }
+        if (msg.status === 'failed')    { _sse.close(); await handleResult('failed'); }
+        if (msg.status === 'timeout')   { _sse.close(); } // leave iframe open, user can retry
+      };
+      _sse.onerror = function () { _sse.close(); };
 
+      // ── PhonePe iframe callback (fires when it works; SSE is the reliable path) ──
       window.PhonePeCheckout.transact({
         tokenUrl: data.redirectUrl,
         type: 'IFRAME',
         callback: async function (response) {
           if (response === 'USER_CANCEL') {
-            _concluded = true;
-            clearInterval(_pollTimer);
-            try { window.PhonePeCheckout.closePage(); } catch (_) {}
+            _done = true;
+            _sse.close();
+            forceClose();
             btn.disabled = false;
             btn.innerHTML = '<span>Pay ' + course.price + ' via PhonePe →</span>';
             return;
           }
           if (response === 'CONCLUDED') {
-            await handleConcluded(true);
+            _sse.close();
+            await handleResult('completed');
           }
         },
       });
