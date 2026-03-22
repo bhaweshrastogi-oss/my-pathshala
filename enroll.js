@@ -321,62 +321,64 @@ async function initiatePhonePeRedirect() {
     notifyPaymentInitiated(orderRef, name, email, course, timestamp).catch(() => {});
 
     if (window.PhonePeCheckout) {
-      let _done = false;
+      let _pollTimer   = null;
+      let _concluded   = false;
 
-      // Force-close PhonePe's overlay by every means available
-      function forceClose() {
+      async function handleConcluded(fromCallback) {
+        if (_concluded) return;
+        _concluded = true;
+        clearInterval(_pollTimer);
         try { window.PhonePeCheckout.closePage(); } catch (_) {}
-        // Remove any iframe/overlay PhonePe injected into the DOM
-        document.querySelectorAll('iframe').forEach(function (f) {
-          if ((f.src || '').includes('phonepe') || (f.src || '').includes('mercury')) f.remove();
-        });
-        document.querySelectorAll('[id*="phonepe"],[id*="PhonePe"],[class*="phonepe"],[class*="PhonePe"]')
-          .forEach(function (el) { el.remove(); });
-      }
 
-      async function handleResult(status) {
-        if (_done) return;
-        _done = true;
-        forceClose();
+        // Give PhonePe's servers a moment to settle
+        await new Promise(r => setTimeout(r, 1200));
 
-        if (status === 'failed') {
-          _done = false;
-          btn.disabled = false;
-          btn.innerHTML = '<span>Pay ' + course.price + ' via PhonePe →</span>';
-          alert('Payment failed. Please try again or contact us.');
-        } else {
+        try {
+          const statusRes = await fetch(
+            paymentApiUrl('/api/order-status?order_id=' + encodeURIComponent(orderRef))
+          );
+          const statusData = statusRes.ok ? await statusRes.json() : {};
+
+          if (statusData.state === 'FAILED') {
+            _concluded = false; // allow retry
+            btn.disabled = false;
+            btn.innerHTML = '<span>Pay ' + course.price + ' via PhonePe →</span>';
+            alert('Payment failed. Please try again or contact us.');
+          } else {
+            await confirmPaymentSuccess();
+          }
+        } catch (_e) {
           await confirmPaymentSuccess();
         }
       }
 
-      // ── SSE stream: server polls PhonePe every 3 s and pushes one event ──
-      const _sse = new EventSource(
-        paymentApiUrl('/api/payment-stream?order_id=' + encodeURIComponent(orderRef))
-      );
-      _sse.onmessage = async function (e) {
-        const msg = JSON.parse(e.data);
-        if (msg.status === 'completed') { _sse.close(); await handleResult('completed'); }
-        if (msg.status === 'failed')    { _sse.close(); await handleResult('failed'); }
-        if (msg.status === 'timeout')   { _sse.close(); } // leave iframe open, user can retry
-      };
-      _sse.onerror = function () { _sse.close(); };
+      // Poll every 3 s — catches cases where the iframe callback never fires
+      _pollTimer = setInterval(async () => {
+        if (_concluded) { clearInterval(_pollTimer); return; }
+        try {
+          const r = await fetch(
+            paymentApiUrl('/api/order-status?order_id=' + encodeURIComponent(orderRef))
+          );
+          const d = r.ok ? await r.json() : {};
+          if (d.state === 'COMPLETED') await handleConcluded(false);
+          if (d.state === 'FAILED')    await handleConcluded(false);
+        } catch (_) {}
+      }, 3000);
 
-      // ── PhonePe iframe callback (fires when it works; SSE is the reliable path) ──
       window.PhonePeCheckout.transact({
         tokenUrl: data.redirectUrl,
         type: 'IFRAME',
         callback: async function (response) {
           if (response === 'USER_CANCEL') {
-            _done = true;
-            _sse.close();
-            forceClose();
+            _concluded = true;
+            clearInterval(_pollTimer);
+            try { window.PhonePeCheckout.closePage(); } catch (_) {}
             btn.disabled = false;
             btn.innerHTML = '<span>Pay ' + course.price + ' via PhonePe →</span>';
             return;
           }
           if (response === 'CONCLUDED') {
-            _sse.close();
-            await handleResult('completed');
+            await handleConcluded(true);
           }
         },
       });
@@ -493,7 +495,7 @@ async function handlePaymentReturn() {
     document.getElementById('pay-page').classList.add('show');
     document.body.style.overflow = 'hidden';
     document.getElementById('pay-main').style.display    = 'none';
-    document.getElementById('pay-success').style.display = '';
+    document.getElementById('pay-success').style.display = 'block';
     document.getElementById('success-email').textContent = 'your registered email';
     return;
   }
@@ -509,8 +511,8 @@ async function confirmPaymentSuccess() {
   // Show success UI
   document.getElementById('ps-confirm').classList.add('active');
   document.getElementById('pay-main').style.display    = 'none';
-  document.getElementById('pay-success').style.display = '';
-  document.getElementById('success-email').textContent = email;
+  document.getElementById('pay-success').style.display = 'block';
+  document.getElementById('success-email').textContent = email || '';
 
   // ── Send "Payment Confirmed" notification + student email trigger ──
   // Web3Forms sends YOU (Bhawesh) an email; the student email flow
