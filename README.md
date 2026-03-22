@@ -24,8 +24,14 @@ You **cannot** put PhonePe `client_secret` in the browser. The flow is:
    | `PHONEPE_ENV` | `sandbox` or `production` |
    | `CORS_ORIGINS` | Your site origins, comma-separated, e.g. `https://yourdomain.com,https://www.yourdomain.com` |
    | `PHONEPE_ALLOW_INSECURE_CORS` | Optional. `1` for local dev only — **never** in production |
+   | `RESEND_API_KEY` | [Resend](https://resend.com) API key — **student** confirmation email after payment |
+   | `RESEND_FROM` | Sender, e.g. `PMpathshala <onboarding@resend.dev>` (test) or verified domain sender in production |
 
 4. PhonePe dashboard: set **webhook** to `https://<your-vercel-domain>/api/phonepe-callback`.
+
+### Student confirmation email
+
+After a successful payment, the browser calls `POST /api/send-confirmation`, which emails the **student** via **Resend** (if `RESEND_API_KEY` is set). Admin notifications still use **Web3Forms** from the browser. Without Resend keys, the endpoint returns `{ ok: true, skipped: true }` and the success page still works.
 
 5. In `enroll.js`, **`BACKEND_URL`**:
    - `''` (empty) if the **same** Vercel project serves the HTML + `/api` (default).

@@ -558,7 +558,15 @@ async function confirmPaymentSuccess() {
     await fetch(paymentApiUrl('/api/send-confirmation'), {
       method : 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body   : JSON.stringify({ name, email, course: course.name, amount: course.price, batch: course.batch, orderRef }),
+      body   : JSON.stringify({
+        name,
+        email,
+        phone,
+        course: course.name,
+        amount: course.price,
+        batch: course.batch,
+        orderRef,
+      }),
     }).catch(() => {}); // non-blocking — confirmation still shows
 
   } catch(e) { console.warn('Confirmation notifications:', e); }
