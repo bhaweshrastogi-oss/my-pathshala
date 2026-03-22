@@ -321,41 +321,64 @@ async function initiatePhonePeRedirect() {
     notifyPaymentInitiated(orderRef, name, email, course, timestamp).catch(() => {});
 
     if (window.PhonePeCheckout) {
+      let _pollTimer   = null;
+      let _concluded   = false;
+
+      async function handleConcluded(fromCallback) {
+        if (_concluded) return;
+        _concluded = true;
+        clearInterval(_pollTimer);
+        try { window.PhonePeCheckout.closePage(); } catch (_) {}
+
+        // Give PhonePe's servers a moment to settle
+        await new Promise(r => setTimeout(r, 1200));
+
+        try {
+          const statusRes = await fetch(
+            paymentApiUrl('/api/order-status?order_id=' + encodeURIComponent(orderRef))
+          );
+          const statusData = statusRes.ok ? await statusRes.json() : {};
+
+          if (statusData.state === 'FAILED') {
+            _concluded = false; // allow retry
+            btn.disabled = false;
+            btn.innerHTML = '<span>Pay ' + course.price + ' via PhonePe →</span>';
+            alert('Payment failed. Please try again or contact us.');
+          } else {
+            await confirmPaymentSuccess();
+          }
+        } catch (_e) {
+          await confirmPaymentSuccess();
+        }
+      }
+
+      // Poll every 3 s — catches cases where the iframe callback never fires
+      _pollTimer = setInterval(async () => {
+        if (_concluded) { clearInterval(_pollTimer); return; }
+        try {
+          const r = await fetch(
+            paymentApiUrl('/api/order-status?order_id=' + encodeURIComponent(orderRef))
+          );
+          const d = r.ok ? await r.json() : {};
+          if (d.state === 'COMPLETED') await handleConcluded(false);
+          if (d.state === 'FAILED')    await handleConcluded(false);
+        } catch (_) {}
+      }, 3000);
+
       window.PhonePeCheckout.transact({
         tokenUrl: data.redirectUrl,
         type: 'IFRAME',
         callback: async function (response) {
-          // Always close the iframe first so it doesn't cover our UI
-          try { window.PhonePeCheckout.closePage(); } catch (_) {}
-
           if (response === 'USER_CANCEL') {
+            _concluded = true;
+            clearInterval(_pollTimer);
+            try { window.PhonePeCheckout.closePage(); } catch (_) {}
             btn.disabled = false;
             btn.innerHTML = '<span>Pay ' + course.price + ' via PhonePe →</span>';
             return;
           }
-
           if (response === 'CONCLUDED') {
-            // Give PhonePe's servers a moment to settle the order
-            await new Promise(r => setTimeout(r, 1500));
-
-            try {
-              const statusRes = await fetch(
-                paymentApiUrl('/api/order-status?order_id=' + encodeURIComponent(orderRef))
-              );
-              const statusData = statusRes.ok ? await statusRes.json() : {};
-
-              if (statusData.state === 'FAILED') {
-                btn.disabled = false;
-                btn.innerHTML = '<span>Pay ' + course.price + ' via PhonePe →</span>';
-                alert('Payment failed. Please try again or contact support.');
-              } else {
-                // COMPLETED or still PENDING (webhook will confirm later)
-                await confirmPaymentSuccess();
-              }
-            } catch (_e) {
-              // If status check fails, still show success (payment went through on PhonePe's end)
-              await confirmPaymentSuccess();
-            }
+            await handleConcluded(true);
           }
         },
       });
