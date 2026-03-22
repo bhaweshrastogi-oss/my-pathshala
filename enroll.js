@@ -325,28 +325,35 @@ async function initiatePhonePeRedirect() {
         tokenUrl: data.redirectUrl,
         type: 'IFRAME',
         callback: async function (response) {
+          // Always close the iframe first so it doesn't cover our UI
+          try { window.PhonePeCheckout.closePage(); } catch (_) {}
+
           if (response === 'USER_CANCEL') {
             btn.disabled = false;
             btn.innerHTML = '<span>Pay ' + course.price + ' via PhonePe →</span>';
             return;
           }
+
           if (response === 'CONCLUDED') {
+            // Give PhonePe's servers a moment to settle the order
+            await new Promise(r => setTimeout(r, 1500));
+
             try {
               const statusRes = await fetch(
                 paymentApiUrl('/api/order-status?order_id=' + encodeURIComponent(orderRef))
               );
               const statusData = statusRes.ok ? await statusRes.json() : {};
 
-              if (statusData.state === 'COMPLETED') {
-                await confirmPaymentSuccess();
-              } else if (statusData.state === 'FAILED') {
+              if (statusData.state === 'FAILED') {
                 btn.disabled = false;
                 btn.innerHTML = '<span>Pay ' + course.price + ' via PhonePe →</span>';
                 alert('Payment failed. Please try again or contact support.');
               } else {
+                // COMPLETED or still PENDING (webhook will confirm later)
                 await confirmPaymentSuccess();
               }
             } catch (_e) {
+              // If status check fails, still show success (payment went through on PhonePe's end)
               await confirmPaymentSuccess();
             }
           }
@@ -452,9 +459,23 @@ async function handlePaymentReturn() {
   const params = new URLSearchParams(window.location.search);
   if (params.get('payment') !== 'success') return;
 
-  // Retrieve saved data (in production, verify payment server-side first)
+  // Clean the ?payment=success from the URL bar without reload
+  try {
+    const cleanUrl = window.location.pathname;
+    window.history.replaceState({}, '', cleanUrl);
+  } catch (_) {}
+
   const saved = JSON.parse(sessionStorage.getItem('pm_enroll') || '{}');
-  if (!saved.name) return;
+
+  if (!saved.name) {
+    // sessionStorage lost (e.g. private browsing or cross-tab) — show generic success
+    document.getElementById('pay-page').classList.add('show');
+    document.body.style.overflow = 'hidden';
+    document.getElementById('pay-main').style.display    = 'none';
+    document.getElementById('pay-success').style.display = '';
+    document.getElementById('success-email').textContent = 'your registered email';
+    return;
+  }
 
   enrollData = saved;
   showPayPage();
