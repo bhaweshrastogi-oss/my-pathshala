@@ -14,8 +14,8 @@ const CFG = {
   courses: {
     basic: {
       name   : 'Basic to Advanced Product Management',
-      price  : '₹25,000',
-      amount : 25000,
+      price  : '₹1',        // ← TEST AMOUNT (revert to ₹25,000 before going live)
+      amount : 1,            // ← TEST AMOUNT (revert to 25000 before going live)
       batch  : 'Apr 3, 2026 · Weekends 11 AM – 2 PM IST',
     }
   },
@@ -249,28 +249,7 @@ function showPayPage() {
   document.body.style.overflow = 'hidden';
 }
 
-// ── PHONEPE PAYMENT INITIATION ────────────────────────────────────
-//
-// HOW THIS WORKS:
-// ─────────────────────────────────────────────────────────────────
-// PhonePe's payment flow requires a backend to:
-//   1. Create an order with your Client Secret (server-side only)
-//   2. Receive back a `redirectUrl` from PhonePe
-//   3. Redirect the user's browser to that URL
-//   4. PhonePe shows its own full checkout page:
-//      UPI, QR, Net Banking, Cards, Wallets — all in one page
-//   5. After payment, PhonePe redirects back to your redirect_url
-//   6. Your backend verifies the webhook callback
-//
-// WHAT YOU NEED TO DO (once only):
-// ─────────────────────────────────────────────────────────────────
-//   Step 1 → Deploy this repo on Vercel (includes /api serverless functions)
-//   Step 2 → Vercel → Settings → Env: PHONEPE_CLIENT_ID, PHONEPE_CLIENT_SECRET,
-//            PHONEPE_CLIENT_VERSION (from PhonePe dashboard), CORS_ORIGINS
-//   Step 3 → If the site is on GitHub Pages, set BACKEND_URL below to your Vercel URL
-//   Step 4 → PhonePe dashboard → webhook URL = https://<vercel>/api/phonepe-callback
-//   Step 5 → Sandbox: PHONEPE_ENV=sandbox on Vercel, then switch to production
-// ─────────────────────────────────────────────────────────────────
+// ── PHONEPE PAYMENT INITIATION (SDK + iframe checkout) ───────────
 
 // ── PAYMENT API BASE URL ───────────────────────────────────────────
 // • '' (empty)     → same origin: deploy static site + /api on ONE Vercel project
@@ -319,7 +298,7 @@ async function initiatePhonePeRedirect() {
       method : 'POST',
       headers: { 'Content-Type': 'application/json' },
       body   : JSON.stringify({
-        amount   : course.amount,   // INR — server converts to paise for PhonePe
+        amount   : course.amount,
         order_id : orderRef,
         name, email, phone,
         course   : course.name,
@@ -335,13 +314,46 @@ async function initiatePhonePeRedirect() {
 
     const data = await res.json();
 
-    if (data.redirectUrl) {
-      // Fire Web3Forms notification (non-blocking)
-      notifyPaymentInitiated(orderRef, name, email, course, timestamp).catch(() => {});
-      // Redirect to PhonePe full checkout
-      window.location.href = data.redirectUrl;
-    } else {
+    if (!data.redirectUrl) {
       throw new Error('No redirectUrl in response: ' + JSON.stringify(data));
+    }
+
+    notifyPaymentInitiated(orderRef, name, email, course, timestamp).catch(() => {});
+
+    if (window.PhonePeCheckout) {
+      window.PhonePeCheckout.transact({
+        tokenUrl: data.redirectUrl,
+        type: 'IFRAME',
+        callback: async function (response) {
+          if (response === 'USER_CANCEL') {
+            btn.disabled = false;
+            btn.innerHTML = '<span>Pay ' + course.price + ' via PhonePe →</span>';
+            return;
+          }
+          if (response === 'CONCLUDED') {
+            try {
+              const statusRes = await fetch(
+                paymentApiUrl('/api/order-status?order_id=' + encodeURIComponent(orderRef))
+              );
+              const statusData = statusRes.ok ? await statusRes.json() : {};
+
+              if (statusData.state === 'COMPLETED') {
+                await confirmPaymentSuccess();
+              } else if (statusData.state === 'FAILED') {
+                btn.disabled = false;
+                btn.innerHTML = '<span>Pay ' + course.price + ' via PhonePe →</span>';
+                alert('Payment failed. Please try again or contact support.');
+              } else {
+                await confirmPaymentSuccess();
+              }
+            } catch (_e) {
+              await confirmPaymentSuccess();
+            }
+          }
+        },
+      });
+    } else {
+      window.location.href = data.redirectUrl;
     }
 
   } catch (err) {
