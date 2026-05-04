@@ -16,7 +16,7 @@ const CFG = {
       name   : 'AI Advanced Product Management',
       price  : '₹35000',        // ← TEST AMOUNT (revert to ₹25,000 before going live)
       amount : 35000,            // ← TEST AMOUNT (revert to 25000 before going live)
-      batch  : 'May 30, 2026 · Weekends 5 PM – 8 PM IST',
+      batch  : 'June 20, 2026 · Weekends 2 PM – 5 PM IST',
     }
   },
 
@@ -39,7 +39,7 @@ const CURRICULUM = {
     ]
   },
   ai: {
-    meta: '8 Weeks · 40+ Hours · 4 Assignments · Weekends 5 PM – 8 PM IST',
+    meta: '8 Weeks · 40+ Hours · 4 Assignments · Weekends 2 PM – 5 PM IST',
     weeks: [
       { t:'AI/ML Fundamentals for PMs',  i:['AI vs ML vs Deep Learning','Types of ML Algorithms','Understanding Neural Networks','AI Capabilities & Limitations','Key AI Terminology'] },
       { t:'AI Product Discovery',        i:['Identifying AI Opportunities','AI Feasibility Assessment','Data Availability Analysis','Build vs Buy vs Partner','AI Use Case Prioritisation'] },
@@ -55,7 +55,7 @@ const CURRICULUM = {
 
 const FAQS = [
   { q:'Do I need prior PM experience?', a:'No experience needed for Basic to Advanced PM — it starts from first principles. For the AI PM course we recommend having some PM foundations or completing the Basic course first.' },
-  { q:'What are the class timings?',    a:'Both courses run on weekends (Saturday & Sunday). Basic to Advanced PM: 11 AM – 2 PM IST. AI Product Manager: 5 PM – 8 PM IST. All sessions are recorded and shared within 24 hours.' },
+  { q:'What are the class timings?',    a:'Both courses run on weekends (Saturday & Sunday). Basic to Advanced PM: 11 AM – 2 PM IST. AI Product Manager: 2 PM – 5 PM IST. All sessions are recorded and shared within 24 hours.' },
   { q:'Are sessions live or recorded?', a:'Every session is live on Zoom with full interaction — polls, breakouts, Q&A. Recordings are available within 24 hours and remain accessible for 1 year.' },
   { q:'What career support is included?', a:'Resume reviews, LinkedIn profile critiques, mock PM interviews, and warm referrals in our hiring network.' },
   { q:'What is the refund policy?',     a:'15-day money-back guarantee from the course start date. If you\'ve attended fewer than 3 sessions and aren\'t satisfied, we\'ll refund 100% — no questions asked. Email support@pmpathshala.com to request.' },
