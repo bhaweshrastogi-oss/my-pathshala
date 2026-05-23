@@ -13,10 +13,10 @@ const CFG = {
 
   courses: {
     basic: {
-      name   : 'AI Advanced Product Management',
-      price  : '₹35000',        // ← TEST AMOUNT (revert to ₹25,000 before going live)
-      amount : 35000,            // ← TEST AMOUNT (revert to 25000 before going live)
-      batch  : 'June 20, 2026 · Weekends 2 PM – 5 PM IST',
+      name   : 'Basic to Advanced Product Management',
+      price  : '₹25000',        // ← TEST AMOUNT (revert to ₹25,000 before going live)
+      amount : 25000,            // ← TEST AMOUNT (revert to 25000 before going live)
+      batch  : 'June 21, 2026 · Weekends 2 PM – 5 PM IST',
     }
   },
 
