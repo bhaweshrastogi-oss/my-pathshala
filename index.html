@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -27,7 +27,6 @@
   padding: 7rem 5% 5rem;
   position: relative; overflow: hidden;
 }
-/* Mesh grid */
 #home::before {
   content: '';
   position: absolute; inset: 0; pointer-events: none;
@@ -36,7 +35,6 @@
     linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
   background-size: 60px 60px;
 }
-/* Glow orbs */
 #home::after {
   content: '';
   position: absolute; inset: 0; pointer-events: none;
@@ -46,7 +44,7 @@
     radial-gradient(ellipse 400px 300px at 50% 100%, rgba(124,58,237,0.2) 0%, transparent 60%);
 }
 .hero-inner { position: relative; z-index: 2; max-width: 860px; }
-
+ 
 .hero-badge {
   display: inline-flex; align-items: center; gap: 0.55rem;
   background: rgba(255,255,255,0.1);
@@ -62,7 +60,7 @@
   width: 6px; height: 6px; border-radius: 50%;
   background: #a5f3fc; animation: pulse 2s ease infinite;
 }
-
+ 
 h1.hero-title {
   font-family: 'DM Serif Display', serif;
   font-size: clamp(2.8rem, 6vw, 5rem);
@@ -101,8 +99,7 @@ h1.hero-title .accent {
   margin-bottom: 3.5rem;
   animation: fadeUp 0.7s 0.4s ease both;
 }
-
-/* Stats strip */
+ 
 .stats-strip {
   display: flex; flex-wrap: wrap; justify-content: center;
   gap: 0; max-width: 680px; width: 100%;
@@ -124,8 +121,7 @@ h1.hero-title .accent {
   display: block; line-height: 1;
 }
 .stat-lbl { font-size: 0.72rem; color: rgba(255,255,255,0.55); margin-top: 0.3rem; font-weight: 500; }
-
-/* Batch tags */
+ 
 .hero-batches {
   display: flex; flex-wrap: wrap; justify-content: center; gap: 0.7rem;
   margin-top: 1.8rem;
@@ -141,7 +137,7 @@ h1.hero-title .accent {
   padding: 0.4rem 1rem; border-radius: 50px;
 }
 .batch-pill .icon { font-size: 0.9rem; }
-
+ 
 /* ═══ TRUST BAR ═══ */
 #trust {
   background: var(--surface);
@@ -160,7 +156,7 @@ h1.hero-title .accent {
   background: var(--bg2); display: flex; align-items: center; justify-content: center;
   font-size: 0.9rem;
 }
-
+ 
 /* ═══ COURSES ═══ */
 #courses { background: var(--bg); }
 .courses-wrap { max-width: 1100px; margin: 0 auto; }
@@ -195,7 +191,7 @@ h1.hero-title .accent {
 .badge-best { background: linear-gradient(90deg,#fef3c7,#fde68a); color: #92400e; }
 .badge-hot  { background: linear-gradient(90deg,#fee2e2,#fecaca); color: #991b1b; }
 .badge-coming { background: var(--bg2); color: var(--ink3); }
-
+ 
 .course-meta-tags { display: flex; gap: 0.4rem; flex-wrap: wrap; }
 .meta-tag {
   font-size: 0.7rem; font-weight: 600; color: var(--ink3);
@@ -228,7 +224,7 @@ h1.hero-title .accent {
   background: var(--emerald-lt); padding: 0.2rem 0.55rem;
   border-radius: 50px; align-self: center;
 }
-
+ 
 .ribbon {
   position: absolute; top: 18px; right: -30px;
   background: var(--indigo-dd); color: rgba(255,255,255,0.8);
@@ -236,7 +232,7 @@ h1.hero-title .accent {
   text-transform: uppercase; padding: 0.22rem 2.5rem;
   transform: rotate(35deg);
 }
-
+ 
 /* ═══ CURRICULUM ═══ */
 #curriculum { background: var(--bg2); }
 .curr-wrap { max-width: 1100px; margin: 0 auto; }
@@ -283,7 +279,7 @@ h1.hero-title .accent {
 .week-body ul { list-style: none; padding: 0 1.1rem; }
 .week-body li { font-size: 0.8rem; color: var(--ink2); padding: 0.22rem 0 0.22rem 1rem; position: relative; }
 .week-body li::before { content: '–'; color: var(--violet-lt); position: absolute; left: 0; }
-
+ 
 /* ═══ INSTRUCTOR ═══ */
 #instructor { background: var(--surface); }
 .instructor-wrap { max-width: 980px; margin: 0 auto; display: grid; grid-template-columns: 300px 1fr; gap: 5rem; align-items: start; }
@@ -311,7 +307,7 @@ h1.hero-title .accent {
 .av-stats { display: flex; justify-content: center; gap: 1.5rem; margin-top: 1.5rem; position: relative; z-index: 1; }
 .av-stat-num { font-family: 'DM Serif Display', serif; font-size: 1.4rem; color: #fff; display: block; line-height: 1; }
 .av-stat-lbl { font-size: 0.65rem; color: rgba(255,255,255,0.5); margin-top: 0.2rem; }
-
+ 
 .instructor-name { font-family: 'DM Serif Display', serif; font-size: 2.1rem; color: var(--ink); margin-bottom: 0.3rem; }
 .instructor-role { color: var(--violet); font-size: 0.9rem; font-weight: 600; margin-bottom: 1.5rem; }
 .instructor-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem; }
@@ -323,7 +319,7 @@ h1.hero-title .accent {
 }
 .instructor-bio { color: var(--ink2); line-height: 1.85; margin-bottom: 1.8rem; font-size: 0.92rem; }
 .instructor-links { display: flex; flex-wrap: wrap; gap: 0.7rem; }
-
+ 
 /* ═══ PRICING ═══ */
 #pricing { background: var(--bg2); }
 .pricing-wrap { max-width: 880px; margin: 0 auto; }
@@ -361,7 +357,7 @@ h1.hero-title .accent {
   color: var(--emerald); font-size: 0.82rem; font-weight: 600;
   margin-top: 0.5rem;
 }
-
+ 
 /* ═══ TESTIMONIALS ═══ */
 #testimonials { background: var(--surface); }
 .testi-grid { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(310px, 1fr)); gap: 1.3rem; }
@@ -384,7 +380,7 @@ h1.hero-title .accent {
 }
 .author-name { font-weight: 700; font-size: 0.88rem; color: var(--ink); }
 .author-role { font-size: 0.74rem; color: var(--ink3); }
-
+ 
 /* ═══ FAQ ═══ */
 #faq { background: var(--bg2); }
 .faq-wrap { max-width: 700px; margin: 0 auto; }
@@ -413,7 +409,7 @@ h1.hero-title .accent {
   transition: max-height 0.3s ease, margin 0.2s;
 }
 .faq-item.open .faq-a { max-height: 280px; margin-bottom: 1.2rem; }
-
+ 
 /* ═══ CTA FINAL ═══ */
 #cta {
   background: linear-gradient(135deg, var(--indigo-dd) 0%, #2d1b69 50%, var(--violet) 100%);
@@ -436,7 +432,7 @@ h1.hero-title .accent {
 #cta p { color: rgba(255,255,255,0.65); margin-bottom: 2.2rem; }
 .cta-tags { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem; margin-top: 1.8rem; }
 .cta-tag { font-size: 0.75rem; color: rgba(255,255,255,0.5); background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); padding: 0.28rem 0.8rem; border-radius: 50px; }
-
+ 
 /* ═══ MODAL ═══ */
 .modal-overlay {
   position: fixed; inset: 0; z-index: 600;
@@ -472,7 +468,7 @@ h1.hero-title .accent {
 .modal-logo-text { font-size: 1rem; font-weight: 800; background: linear-gradient(135deg, var(--indigo), var(--violet)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
 .modal h3 { font-family: 'DM Serif Display', serif; font-size: 1.65rem; color: var(--ink); margin-bottom: 0.3rem; }
 .modal-sub { font-size: 0.82rem; color: var(--ink3); margin-bottom: 1.8rem; }
-
+ 
 .field-label { display: block; font-size: 0.74rem; font-weight: 700; color: var(--ink2); margin-bottom: 0.38rem; letter-spacing: 0.04em; text-transform: uppercase; }
 .field-group { margin-bottom: 1.1rem; }
 .field-input {
@@ -486,7 +482,7 @@ h1.hero-title .accent {
 .field-input:focus { border-color: var(--indigo); box-shadow: 0 0 0 3px rgba(79,70,229,0.1); }
 .field-input::placeholder { color: var(--ink4); }
 .field-error { color: var(--rose); font-size: 0.75rem; margin-top: 0.3rem; display: none; }
-
+ 
 .course-option-card {
   background: var(--bg); border: 1.5px solid var(--border2);
   border-radius: 12px; padding: 0.9rem 1rem;
@@ -505,11 +501,11 @@ h1.hero-title .accent {
 .co-price { font-family: 'DM Serif Display', serif; font-size: 1rem; color: var(--indigo); }
 .co-price s { font-family: 'Sora', sans-serif; font-size: 0.76rem; color: var(--ink4); font-weight: 400; }
 .co-sub { font-size: 0.73rem; color: var(--ink3); margin-top: 0.15rem; }
-
+ 
 .agree-line { display: flex; align-items: flex-start; gap: 0.6rem; font-size: 0.79rem; color: var(--ink2); margin-bottom: 1.5rem; }
 .agree-line input { margin-top: 2px; accent-color: var(--indigo); }
 .agree-line a { color: var(--indigo); }
-
+ 
 .submit-btn {
   width: 100%; padding: 0.9rem;
   background: linear-gradient(135deg, var(--indigo), var(--violet));
@@ -522,7 +518,7 @@ h1.hero-title .accent {
 .submit-btn:hover { filter: brightness(1.07); transform: translateY(-1px); box-shadow: 0 8px 28px rgba(79,70,229,0.5); }
 .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
 .secure-note { text-align: center; font-size: 0.72rem; color: var(--ink3); margin-top: 0.7rem; }
-
+ 
 /* ═══ PAYMENT REDIRECT PAGE ═══ */
 #pay-page {
   display: none; position: fixed; inset: 0; z-index: 700;
@@ -538,8 +534,7 @@ h1.hero-title .accent {
   border: 1px solid var(--border2);
 }
 .pay-logo { display: flex; align-items: center; justify-content: center; gap: 0.55rem; margin-bottom: 1.8rem; }
-
-/* Steps */
+ 
 .pay-steps { display: flex; justify-content: center; margin-bottom: 2rem; }
 .ps { display: flex; flex-direction: column; align-items: center; gap: 0.3rem; font-size: 0.68rem; color: var(--ink4); flex: 1; max-width: 88px; position: relative; }
 .ps::after { content: ''; position: absolute; top: 14px; left: calc(50% + 16px); right: calc(-50% + 16px); height: 1px; background: var(--border2); }
@@ -553,8 +548,7 @@ h1.hero-title .accent {
 .ps.done .ps-dot { background: var(--emerald-lt); border-color: var(--emerald); color: var(--emerald); }
 .ps.active .ps-dot { background: linear-gradient(135deg, var(--indigo), var(--violet)); border-color: transparent; color: #fff; }
 .ps.active { color: var(--indigo); font-weight: 600; }
-
-/* Order summary */
+ 
 .order-box {
   background: linear-gradient(135deg, rgba(79,70,229,0.06), rgba(124,58,237,0.06));
   border: 1px solid var(--border2); border-radius: 16px;
@@ -564,8 +558,7 @@ h1.hero-title .accent {
 .order-course { font-weight: 700; font-size: 0.9rem; color: var(--ink); }
 .order-detail { font-size: 0.72rem; color: var(--ink3); margin-top: 0.15rem; }
 .order-amount { font-family: 'DM Serif Display', serif; font-size: 1.8rem; color: var(--indigo); flex-shrink: 0; }
-
-/* Student summary */
+ 
 .student-summary {
   background: var(--bg2); border-radius: 12px;
   padding: 0.9rem 1.1rem; margin-bottom: 1.5rem;
@@ -575,8 +568,7 @@ h1.hero-title .accent {
 .ss-row:last-child { border-bottom: none; }
 .ss-label { color: var(--ink3); font-weight: 500; }
 .ss-val { color: var(--ink); font-weight: 600; }
-
-/* PhonePe info box */
+ 
 .phonepe-info {
   background: linear-gradient(135deg, #5f259f15, #7c3aed12);
   border: 1px solid rgba(95,37,159,0.2);
@@ -599,7 +591,7 @@ h1.hero-title .accent {
   border: 1px solid rgba(95,37,159,0.18);
   padding: 0.22rem 0.65rem; border-radius: 50px;
 }
-
+ 
 .pay-cta-btn {
   width: 100%; padding: 0.95rem;
   background: linear-gradient(135deg, #5f259f, #7c3aed);
@@ -611,16 +603,15 @@ h1.hero-title .accent {
 }
 .pay-cta-btn:hover { filter: brightness(1.08); transform: translateY(-2px); box-shadow: 0 10px 32px rgba(95,37,159,0.5); }
 .pay-cta-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
-
+ 
 .pay-back-btn { background: transparent; border: none; color: var(--ink3); font-size: 0.82rem; cursor: pointer; padding: 0.4rem; display: flex; align-items: center; gap: 0.3rem; font-family: 'Sora', sans-serif; transition: color 0.2s; }
 .pay-back-btn:hover { color: var(--ink); }
-
-/* Success screen */
+ 
 .pay-success { display: none; text-align: center; padding: 1rem 0; }
 .success-icon { font-size: 4.5rem; margin-bottom: 1.2rem; animation: popIn 0.5s cubic-bezier(0.34,1.56,0.64,1); }
 .pay-success h4 { font-family: 'DM Serif Display', serif; font-size: 1.7rem; color: var(--ink); margin-bottom: 0.6rem; }
 .pay-success p { font-size: 0.87rem; color: var(--ink2); line-height: 1.75; }
-
+ 
 /* ═══ RESPONSIVE ═══ */
 @media (max-width: 900px) {
   .instructor-wrap { grid-template-columns: 1fr; gap: 2.5rem; }
@@ -637,13 +628,13 @@ h1.hero-title .accent {
 </style>
 </head>
 <body>
-
-<!-- Announce -->
+ 
+<!-- CHANGE 1: Announce bar — updated text + icon -->
 <div class="announce">
   <span class="announce-pulse"></span>
-  🚀 Basic to Advanced PM Batch Starting <strong>June 21, 2026</strong> — Registrations Now Open!
+  🔒 Basic to Advanced PM Batch Starting <strong>June 21, 2026</strong> — Registrations Now Closed!
 </div>
-
+ 
 <!-- Nav -->
 <nav id="main-nav">
   <a href="index.html" class="nav-logo">
@@ -656,11 +647,12 @@ h1.hero-title .accent {
     <li><a href="#instructor">Instructor</a></li>
     <li><a href="#pricing">Pricing</a></li>
     <li><a href="#faq">FAQ</a></li>
- <li><a href="#" class="nav-cta" onclick="openModal();return false;">Enroll Now</a></li> 
+    <!-- CHANGE 7: Nav CTA — Enroll Now replaced with Contact Us -->
+    <li><a href="https://wa.me/919667783900" class="nav-cta" target="_blank">💬 Contact Us</a></li>
   </ul>
   <div class="hamburger" id="hamburger" onclick="toggleNav()"><span></span><span></span><span></span></div>
 </nav>
-
+ 
 <!-- ═══ HERO ═══ -->
 <section id="home">
   <div class="hero-inner">
@@ -668,42 +660,44 @@ h1.hero-title .accent {
       <span class="hero-badge-dot"></span>
       Cohort-based learning · Live sessions every weekend
     </div>
-
+ 
     <h1 class="hero-title">
       Build the Skills to<br>
       Ship <span class="accent">World-Class</span><br>
       Products
     </h1>
-
+ 
     <p class="hero-sub">
       India's most hands-on PM school. Learn from Bhawesh Rastogi — Sr. AVP with 15+ years in AI Product Management. Real case studies, live mentorship, career-ready from day one.
     </p>
-
+ 
     <div class="hero-pills">
       <span class="hero-pill">📡 Live Weekend Sessions</span>
       <span class="hero-pill">🧠 Real Case Studies</span>
       <span class="hero-pill">🎯 Exclusive Interview Preparations</span>
     </div>
-
+ 
+    <!-- CHANGE 2: Hero buttons — disabled enroll + keep WhatsApp -->
     <div class="hero-btns">
-<!--      <button class="btn btn-primary btn-lg" onclick="openModal()">Enroll Now — Save ₹9,999 →</button> -->
+      <button class="btn btn-disabled btn-lg" disabled>🔒 Registrations Closed</button>
       <a href="https://wa.me/919667783900?text=Hi%20Bhawesh,%20I'm%20interested%20in%20the%20PM%20course" class="btn btn-ghost-white btn-lg" target="_blank">💬 Chat with Us</a>
     </div>
-
+ 
     <div class="stats-strip">
       <div class="stat-item"><span class="stat-num">150+</span><span class="stat-lbl">Students Trained</span></div>
       <div class="stat-item"><span class="stat-num">4.9★</span><span class="stat-lbl">Course Rating</span></div>
       <div class="stat-item"><span class="stat-num">8</span><span class="stat-lbl">Weeks Per Course</span></div>
       <div class="stat-item"><span class="stat-num">32+</span><span class="stat-lbl">Hours of Learning</span></div>
     </div>
-
+ 
+    <!-- CHANGE 3: Hero batch pill — Basic PM now shows Registrations Closed -->
     <div class="hero-batches">
-      <span class="batch-pill"><span class="icon">📅</span> Basic PM: <strong>June 21 · 11 AM – 2 PM</strong></span>
+      <span class="batch-pill"><span class="icon">🔒</span> Basic PM: <strong>Registrations Closed</strong></span>
       <span class="batch-pill"><span class="icon">🤖</span> AI PM: <strong>Registrations Closed</strong></span>
     </div>
   </div>
 </section>
-
+ 
 <!-- ═══ TRUST BAR ═══ -->
 <div id="trust">
   <div class="trust-inner">
@@ -713,7 +707,7 @@ h1.hero-title .accent {
     <div class="trust-item"><div class="trust-icon">👥</div> Max 30 Students Per Batch</div>
   </div>
 </div>
-
+ 
 <!-- ═══ COURSES ═══ -->
 <section id="courses">
   <div class="courses-wrap">
@@ -723,7 +717,7 @@ h1.hero-title .accent {
       <p class="section-sub">Two focused programs designed around where you are in your PM journey.</p>
     </div>
     <div class="courses-grid">
-
+ 
       <!-- Basic PM -->
       <div class="course-card" data-reveal data-delay="0s">
         <div class="course-card-top"></div>
@@ -733,7 +727,8 @@ h1.hero-title .accent {
             <div class="course-meta-tags">
               <span class="meta-tag">8 Weeks</span>
               <span class="meta-tag">Beginner Friendly</span>
-              <span class="meta-tag">June 21 · 11 AM – 2 PM</span>
+              <!-- CHANGE 5: Meta tag — date replaced with closed status -->
+              <span class="meta-tag">Registrations Closed</span>
             </div>
           </div>
           <h3 class="course-title">Basic to Advanced Product Management</h3>
@@ -749,14 +744,13 @@ h1.hero-title .accent {
             <span class="price-main">₹25,000</span>
             <span class="price-save">Save ₹9,999</span>
           </div>
-            <button class="btn btn-primary btn-md" style="width:100%;justify-content:center;" onclick="openModal('basic')">Enroll Now →</button>
+          <!-- CHANGE 4: Course card button — disabled -->
+          <button class="btn btn-disabled btn-md" disabled style="width:100%;justify-content:center;">🔒 Registrations Closed</button>
         </div>
       </div>
-
-
-      
+ 
       <!-- AI PM -->
-      <div class="course-card " data-reveal data-delay="0.1s">
+      <div class="course-card" data-reveal data-delay="0.1s">
         <div class="course-card-top"></div>
         <div class="ribbon">Coming Soon</div>
         <div class="course-card-body">
@@ -781,15 +775,14 @@ h1.hero-title .accent {
             <span class="price-main">₹35,000</span>
             <span class="price-save">Save ₹15,000</span>
           </div>
-<!--      <button class="btn btn-disabled btn-md" disabled style="width:100%;justify-content:center;">🔔 Registrations Opening Soon</button> -->
           <button class="btn btn-disabled btn-md" disabled style="width:100%;justify-content:center;">🔒 Registrations Closed</button>
         </div>
       </div>
-
+ 
     </div>
   </div>
 </section>
-
+ 
 <!-- ═══ CURRICULUM ═══ -->
 <section id="curriculum">
   <div class="curr-wrap">
@@ -806,7 +799,7 @@ h1.hero-title .accent {
     <div class="curr-grid" id="curr-grid"></div>
   </div>
 </section>
-
+ 
 <!-- ═══ INSTRUCTOR ═══ -->
 <section id="instructor">
   <div class="section-head">
@@ -848,7 +841,7 @@ h1.hero-title .accent {
     </div>
   </div>
 </section>
-
+ 
 <!-- ═══ PRICING ═══ -->
 <section id="pricing">
   <div class="pricing-wrap">
@@ -858,7 +851,7 @@ h1.hero-title .accent {
       <p class="section-sub">No subscriptions. No hidden fees. Transparent one-time pricing with a 15-day money-back guarantee.</p>
     </div>
     <div class="pricing-grid">
-        <div class="price-card featured">
+      <div class="price-card featured">
         <div class="price-plan-label">8-Week Live Program</div>
         <div class="price-plan-name">Basic to Advanced PM</div>
         <div class="price-plan-duration">Weekend cohort · June 21, 2026 · 11 AM – 2 PM IST</div>
@@ -873,11 +866,10 @@ h1.hero-title .accent {
           <li><span class="perk-check">✓</span> Real-world case studies</li>
           <li><span class="perk-check">✓</span> 1 year access to recordings</li>
         </ul>
-<!--        <button class="btn btn-primary btn-md" style="width:100%;justify-content:center;" onclick="openModal('basic')">Enroll Now →</button> -->
-          <button class="btn btn-primary btn-md" style="width:100%;justify-content:center;" onclick="openModal('basic')">Enroll Now →</button>
-       </div>
-     
-
+        <!-- CHANGE 6: Pricing card button — disabled -->
+        <button class="btn btn-disabled btn-md" disabled style="width:100%;justify-content:center;">🔒 Registrations Closed</button>
+      </div>
+ 
       <div class="price-card">
         <div class="price-plan-label">8-Week Live Program</div>
         <div class="price-plan-name">AI Product Manager</div>
@@ -902,7 +894,7 @@ h1.hero-title .accent {
     </div>
   </div>
 </section>
-
+ 
 <!-- ═══ TESTIMONIALS ═══ -->
 <section id="testimonials">
   <div class="section-head">
@@ -937,7 +929,7 @@ h1.hero-title .accent {
     </div>
   </div>
 </section>
-
+ 
 <!-- ═══ FAQ ═══ -->
 <section id="faq">
   <div class="section-head">
@@ -946,26 +938,28 @@ h1.hero-title .accent {
   </div>
   <div class="faq-wrap" id="faq-list"></div>
 </section>
-
+ 
 <!-- ═══ CTA ═══ -->
 <section id="cta">
   <div class="cta-inner">
     <div class="section-label">Join the Cohort</div>
-    <h2 class="section-title">Your PM Career Starts on June 21st</h2>
-    <p class="section-sub">30 seats. One cohort. Zero fluff. Registrations are now open — enrol before the batch fills up.</p>
+    <!-- CHANGE 9: CTA heading & subtext -->
+    <h2 class="section-title">Registrations Are Now Closed</h2>
+    <p class="section-sub">The June 21 cohort is full. Drop us a message on WhatsApp to join the waitlist for the next batch.</p>
     <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:1rem">
-    <button class="btn btn-primary btn-lg" onclick="openModal()">Secure Your Seat →</button>
+      <!-- CHANGE 8: CTA primary button — disabled -->
+      <button class="btn btn-disabled btn-lg" disabled>🔒 Registrations Closed</button>
       <a href="https://wa.me/919667783900" target="_blank" class="btn btn-ghost-white btn-lg">💬 Talk to Bhawesh</a>
     </div>
     <div class="cta-tags">
       <span class="cta-tag">📅 June 21, 2026</span>
-      <span class="cta-tag">⚡ 30 seats only</span>
-      <span class="cta-tag">🔒 Secure checkout</span>
-      <span class="cta-tag">↩️ 15-day refund</span>
+      <span class="cta-tag">⚡ Batch Full</span>
+      <span class="cta-tag">🔒 Registrations Closed</span>
+      <span class="cta-tag">📩 Join Waitlist</span>
     </div>
   </div>
 </section>
-
+ 
 <!-- ═══ FOOTER ═══ -->
 <footer>
   <div class="footer-grid">
@@ -1009,7 +1003,7 @@ h1.hero-title .accent {
     <span><a href="terms.html">Terms</a> &nbsp;·&nbsp; <a href="privacy.html">Privacy</a></span>
   </div>
 </footer>
-
+ 
 <!-- Cookie bar -->
 <div class="cookie-bar" id="cookie-bar">
   <span>We use cookies to enhance your experience. <a href="privacy.html">Learn more</a></span>
@@ -1018,7 +1012,7 @@ h1.hero-title .accent {
     <button class="cookie-decline" onclick="declineCookie()">Decline</button>
   </div>
 </div>
-
+ 
 <!-- ═══ ENROLL MODAL ═══ -->
 <div class="modal-overlay" id="modal-overlay" onclick="handleOverlayClick(event)">
   <div class="modal" id="modal">
@@ -1030,7 +1024,7 @@ h1.hero-title .accent {
       </div>
       <h3>Enrol Now</h3>
       <p class="modal-sub">Fill in your details — you'll be taken to a secure PhonePe payment page.</p>
-
+ 
       <div class="field-group">
         <label class="field-label">Select Course *</label>
         <div class="course-option-card selected" id="opt-basic" onclick="selectCourse('basic')">
@@ -1042,7 +1036,7 @@ h1.hero-title .accent {
           <div class="co-sub">8 Weeks · Weekends 11 AM – 2 PM · June 21, 2026</div>
         </div>
       </div>
-
+ 
       <div class="field-group">
         <label class="field-label">Full Name *</label>
         <input class="field-input" type="text" id="f-name" placeholder="Your full name">
@@ -1058,15 +1052,14 @@ h1.hero-title .accent {
         <input class="field-input" type="tel" id="f-phone" placeholder="+91 98765 43210">
         <div class="field-error" id="err-phone">Please enter your phone number</div>
       </div>
-
+ 
       <div class="agree-line">
         <input type="checkbox" id="f-agree">
         <span>I agree to the <a href="terms.html" target="_blank">Terms of Service</a> and <a href="privacy.html" target="_blank">Privacy Policy</a></span>
       </div>
-
+ 
       <button class="submit-btn" id="form-submit-btn" onclick="handleSubmit()">
         <span id="submit-text">Continue to Secure Payment</span>
-<!--        <span id="submit-price" style="opacity:0.8;font-size:0.85rem;font-weight:500">— ₹25,000</span> -->
       </button>
       <div class="secure-note">🔒 Powered by PhonePe · UPI, Net Banking, Cards &amp; more</div>
     </div>
@@ -1077,7 +1070,7 @@ h1.hero-title .accent {
     </div>
   </div>
 </div>
-
+ 
 <!-- ═══ PAYMENT REDIRECT PAGE ═══ -->
 <div id="pay-page">
   <div class="pay-card">
@@ -1085,13 +1078,13 @@ h1.hero-title .accent {
       <div class="nav-logo-icon" style="width:32px;height:32px;border-radius:8px"><svg class="logo-svg" viewBox="0 0 24 24" style="width:16px;height:16px"></svg></div>
       <span style="font-size:1rem;font-weight:800;background:linear-gradient(135deg,var(--indigo),var(--violet));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">PMpathshala</span>
     </div>
-
+ 
     <div class="pay-steps">
       <div class="ps done"><div class="ps-dot">✓</div><span>Details</span></div>
       <div class="ps active"><div class="ps-dot">₹</div><span>Payment</span></div>
       <div class="ps" id="ps-confirm"><div class="ps-dot">★</div><span>Confirm</span></div>
     </div>
-
+ 
     <div id="pay-main">
       <div class="order-box">
         <div>
@@ -1100,14 +1093,14 @@ h1.hero-title .accent {
         </div>
         <div class="order-amount" id="pay-amount">₹25,000</div>
       </div>
-
+ 
       <div class="student-summary">
         <div class="ss-row"><span class="ss-label">Name</span><span class="ss-val" id="ss-name">—</span></div>
         <div class="ss-row"><span class="ss-label">Email</span><span class="ss-val" id="ss-email">—</span></div>
         <div class="ss-row"><span class="ss-label">Phone</span><span class="ss-val" id="ss-phone">—</span></div>
         <div class="ss-row"><span class="ss-label">Order Ref</span><span class="ss-val" id="ss-ref">—</span></div>
       </div>
-
+ 
       <div class="phonepe-info">
         <div class="phonepe-logo">
           <div class="phonepe-icon">P</div>
@@ -1124,17 +1117,17 @@ h1.hero-title .accent {
           <span class="pf-chip">🔒 SSL Encrypted</span>
         </div>
       </div>
-
+ 
       <button class="pay-cta-btn" id="pay-cta-btn" onclick="initiatePhonePePayment()">
         <span>Pay ₹<span id="pay-btn-amount">25,000</span> via PhonePe →</span>
       </button>
-
+ 
       <div style="display:flex;justify-content:space-between;align-items:center;margin-top:0.5rem">
         <button class="pay-back-btn" onclick="backToForm()">← Go Back</button>
         <span style="font-size:0.71rem;color:var(--ink4)">Need help? <a href="tel:+919667783900" style="color:var(--indigo)">Call us</a></span>
       </div>
     </div>
-
+ 
     <div class="pay-success" id="pay-success">
       <div class="success-icon">🎉</div>
       <h4>You're in the Cohort!</h4>
@@ -1150,9 +1143,10 @@ h1.hero-title .accent {
     </div>
   </div>
 </div>
-
+ 
 <script src="https://mercury.phonepe.com/web/bundle/checkout.js"></script>
 <script src="main.js"></script>
 <script src="enroll.js"></script>
 </body>
 </html>
+ 
