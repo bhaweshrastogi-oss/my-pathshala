@@ -39,7 +39,7 @@ const CURRICULUM = {
     ]
   },
   ai: {
-    meta: '8 Weeks · 40+ Hours · 4 Assignments · Weekends 2 PM – 5 PM IST',
+    meta: '8 Weeks · 40+ Hours · 4 Assignments · Weekends 6 PM – 9 PM IST',
     weeks: [
       { t:'AI/ML Fundamentals for PMs',  i:['AI vs ML vs Deep Learning','Types of ML Algorithms','Understanding Neural Networks','AI Capabilities & Limitations','Key AI Terminology'] },
       { t:'AI Product Discovery',        i:['Identifying AI Opportunities','AI Feasibility Assessment','Data Availability Analysis','Build vs Buy vs Partner','AI Use Case Prioritisation'] },
