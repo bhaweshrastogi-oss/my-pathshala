@@ -1,7 +1,6 @@
 const { setCorsHeaders } = require('../lib/cors');
 const { readJsonBody } = require('../lib/readBody');
-
-
+const { getOrderStatus } = require('../lib/phonepe');
 
 async function sendWithResend({ to, subject, html, text }) {
   const apiKey = process.env.RESEND_API_KEY;
@@ -73,6 +72,29 @@ module.exports = async function handler(req, res) {
       return res.json({ error: 'valid email required' });
     }
 
+    if (!orderRef || typeof orderRef !== 'string') {
+      res.statusCode = 400;
+      return res.json({ error: 'orderRef required' });
+    }
+
+    // SECURITY: this endpoint is publicly reachable, so it must never send
+    // a "payment confirmed" email on the strength of client-supplied data
+    // alone. Verify the order actually completed with PhonePe first.
+    // Fail closed on any doubt — skip sending rather than risk a fake
+    // confirmation.
+    try {
+      const status = await getOrderStatus(orderRef);
+      if (!status || status.state !== 'COMPLETED') {
+        console.warn('[send-confirmation] order not completed, skipping email:', orderRef, status && status.state);
+        res.statusCode = 200;
+        return res.json({ ok: true, skipped: true, reason: 'order not completed' });
+      }
+    } catch (e) {
+      console.error('[send-confirmation] order verification failed:', e.message || e);
+      res.statusCode = 200;
+      return res.json({ ok: true, skipped: true, reason: 'order verification failed' });
+    }
+
     if (!process.env.RESEND_API_KEY) {
       console.warn('[send-confirmation] RESEND_API_KEY not set — student email skipped');
       res.statusCode = 200;
@@ -103,20 +125,19 @@ module.exports = async function handler(req, res) {
       .join('\n');
 
     const html = `
-<!DOCTYPE html>
-<html><body style="font-family:system-ui,sans-serif;line-height:1.6;color:#1a1a2e;max-width:560px;margin:0 auto;padding:24px">
-  <p>Hi <strong>${escapeHtml(safeName)}</strong>,</p>
-  <p>Thank you for your payment. Your enrollment is <strong>confirmed</strong>.</p>
-  <table style="width:100%;border-collapse:collapse;margin:20px 0;font-size:14px">
-    <tr><td style="padding:8px 0;border-bottom:1px solid #eee;color:#666">Course</td><td style="padding:8px 0;border-bottom:1px solid #eee;font-weight:600">${escapeHtml(String(course || '—'))}</td></tr>
-    <tr><td style="padding:8px 0;border-bottom:1px solid #eee;color:#666">Batch</td><td style="padding:8px 0;border-bottom:1px solid #eee">${escapeHtml(String(batch || '—'))}</td></tr>
-    <tr><td style="padding:8px 0;border-bottom:1px solid #eee;color:#666">Amount</td><td style="padding:8px 0;border-bottom:1px solid #eee">${escapeHtml(String(amount || '—'))}</td></tr>
-    <tr><td style="padding:8px 0;color:#666">Order ref</td><td style="padding:8px 0;font-family:monospace;font-size:12px">${escapeHtml(String(orderRef || '—'))}</td></tr>
-  </table>
-  <p>Bhawesh will reach out within <strong>24 hours</strong> with batch joining instructions and the WhatsApp group link.</p>
-  <p style="color:#666;font-size:13px">Questions? Reply to this email or write to <a href="mailto:support@pmpathshala.com">support@pmpathshala.com</a></p>
-  <p style="margin-top:28px;font-size:13px;color:#888">— PMpathshala</p>
-</body></html>`;
+      <!DOCTYPE html>
+      <p>Hi <strong>${escapeHtml(safeName)}</strong>,</p>
+      <p>Thank you for your payment. Your enrollment is <strong>confirmed</strong>.</p>
+      <table>
+        <tr><td>Course</td><td>${escapeHtml(String(course || '—'))}</td></tr>
+        <tr><td>Batch</td><td>${escapeHtml(String(batch || '—'))}</td></tr>
+        <tr><td>Amount</td><td>${escapeHtml(String(amount || '—'))}</td></tr>
+        <tr><td>Order ref</td><td>${escapeHtml(String(orderRef || '—'))}</td></tr>
+      </table>
+      <p>Bhawesh will reach out within <strong>24 hours</strong> with batch joining instructions and the WhatsApp group link.</p>
+      <p>Questions? Reply to this email or write to <a href="mailto:support@pmpathshala.com">support@pmpathshala.com</a></p>
+      <p>— PMpathshala</p>
+    `;
 
     await sendWithResend({ to: email.trim(), subject, html, text });
 
