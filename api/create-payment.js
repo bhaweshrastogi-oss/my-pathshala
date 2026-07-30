@@ -1,6 +1,7 @@
 const { createCheckoutPayment } = require('../lib/phonepe');
 const { setCorsHeaders, isRedirectAllowed } = require('../lib/cors');
 const { readJsonBody } = require('../lib/readBody');
+const { getCourse } = require('../lib/courses');
 
 module.exports = async function handler(req, res) {
   setCorsHeaders(req, res);
@@ -19,12 +20,12 @@ module.exports = async function handler(req, res) {
     const body = await readJsonBody(req).catch(() => ({}));
 
     const {
-      amount,
       order_id: orderId,
       name,
       email,
       phone,
       course,
+      course_key: courseKey,
       redirect_url: redirectUrl,
     } = body;
 
@@ -33,17 +34,15 @@ module.exports = async function handler(req, res) {
       return res.json({ error: 'order_id required' });
     }
 
-    const amountNum = Number(amount);
-    if (!Number.isFinite(amountNum) || amountNum < 1) {
+    // SECURITY: amount is never trusted from the client. It's looked up
+    // server-side by course_key so a tampered/edited request body can't
+    // change what actually gets charged. See lib/courses.js.
+    const courseInfo = getCourse(courseKey);
+    if (!courseInfo) {
       res.statusCode = 400;
-      return res.json({ error: 'amount must be a positive number (INR)' });
+      return res.json({ error: 'Unknown or missing course_key' });
     }
-
-    const amountPaise = Math.round(amountNum * 100);
-    if (amountPaise < 100) {
-      res.statusCode = 400;
-      return res.json({ error: 'minimum amount is ₹1' });
-    }
+    const amountPaise = courseInfo.amountPaise;
 
     if (!redirectUrl || !isRedirectAllowed(redirectUrl)) {
       res.statusCode = 400;
@@ -63,7 +62,7 @@ module.exports = async function handler(req, res) {
       udf1: String(name || '').slice(0, 256),
       udf2: String(email || '').slice(0, 256),
       udf3: String(phone || '').slice(0, 256),
-      udf4: String(course || '').slice(0, 256),
+      udf4: String(course || courseInfo.name || '').slice(0, 256),
     };
 
     const pp = await createCheckoutPayment({
