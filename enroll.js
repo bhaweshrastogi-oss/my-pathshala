@@ -14,8 +14,8 @@ const CFG = {
   courses: {
     basic: {
       name   : 'Basic to Advanced Product Management',
-      price  : '₹25,000',        
-      amount : 25,000,            
+      price  : '₹25000',        
+      amount : 25000,            
       batch  : 'August 22, 2026 · Weekends 2 PM – 5 PM IST',
     }
   },
