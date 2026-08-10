@@ -41,14 +41,14 @@ const CURRICULUM = {
   ai: {
     meta: '8 Weeks · 40+ Hours · 4 Assignments · Weekends 6 PM – 9 PM IST',
     weeks: [
-      { t:'AI/ML Fundamentals for PMs',  i:['AI vs ML vs Deep Learning','Types of ML Algorithms','Understanding Neural Networks','AI Capabilities & Limitations','Key AI Terminology'] },
-      { t:'AI Product Discovery',        i:['Identifying AI Opportunities','AI Feasibility Assessment','Data Availability Analysis','Build vs Buy vs Partner','AI Use Case Prioritisation'] },
-      { t:'Data Strategy & Management',  i:['Data Collection Strategies','Data Quality & Labelling','Data Pipelines Overview','Privacy & Compliance (GDPR)','Working with Data Teams'] },
-      { t:'AI Product Development',      i:['ML Product Development Lifecycle','Model Requirements & Specs','Working with ML Engineers','Experiment Tracking','Model Versioning'] },
-      { t:'AI Metrics & Evaluation',     i:['ML Model Metrics','Precision, Recall, F1 Score','Business vs Model Metrics','A/B Testing for AI Products','Continuous Monitoring'] },
-      { t:'LLMs & Generative AI',        i:['Understanding LLMs (GPT, Claude)','Prompt Engineering','Fine-tuning vs RAG','Building GenAI Products','LLM Evaluation Methods'] },
-      { t:'AI Ethics & Responsible AI',  i:['Bias in AI Systems','Fairness & Transparency','Explainable AI (XAI)','AI Governance Frameworks','Risk Management'] },
-      { t:'AI Product Launch & Scale',   i:['MLOps Fundamentals','Model Deployment Strategies','Scaling AI Products','AI Product Roadmapping','Capstone Project Presentation'] },
+      { t:'AI/ML Fundamentals for PMs',        i:['AI vs ML vs Deep Learning vs LLMs','Types of ML Algorithms & Model Families','How Neural Networks & Transformers Work','AI Capabilities, Limitations & Failure Modes','Key AI Terminology (Hallucination, Latency, Context Window)','India\'s AI Landscape (Sarvam, Krutrim, GenAI Stack)'] },
+      { t:'AI Product Discovery & Feasibility', i:['Identifying AI-Worthy Opportunities','The 4-Axis Feasibility Check (Desirability/Viability/Technical/Data)','Data Availability & Readiness Audit','Build vs Buy vs Prompt-Wrap Decision Tree','AI Use Case Prioritisation','Killing Bad AI Ideas Early'] },
+      { t:'Data Strategy & Working with ML Teams', i:['Data Collection, Labelling & Quality','Training Data vs Fine-Tuning vs RAG','Data Pipelines & Privacy Compliance (DPDP Act)','Writing Specs ML Engineers Respect','Model Requirements Documents','Experiment Tracking & Versioning'] },
+      { t:'Designing Trustworthy AI Experiences', i:['UX Patterns for Uncertainty & Confidence','The Trust Ladder: Suggest → Auto-Apply → Autonomy','Human Handoff & Graceful Degradation','Explainability & "Show Your Work" Design','Designing for Hallucination & Error Recovery','Working with Designers on AI Interfaces'] },
+      { t:'AI Metrics & Evaluation',           i:['Precision, Recall, F1 & the Cost of Each Mistake','Model Metrics vs Product Metrics vs Business Metrics','A/B Testing for Probabilistic Systems','Guardrail Metrics & Novelty Effects','Cost-Per-Inference as a Product Constraint','Continuous Monitoring & Model Drift'] },
+      { t:'LLMs, Prompting & Generative AI Products', i:['Understanding LLMs (GPT, Claude, Gemini)','Prompt Engineering for Product Managers','Fine-Tuning vs RAG vs Prompt-Wrapping','Building GenAI Features End-to-End','LLM Evaluation & Red-Teaming','Managing Latency, Cost & Context Windows'] },
+      { t:'Agentic AI & Responsible AI',       i:['What Makes a Product "Agentic"','Autonomy Levels: Assist to Full Autonomy','Tool Use, Permissions & Guardrails','Bias, Fairness & Explainable AI (XAI)','AI Governance Frameworks & Risk Management','Responsible AI Review Checklist'] },
+      { t:'AI Product Launch, Scale & Career', i:['MLOps Fundamentals for PMs','Model Deployment & Rollout Strategies','Scaling AI Products Post-Launch','AI Product Roadmapping','AI PM Interview Preparation','Capstone Project Presentation'] },
     ]
   }
 };
