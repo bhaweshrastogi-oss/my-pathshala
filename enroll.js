@@ -1,10 +1,10 @@
-/* ═════════════════════════════════════════════════════════════════
+/* ═══════════════════════════════════════════════════════════════════════════
    PMpathshala — enroll.js
    Handles: form validation · Web3Forms (with timestamp) ·
             PhonePe payment redirect · email confirmation trigger
-   ═══════════════════════════════════════════════════════════════ */
+   ═════════════════════════════════════════════════════════════════ */
 
-// ── CONFIG ───────────────────────────────────────────────
+// ── CONFIG ──────────────────────────
 const CFG = {
   web3forms_key : 'cf83d387-9bb4-4849-a2aa-d982c809155e',
 
@@ -16,14 +16,14 @@ const CFG = {
       name   : 'Basic to Advanced Product Management',
       price  : '₹25000',        
       amount : 25000,            
-      batch  : 'August 22, 2026 · Weekends 2 PM – 5 PM IST',
+      // batch  : 'August 22, 2026 · Weekends 2 PM – 5 PM IST',  // commented out — restore when next batch date is set
     }
   },
 
   support_email : 'support@pmpathshala.com',
 };
 
-// ── CURRICULUM ────────────────────────────────────────────────
+// ── CURRICULUM ────────────────────────────────────────────────────────────────────────────
 const CURRICULUM = {
   basic: {
     meta: '8 Weeks · 32+ Hours · 4 Assignments · Weekends 2 PM – 5 PM IST',
@@ -63,7 +63,7 @@ const FAQS = [
   { q:'Can I pay in instalments?',      a:'We currently offer one-time payment via PhonePe (UPI, Net Banking, Cards, Wallets). Reach out via WhatsApp if you\'d like to discuss alternative arrangements.' },
 ];
 
-// ── CURRICULUM RENDER ───────────────────────────────────────────
+// ── CURRICULUM RENDER ────────────────────────────────────────────────────────────
 function renderCurriculum(type) {
   const data = CURRICULUM[type];
   const metaEl = document.getElementById('curr-meta');
@@ -93,7 +93,7 @@ function switchCurr(type, btn) {
 
 renderCurriculum('basic');
 
-// ── FAQ RENDER ─────────────────────────────────────────────────
+// ── FAQ RENDER ──────────────────────────────────────────────────────────────────
 (function() {
   const el = document.getElementById('faq-list');
   if (!el) return;
@@ -109,7 +109,7 @@ renderCurriculum('basic');
 
 function toggleFaq(i) { document.getElementById('faq-'+i).classList.toggle('open'); }
 
-// ── MODAL CONTROL ───────────────────────────────────────────────
+// ── MODAL CONTROL ──────────────────────────────────────────────────────────────────
 let selectedCourse = 'basic';
 
 function openModal(course) {
@@ -139,7 +139,7 @@ function selectCourse(key) {
   if (sp) sp.textContent = '— ' + CFG.courses[key].price;
 }
 
-// ── HELPERS ───────────────────────────────────────────────────
+// ── HELPERS ──────────────────────────────────────────────────────────────────────────
 function nowIST() {
   return new Date().toLocaleString('en-IN', {
     timeZone: 'Asia/Kolkata',
@@ -153,7 +153,7 @@ function generateRef() {
   return 'PMP-' + Date.now().toString(36).toUpperCase() + '-' + Math.random().toString(36).slice(2,5).toUpperCase();
 }
 
-// ── FORM SUBMIT ─────────────────────────────────────────────────
+// ── FORM SUBMIT ─────────────────────────────────────────────────────────────────
 let enrollData = {};
 
 async function handleSubmit() {
@@ -181,7 +181,7 @@ async function handleSubmit() {
 
   enrollData = { name, email, phone, course, orderRef, timestamp };
 
-  // ── 1. Push to Web3Forms (with timestamp) ──────────────
+  // ── 1. Push to Web3Forms (with timestamp) ────────────
   // This fires a notification email to Bhawesh immediately on form submission
   try {
     await fetch('https://api.web3forms.com/submit', {
@@ -200,7 +200,7 @@ async function handleSubmit() {
         status     : 'LEAD_CAPTURED — Awaiting Payment',
         message    : [
           `📋 NEW ENROLLMENT LEAD`,
-          `────────────────────────`,
+          `────────────────────`,
           `Name      : ${name}`,
           `Email     : ${email}`,
           `Phone     : ${phone}`,
@@ -210,13 +210,13 @@ async function handleSubmit() {
           `Order Ref : ${orderRef}`,
           `Timestamp : ${timestamp} IST`,
           `Status    : Lead captured — redirecting to PhonePe`,
-          `────────────────────────`,
+          `────────────────────`,
         ].join('\n'),
       })
     });
   } catch(err) { console.warn('Web3Forms (non-blocking):', err); }
 
-  // ── 2. Show success micro-state ──────────────────
+  // ── 2. Show success micro-state ──────────────
   document.getElementById('form-wrap').style.display    = 'none';
   document.getElementById('form-success').style.display = '';
 
@@ -228,7 +228,7 @@ async function handleSubmit() {
   }, 1200);
 }
 
-// ── PAYMENT PAGE ────────────────────────────────────────────
+// ── PAYMENT PAGE ─────────────────────────────────────────────────────────────────
 function showPayPage() {
   const { name, email, phone, course, orderRef } = enrollData;
 
@@ -251,7 +251,7 @@ function showPayPage() {
 
 // ── PHONEPE PAYMENT INITIATION (SDK + iframe checkout) ─────────
 
-// ── PAYMENT API BASE URL ─────────────────────────────────
+// ── PAYMENT API BASE URL ──────────────────────────
 // • '' (empty)     → same origin: deploy static site + /api on ONE Vercel project
 // • full URL       → e.g. GitHub Pages frontend calling a separate Vercel API project
 // Example: 'https://my-pathshala-api.vercel.app'
@@ -450,7 +450,7 @@ function showContactFallback(debugMsg) {
   if (btn) btn.style.display = 'none';
 }
 
-// ── PAYMENT INITIATED NOTIFICATION ─────────────────────
+// ── PAYMENT INITIATED NOTIFICATION ──────────────────────────
 async function notifyPaymentInitiated(orderRef, name, email, course, timestamp) {
   await fetch('https://api.web3forms.com/submit', {
     method : 'POST',
@@ -467,7 +467,7 @@ async function notifyPaymentInitiated(orderRef, name, email, course, timestamp) 
       status     : 'PAYMENT_INITIATED — Redirected to PhonePe',
       message    : [
         `💳 PAYMENT INITIATED`,
-        `────────────────────────`,
+        `────────────────────`,
         `Name      : ${name}`,
         `Email     : ${email}`,
         `Course    : ${course.name}`,
@@ -475,13 +475,13 @@ async function notifyPaymentInitiated(orderRef, name, email, course, timestamp) 
         `Order Ref : ${orderRef}`,
         `Timestamp : ${timestamp} IST`,
         `Status    : Student redirected to PhonePe checkout`,
-        `────────────────────────`,
+        `────────────────────`,
       ].join('\n'),
     })
   });
 }
 
-// ── PAYMENT SUCCESS (called from redirect landing) ────────────
+// ── PAYMENT SUCCESS (called from redirect landing) ──────────────
 // When PhonePe redirects back with ?payment=success in the URL,
 // this function is triggered to:
 //   1. Verify the payment server-side
@@ -619,7 +619,7 @@ window.showPayPage = function() {
   _orig_showPayPage();
 };
 
-// ── NAV HELPERS ───────────────────────────────────────────
+// ── NAV HELPERS ───────────────────────────────────────────────────────────
 function backToForm() {
   document.getElementById('pay-page').classList.remove('show');
   document.body.style.overflow = '';
@@ -632,6 +632,6 @@ function closePay() {
   sessionStorage.removeItem('pm_enroll');
 }
 
-// ── INIT ──────────────────────────────────────────────────
+// ── INIT ──────────────────────────────────────────────────────────────────────────
 // Check if returning from PhonePe redirect
 document.addEventListener('DOMContentLoaded', handlePaymentReturn);
