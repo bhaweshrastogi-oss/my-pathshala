@@ -1,10 +1,10 @@
-/* ════════════════════════════════════════════════════════════════════════════════
+/* ═══════════════════════════════════════════════════════════════════════════
    PMpathshala — enroll.js
    Handles: form validation · Web3Forms (with timestamp) ·
             PhonePe payment redirect · email confirmation trigger
-   ═══════════════════════════════════════════════════════════════ */
+   ═════════════════════════════════════════════════════════════════ */
 
-// ── CONFIG ───────────────────────────────────────────────
+// ── CONFIG ──────────────────────────
 const CFG = {
   web3forms_key : 'cf83d387-9bb4-4849-a2aa-d982c809155e',
 
@@ -23,7 +23,7 @@ const CFG = {
   support_email : 'support@pmpathshala.com',
 };
 
-// ── CURRICULUM ─────────────────────────────────────────────────────────────────────────────────────────────────
+// ── CURRICULUM ────────────────────────────────────────────────────────────────────────────
 const CURRICULUM = {
   basic: {
     meta: '8 Weeks · 32+ Hours · 4 Assignments · Weekends 2 PM – 5 PM IST',
@@ -54,7 +54,7 @@ const CURRICULUM = {
 };
 
 const FAQS = [
-  { q:'Do I need prior PM experience?', a:'No experience needed for Basic to Advanced PM — it starts from first principles. For the AI PM course we recommend having some PM foundations or completing the Basic course first.' },
+  { q:'Do I need prior PM experience?', a:'No — the AI PM course starts with a foundations week covering core PM concepts before it gets into AI-specific material, so you don\'t need to have completed another course first. Some prior exposure to product work helps, but it isn\'t required.' },
   { q:'What are the class timings?',    a:'Both courses run on weekends (Saturday & Sunday). Basic to Advanced PM: 2 PM – 5 PM IST. AI Product Manager: 6 PM – 9 PM IST. All sessions are recorded and shared within 24 hours.' },
   { q:'Are sessions live or recorded?', a:'Every session is live on Zoom with full interaction — polls, breakouts, Q&A. Recordings are available within 24 hours and remain accessible for 1 year.' },
   { q:'What career support is included?', a:'Resume reviews, LinkedIn profile critiques, mock PM interviews, and warm referrals in our hiring network.' },
@@ -63,7 +63,7 @@ const FAQS = [
   { q:'Can I pay in instalments?',      a:'We currently offer one-time payment via PhonePe (UPI, Net Banking, Cards, Wallets). Reach out via WhatsApp if you\'d like to discuss alternative arrangements.' },
 ];
 
-// ── CURRICULUM RENDER ─────────────────────────────────────────────────────────────────────────────────────────────────
+// ── CURRICULUM RENDER ────────────────────────────────────────────────────────────
 function renderCurriculum(type) {
   const data = CURRICULUM[type];
   const metaEl = document.getElementById('curr-meta');
@@ -91,9 +91,9 @@ function switchCurr(type, btn) {
   renderCurriculum(type);
 }
 
-renderCurriculum('basic');
+renderCurriculum('ai');
 
-// ── FAQ RENDER ────────────────────────────────────────────────────────────────────────────────────────────────
+// ── FAQ RENDER ──────────────────────────────────────────────────────────────────
 (function() {
   const el = document.getElementById('faq-list');
   if (!el) return;
@@ -109,7 +109,7 @@ renderCurriculum('basic');
 
 function toggleFaq(i) { document.getElementById('faq-'+i).classList.toggle('open'); }
 
-// ── MODAL CONTROL ────────────────────────────────────────────────────────────────────────────────────────────────
+// ── MODAL CONTROL ──────────────────────────────────────────────────────────────────
 let selectedCourse = 'basic';
 
 function openModal(course) {
@@ -139,7 +139,78 @@ function selectCourse(key) {
   if (sp) sp.textContent = '— ' + CFG.courses[key].price;
 }
 
-// ── HELPERS ────────────────────────────────────────────────────────────────────────────────────────────────
+// ── AI PM WAITLIST (separate from the paid-enrollment modal above —
+//    no course selection, no PhonePe, just a Web3Forms lead capture
+//    with an on-page success state) ─────────────────────────
+function openWaitlist() {
+  document.getElementById('waitlist-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  document.getElementById('waitlist-form-wrap').style.display = '';
+  document.getElementById('waitlist-success').style.display = 'none';
+}
+
+function closeWaitlist() {
+  document.getElementById('waitlist-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function handleWaitlistOverlayClick(e) {
+  if (e.target.id === 'waitlist-overlay') closeWaitlist();
+}
+
+async function handleWaitlistSubmit() {
+  const name  = document.getElementById('wl-name').value.trim();
+  const email = document.getElementById('wl-email').value.trim();
+  const phone = document.getElementById('wl-phone').value.trim();
+
+  ['wl-name','wl-email','wl-phone'].forEach(f => document.getElementById('err-'+f).style.display = 'none');
+  let valid = true;
+  if (!name)                         { document.getElementById('err-wl-name').style.display  = 'block'; valid = false; }
+  if (!email || !email.includes('@')) { document.getElementById('err-wl-email').style.display = 'block'; valid = false; }
+  if (!phone)                        { document.getElementById('err-wl-phone').style.display = 'block'; valid = false; }
+  if (!valid) return;
+
+  const btn = document.getElementById('waitlist-submit-btn');
+  btn.disabled = true;
+  document.getElementById('waitlist-submit-text').textContent = 'Joining…';
+
+  const timestamp = nowIST();
+
+  try {
+    await fetch('https://api.web3forms.com/submit', {
+      method : 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body   : JSON.stringify({
+        access_key : CFG.web3forms_key,
+        subject    : `🤖 AI PM Waitlist: ${name}`,
+        from_name  : 'PMpathshala AI PM Waitlist',
+        name, email, phone,
+        course     : 'AI Product Manager (Waitlist)',
+        timestamp  : timestamp,
+        status     : 'WAITLIST_JOINED',
+        message    : [
+          `🤖 NEW AI PM WAITLIST SIGNUP`,
+          `─────────────────────`,
+          `Name      : ${name}`,
+          `Email     : ${email}`,
+          `Phone     : ${phone}`,
+          `Timestamp : ${timestamp} IST`,
+          `Status    : Waitlist — no payment, notify when next cohort opens`,
+          `─────────────────────`,
+        ].join('\n'),
+      })
+    });
+  } catch (err) {
+    console.warn('Waitlist Web3Forms (non-blocking):', err);
+  }
+
+  document.getElementById('waitlist-form-wrap').style.display = 'none';
+  document.getElementById('waitlist-success').style.display   = '';
+  btn.disabled = false;
+  document.getElementById('waitlist-submit-text').textContent = 'Join the Waitlist';
+}
+
+// ── HELPERS ──────────────────────────────────────────────────────────────────────────
 function nowIST() {
   return new Date().toLocaleString('en-IN', {
     timeZone: 'Asia/Kolkata',
@@ -153,7 +224,7 @@ function generateRef() {
   return 'PMP-' + Date.now().toString(36).toUpperCase() + '-' + Math.random().toString(36).slice(2,5).toUpperCase();
 }
 
-// ── FORM SUBMIT ────────────────────────────────────────────────────────────────────────────────────────────────
+// ── FORM SUBMIT ──────────────────────────────────────────────────────────────────────────
 let enrollData = {};
 
 async function handleSubmit() {
@@ -216,7 +287,7 @@ async function handleSubmit() {
     });
   } catch(err) { console.warn('Web3Forms (non-blocking):', err); }
 
-  // ── 2. Show success micro-state ──────────────────
+  // ── 2. Show success micro-state ──────────────
   document.getElementById('form-wrap').style.display    = 'none';
   document.getElementById('form-success').style.display = '';
 
@@ -228,7 +299,7 @@ async function handleSubmit() {
   }, 1200);
 }
 
-// ── PAYMENT PAGE ────────────────────────────────────────────────────────────────────────────────────────────────
+// ── PAYMENT PAGE ──────────────────────────────────────────────────────────────────
 function showPayPage() {
   const { name, email, phone, course, orderRef } = enrollData;
 
@@ -251,7 +322,7 @@ function showPayPage() {
 
 // ── PHONEPE PAYMENT INITIATION (SDK + iframe checkout) ─────────
 
-// ── PAYMENT API BASE URL ─────────────────────────────────
+// ── PAYMENT API BASE URL ───────────────────────────
 // • '' (empty)     → same origin: deploy static site + /api on ONE Vercel project
 // • full URL       → e.g. GitHub Pages frontend calling a separate Vercel API project
 // Example: 'https://my-pathshala-api.vercel.app'
@@ -450,7 +521,7 @@ function showContactFallback(debugMsg) {
   if (btn) btn.style.display = 'none';
 }
 
-// ── PAYMENT INITIATED NOTIFICATION ─────────────────────
+// ── PAYMENT INITIATED NOTIFICATION ──────────────────────────
 async function notifyPaymentInitiated(orderRef, name, email, course, timestamp) {
   await fetch('https://api.web3forms.com/submit', {
     method : 'POST',
@@ -481,7 +552,7 @@ async function notifyPaymentInitiated(orderRef, name, email, course, timestamp) 
   });
 }
 
-// ── PAYMENT SUCCESS (called from redirect landing) ────────────
+// ── PAYMENT SUCCESS (called from redirect landing) ──────────────
 // When PhonePe redirects back with ?payment=success in the URL,
 // this function is triggered to:
 //   1. Verify the payment server-side
@@ -619,7 +690,7 @@ window.showPayPage = function() {
   _orig_showPayPage();
 };
 
-// ── NAV HELPERS ───────────────────────────────────────────
+// ── NAV HELPERS ───────────────────────────────────────────────────────────
 function backToForm() {
   document.getElementById('pay-page').classList.remove('show');
   document.body.style.overflow = '';
@@ -632,6 +703,6 @@ function closePay() {
   sessionStorage.removeItem('pm_enroll');
 }
 
-// ── INIT ──────────────────────────────────────────────────
+// ── INIT ──────────────────────────────────────────────────────────────────────────
 // Check if returning from PhonePe redirect
 document.addEventListener('DOMContentLoaded', handlePaymentReturn);
