@@ -645,10 +645,10 @@ h1.hero-title .accent {
     <span class="nav-logo-text">PMpathshala</span>
   </a>
   <ul class="nav-links" id="nav-links">
-    <li><a href="#courses">Courses</a></li>
+    <li><a href="#courses">AI PM Course</a></li>
+    <li><a href="#pricing">Basic PM</a></li>
     <li><a href="#curriculum">Curriculum</a></li>
     <li><a href="#instructor">Instructor</a></li>
-    <li><a href="#pricing">Pricing</a></li>
     <li><a href="#faq">FAQ</a></li>
   </ul>
   <div class="hamburger" id="hamburger" onclick="toggleNav()"><span></span><span></span><span></span></div>
@@ -656,45 +656,62 @@ h1.hero-title .accent {
  
 <!-- ═══ HERO ═══ -->
 <section id="home">
-  <div class="hero-inner">
-    <div class="hero-badge">
-      <span class="hero-badge-dot"></span>
-      Cohort-based learning · Live sessions every weekend
+  <div class="hero-grid">
+    <div class="hero-copy">
+      <div class="hero-flagship-tag">
+        <span class="dot"></span>
+        Flagship program · Cohort-based · Live weekends
+      </div>
+      <h1 class="hero-title">Become the Product Manager who knows how to use AI, not just talk about it</h1>
+      <p class="hero-sub">
+        Taught by a practitioner who leads agentic AI initiatives at a Fortune-500-serving company — not a course written from research. Learn how AI actually changes discovery, specs, evaluation, and shipping.
+      </p>
+      <div class="hero-btns">
+        <button class="btn btn-signal btn-lg" onclick="openWaitlist()">Join the AI PM Waitlist</button>
+        <a href="https://wa.me/919667783900?text=Hi,%20I'm%20interested%20in%20the%20AI%20PM%20course" class="btn btn-ghost-white btn-lg" target="_blank">💬 Chat with Us</a>
+      </div>
+      <div class="hero-proof">
+        <div class="hero-proof-item"><span class="hero-proof-num">150+</span><span class="hero-proof-lbl">Students Trained</span></div>
+        <div class="hero-proof-item"><span class="hero-proof-num">4.9★</span><span class="hero-proof-lbl">Course Rating</span></div>
+        <div class="hero-proof-item"><span class="hero-proof-num">30</span><span class="hero-proof-lbl">Max Seats Per Batch</span></div>
+        <div class="hero-proof-item"><span class="hero-proof-num">15+</span><span class="hero-proof-lbl">Yrs Mentor Experience</span></div>
+      </div>
     </div>
- 
-    <h1 class="hero-title">
-      Build the Skills to<br>
-      Ship <span class="accent">World-Class</span><br>
-      Products
-    </h1>
- 
-    <p class="hero-sub">
-      India's most hands-on PM school. Learn from an industry expert mentor with 15+ years in AI Product Management. Real case studies, live mentorship, career-ready from day one.
-    </p>
- 
-    <div class="hero-pills">
-      <span class="hero-pill">📡 Live Weekend Sessions</span>
-      <span class="hero-pill">🧠 Real Case Studies</span>
-      <span class="hero-pill">🎯 Exclusive Interview Preparations</span>
-    </div>
- 
-    <!-- CHANGE 2: Hero buttons — Basic PM enroll disabled, WhatsApp kept -->
-    <div class="hero-btns">
-      <button class="btn btn-disabled btn-lg" disabled>🔒 Registrations Closed</button>
-      <a href="https://wa.me/919667783900?text=Hi,%20I'm%20interested%20in%20the%20PM%20course" class="btn btn-ghost-white btn-lg" target="_blank">💬 Chat with Us</a>
-    </div>
- 
-    <div class="stats-strip">
-      <div class="stat-item"><span class="stat-num">150+</span><span class="stat-lbl">Students Trained</span></div>
-      <div class="stat-item"><span class="stat-num">4.9★</span><span class="stat-lbl">Course Rating</span></div>
-      <div class="stat-item"><span class="stat-num">8</span><span class="stat-lbl">Weeks Per Course</span></div>
-      <div class="stat-item"><span class="stat-num">32+</span><span class="stat-lbl">Hours of Learning</span></div>
-    </div>
- 
-    <!-- CHANGE 3: Hero batch pill — Basic PM now shows Registrations Closed -->
-    <div class="hero-batches">
-      <span class="batch-pill"><span class="icon">📅</span> Basic PM: <strong>Registrations Closed</strong></span>
-      <span class="batch-pill"><span class="icon">🤖</span> AI PM: <strong>Registrations Closed</strong></span>
+
+    <!-- The one deliberate bold moment: a real mockup of agentic AI inside PM work -->
+    <div class="workspace">
+      <div class="workspace-bar">
+        <span class="workspace-dot"></span><span class="workspace-dot"></span><span class="workspace-dot"></span>
+        <span class="workspace-label">AI PM Workspace</span>
+      </div>
+      <div class="workspace-body">
+        <div class="workspace-prompt">
+          <div class="workspace-prompt-icon">PM</div>
+          <div class="workspace-prompt-text">Turn this week's support thread into a prioritised fix list for the sprint.</div>
+        </div>
+        <div class="workspace-output-label">Agent output</div>
+        <div class="workspace-row">
+          <span class="workspace-priority p0">P0</span>
+          <div>
+            <div class="workspace-row-text">Checkout fails on UPI retries after failed OTP</div>
+            <div class="workspace-row-why">Affects 12% of sessions · blocks revenue</div>
+          </div>
+        </div>
+        <div class="workspace-row">
+          <span class="workspace-priority p1">P1</span>
+          <div>
+            <div class="workspace-row-text">Onboarding tooltip overlaps CTA on small screens</div>
+            <div class="workspace-row-why">Cosmetic, but 40% of traffic is mobile</div>
+          </div>
+        </div>
+        <div class="workspace-row">
+          <span class="workspace-priority p2">P2</span>
+          <div>
+            <div class="workspace-row-text">Add export-to-CSV for the reports tab</div>
+            <div class="workspace-row-why">Requested 6 times this month, no urgency</div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -709,78 +726,68 @@ h1.hero-title .accent {
   </div>
 </div>
  
-<!-- ═══ COURSES ═══ -->
-<section id="courses">
-  <div class="courses-wrap">
-    <div class="section-head">
-      <div class="section-label">Our Programs</div>
-      <h2 class="section-title">Choose Your Learning Path</h2>
-      <p class="section-sub">Two focused programs designed around where you are in your PM journey.</p>
+<!-- ═══ WHY THIS PROGRAM ═══ -->
+<section id="diff">
+  <div class="section-head center" style="text-align:center;margin-left:auto;margin-right:auto">
+    <h2 class="section-title">Why this, and not a bigger name</h2>
+    <p class="section-sub" style="margin:0 auto">There's no shortage of AI PM certificates from institutions you've heard of. Here's the honest case for a smaller one.</p>
+  </div>
+  <div class="diff-grid">
+    <div class="diff-card" data-reveal data-delay="0s">
+      <span class="diff-num">Practitioner, not professor</span>
+      <h3>Taught from the job, not from a syllabus</h3>
+      <p>Your mentor leads agentic AI initiatives at a real company right now. The case studies are this month's actual decisions, not five-year-old research papers repackaged for a curriculum.</p>
     </div>
-    <div class="courses-grid">
- 
-      <!-- Basic PM -->
-      <div class="course-card" data-reveal data-delay="0s">
-        <div class="course-card-top"></div>
-        <div class="course-card-body">
-          <div class="course-badge-row">
-            <span class="badge badge-best">⭐ Bestseller</span>
-            <div class="course-meta-tags">
-              <span class="meta-tag">8 Weeks</span>
-              <span class="meta-tag">Beginner Friendly</span>
-              <!-- CHANGE 5: Meta tag — date replaced with closed status -->
-              <span class="meta-tag">Registrations Closed</span>
-            </div>
-          </div>
-          <h3 class="course-title">Basic to Advanced Product Management</h3>
-          <p class="course-desc">A comprehensive journey from PM fundamentals to advanced strategies. Perfect for aspiring PMs, career switchers, and professionals formalising their skills.</p>
-          <ul class="course-features">
-            <li><span class="feature-check">✓</span> 32+ Hours of Live Weekend Sessions</li>
-            <li><span class="feature-check">✓</span> 4 Hands-on Assignments with Feedback</li>
-            <li><span class="feature-check">✓</span> 1:1 Mentorship Sessions with Industry Expert</li>
-            <li><span class="feature-check">✓</span> 1 year Access to Recordings & Resources</li>
-          </ul>
-          <div class="course-price">
-            <span class="price-strike">₹34,999</span>
-            <span class="price-main">₹25,000</span>
-            <span class="price-save">Save ₹9,999</span>
-          </div>
-          <!-- CHANGE 4: Course card button — disabled -->
-          <button class="btn btn-disabled btn-md" disabled style="width:100%;justify-content:center;">🔒 Registrations Closed</button>
-        </div>
-      </div>
- 
-      <!-- AI PM -->
-      <div class="course-card" data-reveal data-delay="0.1s">
-        <div class="course-card-top"></div>
-        <div class="ribbon">Coming Soon</div>
-        <div class="course-card-body">
-          <div class="course-badge-row">
-            <span class="badge badge-hot">🔥 High Demand</span>
-            <div class="course-meta-tags">
-              <span class="meta-tag">8 Weeks</span>
-              <span class="meta-tag">Intermediate</span>
-              <span class="meta-tag">Registrations Closed</span>
-            </div>
-          </div>
-          <h3 class="course-title">AI Product Manager</h3>
-          <p class="course-desc">Master the judgment AI product managers actually need — scoping a feasible AI feature, writing an evaluation plan, defending a build-vs-buy call. Ideal for PMs ready to own AI-powered products, not just talk about them.</p>
-          <ul class="course-features">
-            <li><span class="feature-check">✓</span> 40+ Hours of Live Weekend Sessions</li>
-            <li><span class="feature-check">✓</span> Real AI PRDs, Evals & Feasibility Case Studies</li>
-            <li><span class="feature-check">✓</span> The 4-Axis Feasibility Check & AI Metrics Stack</li>
-            <li><span class="feature-check">✓</span> 1 year Access to Recordings & Resources</li>
-          </ul>
-          <div class="course-price">
-            <span class="price-strike">₹50,000</span>
-            <span class="price-main">₹35,000</span>
-            <span class="price-save">Save ₹15,000</span>
-          </div>
-          <button class="btn btn-disabled btn-md" disabled style="width:100%;justify-content:center;">🔒 Registrations Closed</button>
-        </div>
-      </div>
- 
+    <div class="diff-card" data-reveal data-delay="0.1s">
+      <span class="diff-num">30 seats, not 300</span>
+      <h3>A cap that's actually enforced</h3>
+      <p>Large programs advertise mentorship they can't deliver at scale. Thirty seats means everyone gets real 1:1 time and feedback on their own work.</p>
     </div>
+    <div class="diff-card" data-reveal data-delay="0.2s">
+      <span class="diff-num">Built for India's market</span>
+      <h3>Case studies you'll actually face</h3>
+      <p>UPI payment flows, tier-2 city user research, India-specific compliance questions — the parts of the job that generic, globally-templated courses skip entirely.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FLAGSHIP: AI PRODUCT MANAGER ═══ -->
+<section id="courses" style="padding-bottom:2rem">
+  <div class="flagship-wrap">
+    <div class="flagship-main">
+      <span class="flagship-tag">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        Flagship Program
+      </span>
+      <h3>AI Product Manager</h3>
+      <p>Master the judgment AI product managers actually need — scoping a feasible AI feature, writing an evaluation plan, defending a build-vs-buy call. Ideal for PMs ready to own AI-powered products, not just talk about them.</p>
+      <ul class="flagship-weeks">
+        <li><span class="wk-num">1</span> AI/ML fundamentals PMs actually need</li>
+        <li><span class="wk-num">2</span> AI product discovery & the 4-Axis Feasibility Check</li>
+        <li><span class="wk-num">4</span> System architecture & context engineering — writing AI PRDs ML teams respect</li>
+        <li><span class="wk-num">5</span> AI agents, MCP, and designing evals</li>
+        <li><span class="wk-num">6</span> Designing trustworthy AI experiences</li>
+        <li><span class="wk-num">8</span> Responsible AI review + capstone AI PRD defense</li>
+      </ul>
+      <a href="https://wa.me/919667783900?text=Hi,%20I'm%20interested%20in%20the%20AI%20PM%20course" class="btn btn-ghost-white btn-md" target="_blank">💬 Ask a question first</a>
+    </div>
+    <div class="flagship-side">
+      <div class="price-plan-label" style="color:rgba(255,255,255,0.5)">8-WEEK LIVE PROGRAM</div>
+      <div class="flagship-price-was">₹50,000</div>
+      <div class="flagship-price-now">₹35,000</div>
+      <div class="flagship-side-meta">Weekends · 6 PM – 9 PM IST · 40+ live hours</div>
+      <button class="btn btn-signal" onclick="openWaitlist()">Join the Waitlist</button>
+      <div class="flagship-side-note">No payment now — you'll be notified the moment the next cohort opens.</div>
+    </div>
+  </div>
+
+  <div class="secondary-strip">
+    <div class="secondary-strip-text">
+      <span class="secondary-strip-name">Also offered: Basic to Advanced Product Management</span>
+      <span class="secondary-strip-price"><s>₹34,999</s> ₹25,000</span>
+      <span class="secondary-strip-status">Registrations Closed</span>
+    </div>
+    <a href="#pricing" class="btn btn-outline btn-sm">See full details</a>
   </div>
 </section>
  
@@ -793,10 +800,10 @@ h1.hero-title .accent {
       <p class="section-sub">Every session is structured to build on the last — from first principles to capstone project.</p>
     </div>
     <div class="curr-tab-row">
-      <button class="curr-tab active" onclick="switchCurr('basic',this)">Basic to Advanced PM</button>
-      <button class="curr-tab" onclick="switchCurr('ai',this)">AI Product Manager</button>
+      <button class="curr-tab active" onclick="switchCurr('ai',this)">AI Product Manager</button>
+      <button class="curr-tab" onclick="switchCurr('basic',this)">Basic to Advanced PM</button>
     </div>
-    <div class="curr-meta" id="curr-meta">8 Weeks · 32+ Hours · 4 Assignments · Weekends 2 PM – 5 PM IST</div>
+    <div class="curr-meta" id="curr-meta">8 Weeks · 40+ Hours · 4 Assignments · Weekends 6 PM – 9 PM IST</div>
     <div class="curr-grid" id="curr-grid"></div>
   </div>
 </section>
@@ -812,7 +819,7 @@ h1.hero-title .accent {
       <div class="instructor-avatar-card">
         <div class="av-initials">IE</div>
         <div class="av-name">Industry Expert Mentor</div>
-        <div class="av-role">Sr. AVP – AI Solutions & Product Management</div>
+        <div class="av-role">Founder, PMpathshala · Agentic AI Practitioner</div>
         <div class="av-stats">
           <div><span class="av-stat-num">15+</span><div class="av-stat-lbl">Years Exp.</div></div>
           <div><span class="av-stat-num">150+</span><div class="av-stat-lbl">Students</div></div>
@@ -822,7 +829,7 @@ h1.hero-title .accent {
     </div>
     <div>
       <h3 class="instructor-name">Industry Expert Mentor</h3>
-      <div class="instructor-role">Sr. AVP – AI Solutions & Product Management </div>
+      <div class="instructor-role">Founder, PMpathshala · Agentic AI Practitioner </div>
       <div class="instructor-chips">
         <span class="chip">🎯 15+ Years in PM</span>
         <span class="chip">🤖 PM Specialist</span>
@@ -854,6 +861,24 @@ h1.hero-title .accent {
     </div>
     <div class="pricing-grid">
       <div class="price-card featured">
+        <div class="price-plan-label">FLAGSHIP · 8-Week Live Program</div>
+        <div class="price-plan-name">AI Product Manager</div>
+        <div class="price-plan-duration">Weekend cohort · 6 PM – 9 PM IST</div>
+        <div class="price-amount">
+          <span class="price-was">₹50,000</span>
+          <span class="price-now">₹35,000</span>
+        </div>
+        <ul class="price-perks">
+          <li><span class="perk-check">✓</span> 40+ hours of live sessions</li>
+          <li><span class="perk-check">✓</span> AI PRDs, evals & feasibility case studies</li>
+          <li><span class="perk-check">✓</span> India AI case studies: Sarvam vs Krutrim</li>
+          <li><span class="perk-check">✓</span> 1:1 mentorship with industry expert</li>
+          <li><span class="perk-check">✓</span> 1 year access to recordings</li>
+        </ul>
+        <button class="btn btn-signal btn-md" style="width:100%;justify-content:center;" onclick="openWaitlist()">Join the Waitlist</button>
+      </div>
+
+      <div class="price-card">
         <div class="price-plan-label">8-Week Live Program</div>
         <div class="price-plan-name">Basic to Advanced PM</div>
         
@@ -867,25 +892,6 @@ h1.hero-title .accent {
           <li><span class="perk-check">✓</span> Hands-on assignments with feedback</li>
           <li><span class="perk-check">✓</span> 1:1 mentorship with industry expert</li>
           <li><span class="perk-check">✓</span> Real-world case studies</li>
-          <li><span class="perk-check">✓</span> 1 year access to recordings</li>
-        </ul>
-        <!-- CHANGE 6: Pricing card button — disabled -->
-        <button class="btn btn-disabled btn-md" disabled style="width:100%;justify-content:center;">🔒 Registrations Closed</button>
-      </div>
- 
-      <div class="price-card">
-        <div class="price-plan-label">8-Week Live Program</div>
-        <div class="price-plan-name">AI Product Manager</div>
-        <div class="price-plan-duration">Weekend cohort · Coming Soon</div>
-        <div class="price-amount">
-          <span class="price-was">₹50,000</span>
-          <span class="price-now">₹35,000</span>
-        </div>
-        <ul class="price-perks">
-          <li><span class="perk-check">✓</span> 40+ hours of live sessions</li>
-          <li><span class="perk-check">✓</span> AI PRDs, evals & feasibility case studies</li>
-          <li><span class="perk-check">✓</span> India AI case studies: Sarvam vs Krutrim</li>
-          <li><span class="perk-check">✓</span> 1:1 mentorship with industry expert</li>
           <li><span class="perk-check">✓</span> 1 year access to recordings</li>
         </ul>
         <button class="btn btn-disabled btn-md" disabled style="width:100%;justify-content:center;">🔒 Registrations Closed</button>
@@ -946,19 +952,15 @@ h1.hero-title .accent {
 <section id="cta">
   <div class="cta-inner">
     <div class="section-label">Join the Cohort</div>
-    <!-- CHANGE 9: CTA heading & subtext -->
-    <!-- <h2 class="section-title">Your PM Career Starts August 22nd</h2> -->
-    <h2 class="section-title">Your PM Career Starts Here</h2>
-    <p class="section-sub">30 seats. One cohort. Zero fluff. Registrations are currently closed — chat with us to be notified when the next cohort opens.</p>
-    <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:1rem">
-      <!-- CHANGE 8: CTA primary button — disabled -->
-      <button class="btn btn-disabled btn-lg" disabled>🔒 Registrations Closed</button>
+    <h2 class="section-title">Get on the AI PM Waitlist</h2>
+    <p class="section-sub" style="margin:0 auto">30 seats. One cohort at a time. Tell us you're interested and we'll message you the moment the next batch opens — no payment, no commitment.</p>
+    <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:1rem;margin-top:2rem">
+      <button class="btn btn-signal btn-lg" onclick="openWaitlist()">Join the AI PM Waitlist</button>
       <a href="https://wa.me/919667783900" target="_blank" class="btn btn-ghost-white btn-lg">💬 Talk to Us</a>
     </div>
     <div class="cta-tags">
-      <!-- <span class="cta-tag">📅 August 22, 2026</span> -->
+      <span class="cta-tag">🤖 AI Product Manager · Flagship</span>
       <span class="cta-tag">⚡ 30 seats only</span>
-      <span class="cta-tag">🔒 Secure checkout</span>
       <span class="cta-tag">↩️ 15-day refund</span>
     </div>
   </div>
@@ -1017,6 +1019,54 @@ h1.hero-title .accent {
   </div>
 </div>
  
+<!-- ═══ AI PM WAITLIST MODAL ═══ -->
+<div class="modal-overlay" id="waitlist-overlay" onclick="handleWaitlistOverlayClick(event)">
+  <div class="modal" id="waitlist-modal">
+    <button class="modal-close" onclick="closeWaitlist()">✕</button>
+    <div id="waitlist-form-wrap">
+      <div class="modal-logo">
+        <div class="modal-logo-icon"><svg class="logo-svg" viewBox="0 0 24 24" style="width:18px;height:18px"></svg></div>
+        <span class="modal-logo-text">PMpathshala</span>
+      </div>
+      <span class="flagship-tag" style="margin-bottom:0.8rem">🤖 AI Product Manager</span>
+      <h3>Join the Waitlist</h3>
+      <p class="modal-sub">Be the first to know when the next AI PM cohort opens. No payment, no commitment — just your spot in line.</p>
+
+      <div class="field-group">
+        <label class="field-label">Full Name *</label>
+        <input class="field-input" type="text" id="wl-name" placeholder="Your full name">
+        <div class="field-error" id="err-wl-name">Please enter your full name</div>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Email Address *</label>
+        <input class="field-input" type="email" id="wl-email" placeholder="you@example.com">
+        <div class="field-error" id="err-wl-email">Please enter a valid email</div>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Phone Number *</label>
+        <input class="field-input" type="tel" id="wl-phone" placeholder="+91 98765 43210">
+        <div class="field-error" id="err-wl-phone">Please enter your phone number</div>
+      </div>
+
+      <button class="submit-btn" id="waitlist-submit-btn" onclick="handleWaitlistSubmit()" style="background:linear-gradient(135deg,var(--signal),var(--signal-d));box-shadow:0 4px 18px var(--signal-glow)">
+        <span id="waitlist-submit-text">Join the Waitlist</span>
+      </button>
+      <div class="secure-note">We'll only message you about the AI PM cohort — no spam.</div>
+    </div>
+    <div id="waitlist-success" style="display:none;text-align:center;padding:2rem 0">
+      <div style="font-size:3rem;margin-bottom:1rem">🎉</div>
+      <h4 style="font-family:'DM Serif Display',serif;font-size:1.3rem;color:var(--ink);margin-bottom:0.6rem">You're on the list!</h4>
+      <p style="font-size:0.87rem;color:var(--ink2);line-height:1.75">
+        We'll notify you the moment the next AI PM cohort opens.<br>
+        Have a question in the meantime? We're one message away.
+      </p>
+      <div style="margin-top:1.6rem">
+        <a href="https://wa.me/919667783900" target="_blank" class="btn btn-signal btn-md" style="justify-content:center">💬 Chat with Us</a>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- ═══ ENROLL MODAL ═══ -->
 <div class="modal-overlay" id="modal-overlay" onclick="handleOverlayClick(event)">
   <div class="modal" id="modal">
