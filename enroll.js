@@ -1,10 +1,10 @@
-/* ═══════════════════════════════════════════════════════════════════════════
+/* ════════════════════════════════════════════════════════════════════════════════
    PMpathshala — enroll.js
    Handles: form validation · Web3Forms (with timestamp) ·
             PhonePe payment redirect · email confirmation trigger
-   ═════════════════════════════════════════════════════════════════ */
+   ═══════════════════════════════════════════════════════════════ */
 
-// ── CONFIG ──────────────────────────
+// ── CONFIG ───────────────────────────────────────────────
 const CFG = {
   web3forms_key : 'cf83d387-9bb4-4849-a2aa-d982c809155e',
 
@@ -23,7 +23,7 @@ const CFG = {
   support_email : 'support@pmpathshala.com',
 };
 
-// ── CURRICULUM ────────────────────────────────────────────────────────────────────────────
+// ── CURRICULUM ─────────────────────────────────────────────────────────────────────────────────────────────────
 const CURRICULUM = {
   basic: {
     meta: '8 Weeks · 32+ Hours · 4 Assignments · Weekends 2 PM – 5 PM IST',
@@ -43,12 +43,12 @@ const CURRICULUM = {
     weeks: [
       { t:'AI/ML Fundamentals for PMs',        i:['AI vs ML vs Deep Learning vs LLMs','Types of ML Algorithms & Model Families','How Neural Networks & Transformers Work','AI Capabilities, Limitations & Failure Modes','Key AI Terminology (Hallucination, Latency, Context Window)','India\'s AI Landscape (Sarvam, Krutrim, GenAI Stack)'] },
       { t:'AI Product Discovery & Feasibility', i:['Identifying AI-Worthy Opportunities','The 4-Axis Feasibility Check (Desirability/Viability/Technical/Data)','Data Availability & Readiness Audit','Build vs Buy vs Prompt-Wrap Decision Tree','AI Use Case Prioritisation','Killing Bad AI Ideas Early'] },
-      { t:'Data Strategy & Working with ML Teams', i:['Data Collection, Labelling & Quality','Training Data vs Fine-Tuning vs RAG','Data Pipelines & Privacy Compliance (DPDP Act)','Writing Specs ML Engineers Respect','Model Requirements Documents','Experiment Tracking & Versioning'] },
-      { t:'Designing Trustworthy AI Experiences', i:['UX Patterns for Uncertainty & Confidence','The Trust Ladder: Suggest → Auto-Apply → Autonomy','Human Handoff & Graceful Degradation','Explainability & "Show Your Work" Design','Designing for Hallucination & Error Recovery','Working with Designers on AI Interfaces'] },
-      { t:'AI Metrics & Evaluation',           i:['Precision, Recall, F1 & the Cost of Each Mistake','Model Metrics vs Product Metrics vs Business Metrics','A/B Testing for Probabilistic Systems','Guardrail Metrics & Novelty Effects','Cost-Per-Inference as a Product Constraint','Continuous Monitoring & Model Drift'] },
-      { t:'LLMs, Prompting & Generative AI Products', i:['Understanding LLMs (GPT, Claude, Gemini)','Prompt Engineering for Product Managers','Fine-Tuning vs RAG vs Prompt-Wrapping','Building GenAI Features End-to-End','LLM Evaluation & Red-Teaming','Managing Latency, Cost & Context Windows'] },
-      { t:'Agentic AI & Responsible AI',       i:['What Makes a Product "Agentic"','Autonomy Levels: Assist to Full Autonomy','Tool Use, Permissions & Guardrails','Bias, Fairness & Explainable AI (XAI)','AI Governance Frameworks & Risk Management','Responsible AI Review Checklist'] },
-      { t:'AI Product Launch, Scale & Career', i:['MLOps Fundamentals for PMs','Model Deployment & Rollout Strategies','Scaling AI Products Post-Launch','AI Product Roadmapping','AI PM Interview Preparation','Capstone Project Presentation'] },
+      { t:'Generative AI: How LLMs Actually Work', i:['Predictive AI vs Generative AI','Pre-Training, Fine-Tuning & RLHF Explained','Tokenization, Attention & Inference Demystified','The AI Product Landscape: Infra, Models, Apps','The AI PM Stack: A 7-Step Framework','Choosing the Right Model for Your Use Case'] },
+      { t:'System Architecture & Context Engineering', i:['System Components: Data, Models, Context, Tools, Feedback Loops','Context Engineering for Product Managers','RAG vs Fine-Tuning: A Decision Framework','Writing AI PRDs ML Teams Respect','Prompt Strategy Design (Not Prompt Writing)','Evaluation Plans as a Launch Requirement'] },
+      { t:'AI Agents & Evaluations',           i:['What Makes a Product "Agentic"','The Agent Stack: Tools, Memory, Context, Orchestration','Agentic Loops & Self-Improving Systems','Understanding MCP & AI Distribution','Designing Evals: The Must-Have AI PM Skill','Offline vs Online Evaluation Strategy'] },
+      { t:'Designing Trustworthy AI Experiences', i:['UX Patterns for Uncertainty & Confidence','The Trust Ladder: Suggest → Auto-Apply → Autonomy','Human Handoff & Graceful Degradation','Designing for Hallucination, Latency & Non-Determinism','Guardrails for Regulation, Trust & Safety','India\'s DPDP Act for AI Products'] },
+      { t:'The Business & Metrics of AI Products', i:['AI Product Business Models & Monetization','Pricing Probabilistic Features','Cost-Per-Inference as a Product Metric','The AI Metrics Stack: Model, Product, Business','Platform Thinking & Data Feedback Loops','India Case Study: Scope Discipline (Sarvam vs Krutrim)'] },
+      { t:'Responsible AI, Capstone & Career', i:['Responsible AI Review Framework','AI Governance & Regulatory Landscape (India DPDP + Global)','Capstone: Full AI PRD + Evaluation Plan Defense','AI PM Interview Preparation','Career Paths: AI PM vs ML PM vs Platform PM','Building Your AI PM Portfolio (Without Code)'] },
     ]
   }
 };
@@ -63,7 +63,7 @@ const FAQS = [
   { q:'Can I pay in instalments?',      a:'We currently offer one-time payment via PhonePe (UPI, Net Banking, Cards, Wallets). Reach out via WhatsApp if you\'d like to discuss alternative arrangements.' },
 ];
 
-// ── CURRICULUM RENDER ────────────────────────────────────────────────────────────
+// ── CURRICULUM RENDER ─────────────────────────────────────────────────────────────────────────────────────────────────
 function renderCurriculum(type) {
   const data = CURRICULUM[type];
   const metaEl = document.getElementById('curr-meta');
@@ -93,7 +93,7 @@ function switchCurr(type, btn) {
 
 renderCurriculum('basic');
 
-// ── FAQ RENDER ──────────────────────────────────────────────────────────────────
+// ── FAQ RENDER ────────────────────────────────────────────────────────────────────────────────────────────────
 (function() {
   const el = document.getElementById('faq-list');
   if (!el) return;
@@ -109,7 +109,7 @@ renderCurriculum('basic');
 
 function toggleFaq(i) { document.getElementById('faq-'+i).classList.toggle('open'); }
 
-// ── MODAL CONTROL ──────────────────────────────────────────────────────────────────
+// ── MODAL CONTROL ────────────────────────────────────────────────────────────────────────────────────────────────
 let selectedCourse = 'basic';
 
 function openModal(course) {
@@ -139,7 +139,7 @@ function selectCourse(key) {
   if (sp) sp.textContent = '— ' + CFG.courses[key].price;
 }
 
-// ── HELPERS ──────────────────────────────────────────────────────────────────────────
+// ── HELPERS ────────────────────────────────────────────────────────────────────────────────────────────────
 function nowIST() {
   return new Date().toLocaleString('en-IN', {
     timeZone: 'Asia/Kolkata',
@@ -153,7 +153,7 @@ function generateRef() {
   return 'PMP-' + Date.now().toString(36).toUpperCase() + '-' + Math.random().toString(36).slice(2,5).toUpperCase();
 }
 
-// ── FORM SUBMIT ─────────────────────────────────────────────────────────────────
+// ── FORM SUBMIT ────────────────────────────────────────────────────────────────────────────────────────────────
 let enrollData = {};
 
 async function handleSubmit() {
@@ -216,7 +216,7 @@ async function handleSubmit() {
     });
   } catch(err) { console.warn('Web3Forms (non-blocking):', err); }
 
-  // ── 2. Show success micro-state ──────────────
+  // ── 2. Show success micro-state ──────────────────
   document.getElementById('form-wrap').style.display    = 'none';
   document.getElementById('form-success').style.display = '';
 
@@ -228,7 +228,7 @@ async function handleSubmit() {
   }, 1200);
 }
 
-// ── PAYMENT PAGE ─────────────────────────────────────────────────────────────────
+// ── PAYMENT PAGE ────────────────────────────────────────────────────────────────────────────────────────────────
 function showPayPage() {
   const { name, email, phone, course, orderRef } = enrollData;
 
@@ -251,7 +251,7 @@ function showPayPage() {
 
 // ── PHONEPE PAYMENT INITIATION (SDK + iframe checkout) ─────────
 
-// ── PAYMENT API BASE URL ──────────────────────────
+// ── PAYMENT API BASE URL ─────────────────────────────────
 // • '' (empty)     → same origin: deploy static site + /api on ONE Vercel project
 // • full URL       → e.g. GitHub Pages frontend calling a separate Vercel API project
 // Example: 'https://my-pathshala-api.vercel.app'
@@ -450,7 +450,7 @@ function showContactFallback(debugMsg) {
   if (btn) btn.style.display = 'none';
 }
 
-// ── PAYMENT INITIATED NOTIFICATION ──────────────────────────
+// ── PAYMENT INITIATED NOTIFICATION ─────────────────────
 async function notifyPaymentInitiated(orderRef, name, email, course, timestamp) {
   await fetch('https://api.web3forms.com/submit', {
     method : 'POST',
@@ -481,7 +481,7 @@ async function notifyPaymentInitiated(orderRef, name, email, course, timestamp) 
   });
 }
 
-// ── PAYMENT SUCCESS (called from redirect landing) ──────────────
+// ── PAYMENT SUCCESS (called from redirect landing) ────────────
 // When PhonePe redirects back with ?payment=success in the URL,
 // this function is triggered to:
 //   1. Verify the payment server-side
@@ -619,7 +619,7 @@ window.showPayPage = function() {
   _orig_showPayPage();
 };
 
-// ── NAV HELPERS ───────────────────────────────────────────────────────────
+// ── NAV HELPERS ───────────────────────────────────────────
 function backToForm() {
   document.getElementById('pay-page').classList.remove('show');
   document.body.style.overflow = '';
@@ -632,6 +632,6 @@ function closePay() {
   sessionStorage.removeItem('pm_enroll');
 }
 
-// ── INIT ──────────────────────────────────────────────────────────────────────────
+// ── INIT ──────────────────────────────────────────────────
 // Check if returning from PhonePe redirect
 document.addEventListener('DOMContentLoaded', handlePaymentReturn);
