@@ -26,7 +26,7 @@ const CFG = {
 // ── CURRICULUM ────────────────────────────────────────────────────────────────────────────
 const CURRICULUM = {
   basic: {
-    meta: '8 Weeks · 32+ Hours · 4 Assignments · Weekends 2 PM – 5 PM IST',
+    meta: '8 Weeks · 32+ Hours · 4 Assignments · Weekends 9:30 AM – 12:30 PM IST',
     weeks: [
       { t:'PM Foundations & User Research', i:['What is Product Management?','PM Roles & Responsibilities','Product Lifecycle Overview','User Interview Techniques','Creating User Personas','Jobs-to-be-Done Framework'] },
       { t:'Market Analysis & Strategy',     i:['Market Sizing (TAM/SAM/SOM)','Competitive Analysis & SWOT','Porter\'s Five Forces','Crafting Product Vision','OKRs & North Star Metrics','Strategic Roadmapping'] },
@@ -39,7 +39,7 @@ const CURRICULUM = {
     ]
   },
   ai: {
-    meta: '8 Weeks · 40+ Hours · 4 Assignments · Weekends 6 PM – 9 PM IST',
+    meta: '8 Weeks · 40+ Hours · 4 Assignments · Weekends 2 PM – 5 PM IST',
     weeks: [
       { t:'AI/ML Fundamentals for Product Managers',        i:['AI → ML → Deep Learning → Generative AI','How LLMs Actually Work — PM Version','The Modern Model Landscape','Model Parameters That Affect Product Behaviour','LLM Limitations','The AI Product Stack','Choosing the Right Model','AI vs Rules vs Traditional ML'] },
       { t:'AI Product Discovery, Strategy & Feasibility', i:['Finding AI-Native Product Opportunities','Workflow Decomposition','PMpathshala AI Opportunity Framework','4-Axis AI Feasibility Check','Build vs Buy vs Partner','AI Product Strategy & Moats','AI Business Models'] },
@@ -55,7 +55,7 @@ const CURRICULUM = {
 
 const FAQS = [
   { q:'Do I need prior PM experience?', a:'No — the AI PM course starts with a foundations week covering core PM concepts before it gets into AI-specific material, so you don\'t need to have completed another course first. Some prior exposure to product work helps, but it isn\'t required.' },
-  { q:'What are the class timings?',    a:'Both courses run on weekends (Saturday & Sunday). Basic to Advanced PM: 2 PM – 5 PM IST. AI Product Manager: 6 PM – 9 PM IST. All sessions are recorded and shared within 24 hours.' },
+  { q:'What are the class timings?',    a:'Both courses run on weekends (Saturday & Sunday). Basic to Advanced PM: 9:30 AM – 12:30 PM IST. AI Product Manager: 2 PM – 5 PM IST. All sessions are recorded and shared within 24 hours.' },
   { q:'Are sessions live or recorded?', a:'Every session is live on Zoom with full interaction — polls, breakouts, Q&A. Recordings are available within 24 hours and remain accessible for 1 year.' },
   { q:'What career support is included?', a:'Resume reviews, LinkedIn profile critiques, mock PM interviews, and warm referrals in our hiring network.' },
   { q:'What is the refund policy?',     a:'15-day money-back guarantee from the course start date. If you\'ve attended fewer than 3 sessions and aren\'t satisfied, we\'ll refund 100% — no questions asked. Email support@pmpathshala.com to request.' },
