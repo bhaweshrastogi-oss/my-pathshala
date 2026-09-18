@@ -1,7 +1,7 @@
-/* ══════════════════════════════════════════════════════════════════
+/* ════════════════════════════════════════════════════════════════════
    PMpathshala — Global Stylesheet
    Theme: Deep Indigo / Violet / Soft Lavender
-   ═══════════════════════════════════════════════════ */
+   ═══════════════════════════════════════════════════════ */
 
 @import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Serif+Display:ital@0;1&display=swap');
 
@@ -344,9 +344,9 @@ footer {
   section { padding: 4rem 5%; }
 }
 
-/* ══════════════════════════════════════════════════
+/* ═════════════════════════════════════════════════
    FLAGSHIP REDESIGN — AI PM as flagship course
-   ═════════════════════════════════════════════ */
+   ═════════════════════════════════════════════════ */
 
 /* ── Status chips (waitlist-open vs closed, distinct from generic .meta-tag) ── */
 .meta-tag-signal {
@@ -478,7 +478,7 @@ footer {
 #diff .diff-inner { max-width: 1140px; margin: 0 auto; position: relative; z-index: 2; }
 #diff .section-title { color: #fff; }
 #diff .section-sub { color: rgba(255,255,255,0.68); }
-#diff .section-label { color: var(--violet-lt); }
+#diff .section-label { color: var(--violet-lt); text-transform: none; }
 #diff .section-label::before { background: linear-gradient(90deg, #fff, var(--violet-lt)); }
 
 /* Career support grid */
