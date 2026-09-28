@@ -1,7 +1,7 @@
-/* ════════════════════════════════════════════════════════════════════
+/* ══════════════════════════════════════════════════════════════════
    PMpathshala — Global Stylesheet
    Theme: Deep Indigo / Violet / Soft Lavender
-   ═══════════════════════════════════════════════════════ */
+   ═══════════════════════════════════════════════ */
 
 @import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Serif+Display:ital@0;1&display=swap');
 
@@ -344,9 +344,9 @@ footer {
   section { padding: 4rem 5%; }
 }
 
-/* ═════════════════════════════════════════════════
+/* ═════════════════════════════════════════════
    FLAGSHIP REDESIGN — AI PM as flagship course
-   ═════════════════════════════════════════════════ */
+   ═════════════════════════════════════════ */
 
 /* ── Status chips (waitlist-open vs closed, distinct from generic .meta-tag) ── */
 .meta-tag-signal {
@@ -569,6 +569,40 @@ footer {
 .flagship-side-meta { font-size: 0.78rem; color: rgba(255,255,255,0.5); margin-bottom: 1.4rem; }
 .flagship-side .btn { width: 100%; justify-content: center; margin-bottom: 0.8rem; }
 .flagship-side-note { font-size: 0.72rem; color: rgba(255,255,255,0.4); text-align: center; }
+
+/* ── Quiz CTA — glitter gold ── */
+.flagship-cta-row { display: flex; flex-wrap: wrap; align-items: center; gap: 0.9rem; }
+.btn-quiz {
+  position: relative; overflow: hidden;
+  background: linear-gradient(135deg, #9a6d00 0%, #ffd84d 22%, #fff6d8 45%, #ffd84d 68%, #a9770a 100%);
+  background-size: 220% 220%;
+  color: #4a3300;
+  font-weight: 700;
+  box-shadow: 0 4px 18px rgba(212,168,20,0.5), inset 0 1px 0 rgba(255,255,255,0.5);
+  animation: gold-shift 3.2s ease-in-out infinite;
+}
+.btn-quiz::after {
+  content: '';
+  position: absolute; top: 0; left: -60%;
+  width: 35%; height: 100%;
+  background: linear-gradient(120deg, transparent, rgba(255,255,255,0.9), transparent);
+  transform: skewX(-20deg);
+  animation: glitter-sweep 2.8s ease-in-out infinite;
+}
+.btn-quiz:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 26px rgba(212,168,20,0.65), inset 0 1px 0 rgba(255,255,255,0.5);
+}
+@keyframes gold-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+@keyframes glitter-sweep {
+  0% { left: -60%; }
+  45% { left: 130%; }
+  100% { left: 130%; }
+}
+@media (prefers-reduced-motion: reduce) { .btn-quiz, .btn-quiz::after { animation: none; } }
 
 /* ── Secondary course strip (Basic PM, demoted deliberately, price still visible) ── */
 .secondary-strip {
