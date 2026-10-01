@@ -1,6 +1,14 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <rect width="32" height="32" rx="7" fill="#4f46e5"/>
-  <polygon points="16,4 8,8.5 8,17.5 16,22 24,17.5 24,8.5" fill="rgba(255,255,255,0.95)"/>
-  <polygon points="8,17.5 8,26.5 16,31 16,22" fill="rgba(255,255,255,0.52)"/>
-  <polygon points="24,17.5 24,26.5 16,31 16,22" fill="rgba(255,255,255,0.75)"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="PMpathshala logo">
+<polygon points="7.01,32.5 20,40 20.0,55.0 7.01,47.5" fill="#1FD4FA"/>
+<polygon points="20,40 32.99,32.5 32.99,47.5 20.0,55.0" fill="#0098C9"/>
+<polygon points="7.01,32.5 20.0,25.0 32.99,32.5 20,40" fill="#7FF3FF"/>
+<polygon points="20,37.61 24.12,40 20,42.39 15.88,40" fill="#ffffff" fill-opacity="0.9"/>
+<polygon points="31.01,32.5 44,40 44.0,55.0 31.01,47.5" fill="#1FD4FA"/>
+<polygon points="44,40 56.99,32.5 56.99,47.5 44.0,55.0" fill="#0098C9"/>
+<polygon points="31.01,32.5 44.0,25.0 56.99,32.5 44,40" fill="#7FF3FF"/>
+<polygon points="44,37.61 48.12,40 44,42.39 39.88,40" fill="#ffffff" fill-opacity="0.9"/>
+<polygon points="19.01,16.5 32,24 32.0,39.0 19.01,31.5" fill="#1FD4FA"/>
+<polygon points="32,24 44.99,16.5 44.99,31.5 32.0,39.0" fill="#0098C9"/>
+<polygon points="19.01,16.5 32.0,9.0 44.99,16.5 32,24" fill="#7FF3FF"/>
+<polygon points="32,21.61 36.12,24 32,26.39 27.88,24" fill="#ffffff" fill-opacity="0.9"/>
 </svg>
