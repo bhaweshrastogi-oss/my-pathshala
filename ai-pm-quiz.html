@@ -60,11 +60,17 @@
 
   .wrap {
     width: 100%;
-    max-width: 640px;
+    max-width: 1100px;
     display: flex;
     flex-direction: column;
     gap: 18px;
     min-width: 0;
+  }
+
+  .narrow {
+    max-width: 820px;
+    margin: 0 auto;
+    width: 100%;
   }
 
   /* ---------- header / logo lockup ---------- */
@@ -80,20 +86,10 @@
     gap: 8px;
   }
   .brand-mark {
-    width: 28px;
-    height: 28px;
+    width: 46px;
+    height: 46px;
     flex: none;
     display: block;
-  }
-  .brand-word {
-    font-family: 'Sora', sans-serif;
-    font-weight: 800;
-    font-size: 1.05rem;
-    letter-spacing: -0.02em;
-    white-space: nowrap;
-    background: linear-gradient(135deg, var(--indigo), var(--violet));
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    background-clip: text;
   }
   .topbar-sub { font-size: 12px; color: var(--ink3); font-weight: 500; }
 
@@ -130,6 +126,26 @@
     border-radius: 999px;
     white-space: nowrap;
     font-variant-numeric: tabular-nums;
+  }
+  .timer-chip {
+    flex: none;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--ink2);
+    background: var(--bg2);
+    border: 1px solid var(--border2);
+    padding: 5px 10px;
+    border-radius: 999px;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+    min-width: 54px;
+    text-align: center;
+    transition: color 0.2s, border-color 0.2s, background 0.2s;
+  }
+  .timer-chip.low {
+    color: #fff;
+    background: var(--rose);
+    border-color: var(--rose);
   }
 
   /* ---------- enrollment / intro screen ---------- */
@@ -204,10 +220,28 @@
   .topic-tag.judg { color: var(--violet); background: rgba(124,58,237,0.06); }
   .topic-tag.agent { color: var(--signal-d); background: rgba(8,145,178,0.06); }
 
-  .hero-divider {
-    border: none;
+  .hero-grid { display: block; }
+  .hero-info { min-width: 0; }
+  .hero-form {
+    min-width: 0;
     border-top: 1px solid var(--border);
-    margin: 4px 0 22px;
+    padding-top: 22px;
+    margin-top: 4px;
+  }
+  @media (min-width: 860px) {
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 1fr;
+      gap: 44px;
+      align-items: start;
+    }
+    .hero-form {
+      border-top: none;
+      border-left: 1px solid var(--border);
+      padding-top: 0;
+      padding-left: 36px;
+      margin-top: 0;
+    }
   }
 
   /* ---------- enrollment form ---------- */
@@ -486,6 +520,13 @@
     .hero h1 { font-size: 22px; }
     .qprompt { font-size: 15.5px; }
   }
+
+  @media (min-width: 860px) {
+    .hero { padding: 40px 44px; }
+    .score-hero { padding: 40px 44px; }
+    .breakdown { grid-template-columns: repeat(3, 1fr); }
+    .cta-card { padding: 28px 32px; }
+  }
 </style>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -497,74 +538,77 @@
   <div class="topbar">
     <div class="brand">
       <img class="brand-mark" alt="PMpathshala" src="logo-icon.png">
-      <div class="brand-word">PMpathshala</div>
     </div>
     <div class="topbar-sub">AI PM Readiness Quiz</div>
   </div>
 
   <!-- ===================== ENROLLMENT SCREEN ===================== -->
   <section id="screen-enroll">
-    <div class="hero">
-      <p class="eyebrow">⬤ 15 Questions · ~8 Minutes</p>
-      <h1>How ready are you to think like an AI Product Manager?</h1>
-      <p>Fifteen scenario questions pulled straight from how AI PM interviews are actually run in 2026 — not trivia. You'll be tested on AI fundamentals, PM judgment under uncertainty, and agentic-AI concepts. Each answer comes with a short explanation either way.</p>
+    <div class="hero hero-grid">
+      <div class="hero-info">
+        <p class="eyebrow">⬤ 15 Questions · ~8 Minutes</p>
+        <h1>How ready are you to think like an AI Product Manager?</h1>
+        <p>Fifteen scenario questions pulled straight from how AI PM interviews are actually run in 2026 — not trivia. You'll be tested on AI fundamentals, PM judgment under uncertainty, and agentic-AI concepts. Each answer comes with a short explanation either way.</p>
 
-      <div class="meta-row">
-        <span class="meta-pill">Instant score + breakdown</span>
-        <span class="meta-pill">Free</span>
-      </div>
-
-      <div class="topic-row">
-        <span class="topic-tag fund">AI &amp; ML Fundamentals</span>
-        <span class="topic-tag judg">PM Judgment</span>
-        <span class="topic-tag agent">Agentic AI</span>
-      </div>
-
-      <hr class="hero-divider">
-
-      <p class="form-title">Tell us a bit about you to start</p>
-
-      <div class="field-group">
-        <label class="field-label" for="en-name">Full Name *</label>
-        <input class="field-input" type="text" id="en-name" placeholder="Your full name">
-        <div class="field-error" id="err-en-name">Please enter your full name</div>
-      </div>
-
-      <div class="field-row-2">
-        <div class="field-group">
-          <label class="field-label" for="en-email">Email Address *</label>
-          <input class="field-input" type="email" id="en-email" placeholder="you@example.com">
-          <div class="field-error" id="err-en-email">Please enter a valid email</div>
+        <div class="meta-row">
+          <span class="meta-pill">Instant score + breakdown</span>
+          <span class="meta-pill">Free</span>
+          <span class="meta-pill">⏱ 30s per question</span>
         </div>
-        <div class="field-group">
-          <label class="field-label" for="en-phone">Phone Number *</label>
-          <input class="field-input" type="tel" id="en-phone" placeholder="+91 98765 43210">
-          <div class="field-error" id="err-en-phone">Please enter your phone number</div>
+
+        <div class="topic-row">
+          <span class="topic-tag fund">AI &amp; ML Fundamentals</span>
+          <span class="topic-tag judg">PM Judgment</span>
+          <span class="topic-tag agent">Agentic AI</span>
         </div>
       </div>
 
-      <div class="field-group">
-        <label class="field-label" for="en-experience">Experience *</label>
-        <select class="field-select" id="en-experience">
-          <option value="">Select your experience level</option>
-          <option value="Student / Fresher">Student / Fresher</option>
-          <option value="0-2 years">0–2 years</option>
-          <option value="2-5 years">2–5 years</option>
-          <option value="5-10 years">5–10 years</option>
-          <option value="10+ years">10+ years</option>
-        </select>
-        <div class="field-error" id="err-en-experience">Please select your experience level</div>
-      </div>
+      <div class="hero-form">
+        <p class="form-title">Tell us a bit about you to start</p>
 
-      <button class="btn-primary" id="start-btn">Proceed to Quiz →</button>
-      <div class="form-note">We'll only use this to send you your results and relevant course updates — no spam.</div>
+        <div class="field-group">
+          <label class="field-label" for="en-name">Full Name *</label>
+          <input class="field-input" type="text" id="en-name" placeholder="Your full name">
+          <div class="field-error" id="err-en-name">Please enter your full name</div>
+        </div>
+
+        <div class="field-row-2">
+          <div class="field-group">
+            <label class="field-label" for="en-email">Email Address *</label>
+            <input class="field-input" type="email" id="en-email" placeholder="you@example.com">
+            <div class="field-error" id="err-en-email">Please enter a valid email</div>
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="en-phone">Phone Number *</label>
+            <input class="field-input" type="tel" id="en-phone" placeholder="+91 98765 43210">
+            <div class="field-error" id="err-en-phone">Please enter your phone number</div>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label" for="en-experience">Experience *</label>
+          <select class="field-select" id="en-experience">
+            <option value="">Select your experience level</option>
+            <option value="Student / Fresher">Student / Fresher</option>
+            <option value="0-2 years">0–2 years</option>
+            <option value="2-5 years">2–5 years</option>
+            <option value="5-10 years">5–10 years</option>
+            <option value="10+ years">10+ years</option>
+          </select>
+          <div class="field-error" id="err-en-experience">Please select your experience level</div>
+        </div>
+
+        <button class="btn-primary" id="start-btn">Proceed to Quiz →</button>
+        <div class="form-note">We'll only use this to send you your results and relevant course updates — no spam.</div>
+      </div>
     </div>
   </section>
 
   <!-- ===================== QUIZ SCREEN ===================== -->
-  <section id="screen-quiz" hidden>
+  <section id="screen-quiz" class="narrow" hidden>
     <div class="progress-shell">
       <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+      <div class="timer-chip" id="timer-chip">⏱ 0:30</div>
       <div class="score-chip" id="progress-label">Q1 / 15</div>
     </div>
 
@@ -582,7 +626,7 @@
   </section>
 
   <!-- ===================== RESULTS SCREEN ===================== -->
-  <section id="screen-results" hidden>
+  <section id="screen-results" class="narrow" hidden>
     <div class="score-hero">
       <div class="band-label" id="band-label">AI PM READY</div>
       <div class="score-ring" id="score-ring" style="--pct:0">
@@ -824,12 +868,69 @@
   ];
 
   var TOTAL = QUESTIONS.length;
+  var TIME_PER_Q = 30; // seconds
 
   var state = {
     idx: 0,
     answers: {}, // qid -> { chosen, correct }
     lead: null
   };
+
+  var timerInterval = null;
+  var timeRemaining = TIME_PER_Q;
+
+  function clearQuizTimer() {
+    if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
+  }
+
+  function updateTimerDisplay() {
+    var chip = document.getElementById('timer-chip');
+    if (!chip) return;
+    var m = Math.floor(timeRemaining / 60);
+    var s = timeRemaining % 60;
+    chip.textContent = '⏱ ' + m + ':' + (s < 10 ? '0' : '') + s;
+    chip.classList.toggle('low', timeRemaining <= 10);
+  }
+
+  function startQuizTimer(q) {
+    clearQuizTimer();
+    timeRemaining = TIME_PER_Q;
+    updateTimerDisplay();
+    timerInterval = setInterval(function () {
+      timeRemaining--;
+      updateTimerDisplay();
+      if (timeRemaining <= 0) {
+        clearQuizTimer();
+        handleTimeout(q);
+      }
+    }, 1000);
+  }
+
+  function handleTimeout(q) {
+    if (state.answers[q.id]) return; // already answered just before timeout fired
+    state.answers[q.id] = { chosen: null, correct: false, topic: q.topic, timedOut: true };
+
+    var optsWrap = document.getElementById("q-options");
+    var buttons = optsWrap.querySelectorAll(".opt");
+    buttons.forEach(function (b, i) {
+      b.disabled = true;
+      if (q.options[i].id === q.correct) b.classList.add("correct");
+    });
+
+    var explainBox = document.getElementById("q-explain");
+    var verdict = document.getElementById("q-verdict");
+    verdict.textContent = "Time's up.";
+    verdict.className = "verdict no";
+    document.getElementById("q-explain-text").textContent = q.explain;
+    explainBox.classList.add("show");
+
+    document.getElementById("progress-label").textContent =
+      "Q" + (state.idx + 1) + " / " + TOTAL + " · " + scoreSoFar() + " ✓";
+
+    var nextBtn = document.getElementById("next-btn");
+    nextBtn.disabled = false;
+    nextBtn.textContent = (state.idx === TOTAL - 1) ? "See my results →" : "Next question →";
+  }
 
   var screenEnroll = document.getElementById("screen-enroll");
   var screenQuiz = document.getElementById("screen-quiz");
@@ -948,10 +1049,13 @@
       btn.addEventListener("click", function () { handleAnswer(q, opt, btn, optsWrap); });
       optsWrap.appendChild(btn);
     });
+
+    startQuizTimer(q);
   }
 
   function handleAnswer(q, chosenOpt, chosenBtn, optsWrap) {
     if (state.answers[q.id]) return; // already answered
+    clearQuizTimer();
     var isCorrect = chosenOpt.id === q.correct;
     state.answers[q.id] = { chosen: chosenOpt.id, correct: isCorrect, topic: q.topic };
 
@@ -990,6 +1094,7 @@
   });
 
   function showResults() {
+    clearQuizTimer();
     screenQuiz.hidden = true;
     screenResults.hidden = false;
 
