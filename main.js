@@ -1,6 +1,6 @@
-/* ═══════════════════════════════════════════════
+/* ═══════════════════════════════════════════
    PMpathshala — main.js (shared utilities)
-   ═══════════════════════════════════════════════ */
+   ═══════════════════════════════════════════ */
 
 // Nav toggle
 function toggleNav() {
@@ -38,12 +38,3 @@ function _hideCookie()   {
     io.observe(el);
   });
 })();
-
-// Logo SVG (cubes icon matching brand)
-const LOGO_SVG = `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path d="M12 2L7 5v5l5 3 5-3V5L12 2z" fill="rgba(255,255,255,0.9)"/>
-  <path d="M7 10v5l5 3V13L7 10z" fill="rgba(255,255,255,0.6)"/>
-  <path d="M17 10l-5 3v5l5-3v-5z" fill="rgba(255,255,255,0.75)"/>
-</svg>`;
-
-document.querySelectorAll('.logo-svg').forEach(el => el.innerHTML = LOGO_SVG);
