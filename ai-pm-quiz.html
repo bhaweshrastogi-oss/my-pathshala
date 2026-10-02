@@ -1,0 +1,1088 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#f8f7ff;color:#0f0e2a}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!--
+  AI PM Readiness Quiz — PMpathshala
+  Re-themed to match the live site's own design system (style.css):
+  fonts Sora + DM Serif Display, indigo/violet/signal palette, light
+  surfaces with a dark indigo→violet gradient reserved for the same kind
+  of accent panel the site uses on its hero/CTA/instructor-card sections.
+  Flow: enrollment (name/phone/email/experience) → quiz → results.
+  Enrollment submits to the site's existing Web3Forms account (same
+  access key as enroll.js) so leads land wherever the rest of the
+  site's form submissions already go.
+-->
+<title>AI PM Readiness Quiz</title>
+<style>
+  :root {
+    --indigo: #4f46e5;
+    --indigo-d: #3730a3;
+    --indigo-dd: #1e1b4b;
+    --violet: #7c3aed;
+    --violet-lt: #8b5cf6;
+    --purple: #6d28d9;
+    --signal: #0891b2;
+    --signal-d: #0e7490;
+    --signal-glow: rgba(8,145,178,0.28);
+    --bg: #f8f7ff;
+    --bg2: #f1f0fe;
+    --bg3: #e8e6fd;
+    --surface: #ffffff;
+    --ink: #0f0e2a;
+    --ink2: #3d3a6b;
+    --ink3: #7b79a8;
+    --ink4: #a9a7cc;
+    --border: rgba(79,70,229,0.1);
+    --border2: rgba(79,70,229,0.18);
+    --border3: rgba(79,70,229,0.28);
+    --emerald: #059669;
+    --emerald-lt: #d1fae5;
+    --rose: #e11d48;
+    --rose-lt: rgba(225,29,72,0.1);
+    --shadow-sm: 0 2px 8px rgba(79,70,229,0.1), 0 1px 3px rgba(0,0,0,0.06);
+    --shadow-md: 0 4px 20px rgba(79,70,229,0.15), 0 2px 8px rgba(0,0,0,0.06);
+    --shadow-lg: 0 12px 40px rgba(79,70,229,0.2), 0 4px 16px rgba(0,0,0,0.08);
+    color-scheme: light;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink2);
+    font-family: 'Sora', Arial, sans-serif;
+    padding-inline: 16px;
+    padding-block: 20px;
+    display: flex;
+    justify-content: center;
+  }
+
+  h1, h2, h3, .display { font-family: 'DM Serif Display', serif; }
+
+  .wrap {
+    width: 100%;
+    max-width: 640px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    min-width: 0;
+  }
+
+  /* ---------- header / logo lockup ---------- */
+  .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .brand-mark {
+    width: 28px;
+    height: 28px;
+    flex: none;
+    display: block;
+  }
+  .brand-word {
+    font-family: 'Sora', sans-serif;
+    font-weight: 800;
+    font-size: 1.05rem;
+    letter-spacing: -0.02em;
+    white-space: nowrap;
+    background: linear-gradient(135deg, var(--indigo), var(--violet));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .topbar-sub { font-size: 12px; color: var(--ink3); font-weight: 500; }
+
+  /* ---------- progress ---------- */
+  .progress-shell {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .progress-track {
+    flex: 1;
+    min-width: 0;
+    height: 6px;
+    border-radius: 999px;
+    background: var(--bg3);
+    border: 1px solid var(--border2);
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--indigo), var(--violet));
+    border-radius: 999px;
+    transition: width 0.35s ease;
+    width: 0%;
+  }
+  .score-chip {
+    flex: none;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--ink);
+    background: var(--surface);
+    border: 1px solid var(--border2);
+    padding: 5px 10px;
+    border-radius: 999px;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ---------- enrollment / intro screen ---------- */
+  .hero {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-sm);
+    border-radius: 18px;
+    padding: 28px 22px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: "";
+    position: absolute;
+    top: -40%;
+    right: -20%;
+    width: 220px;
+    height: 220px;
+    background: radial-gradient(circle, rgba(124,58,237,0.12), transparent 70%);
+    pointer-events: none;
+  }
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--violet);
+    margin: 0 0 10px;
+  }
+  .hero h1 {
+    font-size: 26px;
+    line-height: 1.22;
+    color: var(--ink);
+    margin: 0 0 10px;
+    text-wrap: balance;
+    font-weight: 400;
+  }
+  .hero p { margin: 0 0 18px; font-size: 14.5px; line-height: 1.6; max-width: 48ch; color: var(--ink2); }
+  .meta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .meta-pill {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--ink2);
+    background: var(--bg2);
+    border: 1px solid var(--border2);
+    padding: 6px 12px;
+    border-radius: 999px;
+  }
+  .topic-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 24px;
+  }
+  .topic-tag {
+    font-size: 11.5px;
+    font-weight: 700;
+    padding: 6px 10px;
+    border-radius: 8px;
+    border: 1px solid var(--border2);
+  }
+  .topic-tag.fund { color: var(--indigo); background: rgba(79,70,229,0.06); }
+  .topic-tag.judg { color: var(--violet); background: rgba(124,58,237,0.06); }
+  .topic-tag.agent { color: var(--signal-d); background: rgba(8,145,178,0.06); }
+
+  .hero-divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 4px 0 22px;
+  }
+
+  /* ---------- enrollment form ---------- */
+  .form-title { font-size: 13px; font-weight: 700; color: var(--ink); margin: 0 0 14px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .field-label { display: block; font-size: 0.74rem; font-weight: 700; color: var(--ink2); margin-bottom: 0.38rem; letter-spacing: 0.04em; text-transform: uppercase; }
+  .field-group { margin-bottom: 1.05rem; }
+  .field-input, .field-select {
+    width: 100%; background: var(--bg);
+    border: 1.5px solid var(--border2);
+    border-radius: 10px; padding: 0.75rem 1rem;
+    color: var(--ink); font-family: 'Sora', sans-serif;
+    font-size: 0.9rem; outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    appearance: none;
+  }
+  .field-select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237b79a8' stroke-width='1.6' fill='none' fill-rule='evenodd'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    padding-right: 2.2rem;
+  }
+  .field-input:focus, .field-select:focus { border-color: var(--indigo); box-shadow: 0 0 0 3px rgba(79,70,229,0.1); }
+  .field-input::placeholder { color: var(--ink4); }
+  .field-error { color: var(--rose); font-size: 0.75rem; margin-top: 0.3rem; display: none; }
+  .field-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+  @media (max-width: 480px) { .field-row-2 { grid-template-columns: 1fr; } }
+
+  .form-note { font-size: 0.74rem; color: var(--ink3); text-align: center; margin-top: 0.7rem; }
+
+  button { font-family: inherit; }
+  .btn-primary {
+    appearance: none;
+    border: none;
+    cursor: pointer;
+    background: linear-gradient(135deg, var(--indigo), var(--violet));
+    color: #fff;
+    font-weight: 700;
+    font-size: 15px;
+    padding: 13px 20px;
+    border-radius: 50px;
+    width: 100%;
+    box-shadow: 0 4px 18px rgba(79,70,229,0.35);
+    transition: transform 0.15s ease, opacity 0.15s ease, box-shadow 0.15s ease;
+  }
+  .btn-primary:hover:not(:disabled) { box-shadow: 0 8px 26px rgba(79,70,229,0.45); }
+  .btn-primary:active { transform: scale(0.98); }
+  .btn-primary:disabled { opacity: 0.55; cursor: not-allowed; }
+  .btn-ghost {
+    appearance: none;
+    cursor: pointer;
+    background: transparent;
+    color: var(--ink2);
+    border: 1.5px solid var(--border3);
+    font-weight: 700;
+    font-size: 14px;
+    padding: 11px 18px;
+    border-radius: 50px;
+    width: 100%;
+  }
+  .btn-ghost:hover { background: var(--bg2); border-color: var(--indigo); color: var(--indigo); }
+
+  /* ---------- question card ---------- */
+  .qcard {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-sm);
+    border-radius: 18px;
+    padding: 22px 20px;
+    position: relative;
+    border-left: 4px solid var(--indigo);
+  }
+  .qtopic {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .qtopic.fund { color: var(--indigo); }
+  .qtopic.judg { color: var(--violet); }
+  .qtopic.agent { color: var(--signal-d); }
+  .qprompt {
+    font-size: 17px;
+    line-height: 1.5;
+    color: var(--ink);
+    font-weight: 600;
+    font-family: 'Sora', sans-serif;
+    margin: 0 0 16px;
+  }
+
+  .options { display: flex; flex-direction: column; gap: 10px; margin-bottom: 4px; }
+  .opt {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    text-align: left;
+    width: 100%;
+    background: var(--bg);
+    border: 1.5px solid var(--border2);
+    color: var(--ink2);
+    padding: 12px 14px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  .opt:hover:not(:disabled) { border-color: var(--indigo); }
+  .opt .letter {
+    flex: none;
+    width: 22px;
+    height: 22px;
+    border-radius: 6px;
+    border: 1px solid var(--border3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--ink3);
+    background: var(--surface);
+  }
+  .opt.correct { background: var(--emerald-lt); border-color: var(--emerald); color: var(--ink); }
+  .opt.correct .letter { background: var(--emerald); border-color: var(--emerald); color: #fff; }
+  .opt.wrong { background: var(--rose-lt); border-color: var(--rose); color: var(--ink); }
+  .opt.wrong .letter { background: var(--rose); border-color: var(--rose); color: #fff; }
+  .opt:disabled { cursor: default; }
+  .opt:disabled:not(.correct):not(.wrong) { opacity: 0.55; }
+
+  .explain {
+    margin-top: 14px;
+    padding: 13px 14px;
+    border-radius: 12px;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: var(--ink2);
+    display: none;
+  }
+  .explain.show { display: block; }
+  .explain .verdict { font-weight: 700; margin-right: 4px; }
+  .explain .verdict.ok { color: var(--emerald); }
+  .explain .verdict.no { color: var(--rose); }
+
+  .qfoot { margin-top: 16px; }
+
+  /* ---------- results screen ---------- */
+  .score-hero {
+    background: linear-gradient(135deg, var(--indigo-dd) 0%, var(--violet) 100%);
+    border-radius: 18px;
+    padding: 32px 22px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+  }
+  .score-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 30% 20%, rgba(255,255,255,0.12), transparent 50%);
+    pointer-events: none;
+  }
+  .score-hero > * { position: relative; z-index: 1; }
+  .score-ring {
+    width: 128px;
+    height: 128px;
+    margin: 0 auto 16px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: conic-gradient(#fff calc(var(--pct, 0) * 1%), rgba(255,255,255,0.18) 0);
+    position: relative;
+  }
+  .score-ring::before {
+    content: "";
+    position: absolute;
+    inset: 9px;
+    border-radius: 50%;
+    background: var(--indigo-dd);
+  }
+  .score-ring .num {
+    position: relative;
+    font-family: 'DM Serif Display', serif;
+    font-size: 30px;
+    color: #fff;
+  }
+  .band-label {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #c4b5fd;
+    margin-bottom: 8px;
+  }
+  .score-hero h2 { font-size: 22px; color: #fff; margin: 0 0 10px; font-weight: 400; }
+  .score-hero p { font-size: 14px; line-height: 1.6; max-width: 42ch; margin: 0 auto; color: rgba(255,255,255,0.75); }
+
+  .breakdown {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  .bd-row {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-sm);
+    border-radius: 14px;
+    padding: 14px 16px;
+  }
+  .bd-top {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+  .bd-top span.n { color: var(--ink3); font-weight: 500; font-variant-numeric: tabular-nums; }
+  .bd-bar { height: 7px; border-radius: 999px; background: var(--bg3); overflow: hidden; }
+  .bd-fill { height: 100%; border-radius: 999px; }
+  .bd-fill.fund { background: var(--indigo); }
+  .bd-fill.judg { background: var(--violet); }
+  .bd-fill.agent { background: var(--signal); }
+
+  .cta-card {
+    background: linear-gradient(145deg, rgba(79,70,229,0.07), rgba(124,58,237,0.07));
+    border: 1px solid var(--border2);
+    border-radius: 18px;
+    padding: 22px 20px;
+  }
+  .cta-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--violet); margin-bottom: 8px; }
+  .cta-card h3 { font-size: 18px; color: var(--ink); margin: 0 0 8px; font-weight: 400; }
+  .cta-card p { font-size: 13.5px; line-height: 1.6; margin: 0 0 16px; color: var(--ink2); }
+
+  .review-list { display: flex; flex-direction: column; gap: 8px; }
+  .review-item {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 12px 14px;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  .review-item .mark { flex: none; font-weight: 800; width: 18px; }
+  .review-item .mark.ok { color: var(--emerald); }
+  .review-item .mark.no { color: var(--rose); }
+  .review-item .qtext { color: var(--ink2); }
+
+  details.review-wrap { background: transparent; }
+  details.review-wrap > summary {
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--indigo);
+    list-style: none;
+    padding: 4px 0 10px;
+  }
+  details.review-wrap > summary::-webkit-details-marker { display: none; }
+
+  footer {
+    text-align: center;
+    font-size: 11px;
+    color: var(--ink4);
+    padding-top: 6px;
+  }
+
+  [hidden] { display: none !important; }
+
+  @media (max-width: 420px) {
+    .hero h1 { font-size: 22px; }
+    .qprompt { font-size: 15.5px; }
+  }
+</style>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+
+<div class="wrap">
+
+  <div class="topbar">
+    <div class="brand">
+      <img class="brand-mark" alt="PMpathshala" src="logo-icon.png">
+      <div class="brand-word">PMpathshala</div>
+    </div>
+    <div class="topbar-sub">AI PM Readiness Quiz</div>
+  </div>
+
+  <!-- ===================== ENROLLMENT SCREEN ===================== -->
+  <section id="screen-enroll">
+    <div class="hero">
+      <p class="eyebrow">⬤ 15 Questions · ~8 Minutes</p>
+      <h1>How ready are you to think like an AI Product Manager?</h1>
+      <p>Fifteen scenario questions pulled straight from how AI PM interviews are actually run in 2026 — not trivia. You'll be tested on AI fundamentals, PM judgment under uncertainty, and agentic-AI concepts. Each answer comes with a short explanation either way.</p>
+
+      <div class="meta-row">
+        <span class="meta-pill">Instant score + breakdown</span>
+        <span class="meta-pill">Free</span>
+      </div>
+
+      <div class="topic-row">
+        <span class="topic-tag fund">AI &amp; ML Fundamentals</span>
+        <span class="topic-tag judg">PM Judgment</span>
+        <span class="topic-tag agent">Agentic AI</span>
+      </div>
+
+      <hr class="hero-divider">
+
+      <p class="form-title">Tell us a bit about you to start</p>
+
+      <div class="field-group">
+        <label class="field-label" for="en-name">Full Name *</label>
+        <input class="field-input" type="text" id="en-name" placeholder="Your full name">
+        <div class="field-error" id="err-en-name">Please enter your full name</div>
+      </div>
+
+      <div class="field-row-2">
+        <div class="field-group">
+          <label class="field-label" for="en-email">Email Address *</label>
+          <input class="field-input" type="email" id="en-email" placeholder="you@example.com">
+          <div class="field-error" id="err-en-email">Please enter a valid email</div>
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="en-phone">Phone Number *</label>
+          <input class="field-input" type="tel" id="en-phone" placeholder="+91 98765 43210">
+          <div class="field-error" id="err-en-phone">Please enter your phone number</div>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label" for="en-experience">Experience *</label>
+        <select class="field-select" id="en-experience">
+          <option value="">Select your experience level</option>
+          <option value="Student / Fresher">Student / Fresher</option>
+          <option value="0-2 years">0–2 years</option>
+          <option value="2-5 years">2–5 years</option>
+          <option value="5-10 years">5–10 years</option>
+          <option value="10+ years">10+ years</option>
+        </select>
+        <div class="field-error" id="err-en-experience">Please select your experience level</div>
+      </div>
+
+      <button class="btn-primary" id="start-btn">Proceed to Quiz →</button>
+      <div class="form-note">We'll only use this to send you your results and relevant course updates — no spam.</div>
+    </div>
+  </section>
+
+  <!-- ===================== QUIZ SCREEN ===================== -->
+  <section id="screen-quiz" hidden>
+    <div class="progress-shell">
+      <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+      <div class="score-chip" id="progress-label">Q1 / 15</div>
+    </div>
+
+    <div class="qcard" id="qcard">
+      <div class="qtopic" id="q-topic">AI FUNDAMENTALS</div>
+      <p class="qprompt" id="q-prompt">Loading…</p>
+      <div class="options" id="q-options"></div>
+      <div class="explain" id="q-explain">
+        <span class="verdict" id="q-verdict"></span><span id="q-explain-text"></span>
+      </div>
+      <div class="qfoot">
+        <button class="btn-primary" id="next-btn" disabled>Answer to continue</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== RESULTS SCREEN ===================== -->
+  <section id="screen-results" hidden>
+    <div class="score-hero">
+      <div class="band-label" id="band-label">AI PM READY</div>
+      <div class="score-ring" id="score-ring" style="--pct:0">
+        <div class="num" id="score-num">0/15</div>
+      </div>
+      <h2 id="band-headline">Headline</h2>
+      <p id="band-copy">Copy</p>
+    </div>
+
+    <div class="breakdown">
+      <div class="bd-row">
+        <div class="bd-top"><span>AI &amp; ML Fundamentals</span><span class="n" id="bd-fund-n">0/5</span></div>
+        <div class="bd-bar"><div class="bd-fill fund" id="bd-fund-bar" style="width:0%"></div></div>
+      </div>
+      <div class="bd-row">
+        <div class="bd-top"><span>PM Judgment</span><span class="n" id="bd-judg-n">0/5</span></div>
+        <div class="bd-bar"><div class="bd-fill judg" id="bd-judg-bar" style="width:0%"></div></div>
+      </div>
+      <div class="bd-row">
+        <div class="bd-top"><span>Agentic AI</span><span class="n" id="bd-agent-n">0/5</span></div>
+        <div class="bd-bar"><div class="bd-fill agent" id="bd-agent-bar" style="width:0%"></div></div>
+      </div>
+    </div>
+
+    <details class="review-wrap">
+      <summary>Review all 15 questions ▾</summary>
+      <div class="review-list" id="review-list"></div>
+    </details>
+
+    <div class="cta-card">
+      <div class="cta-eyebrow">PMpathshala · AI Product Management</div>
+      <h3 id="cta-headline">Turn this score into a job-ready skillset</h3>
+      <p>PMpathshala's AI PM program builds the exact judgment this quiz tested — feasibility calls, AI PRDs, evals, and agentic product design — grounded in real India AI case studies, not tool tutorials.</p>
+      <button class="btn-primary" id="cta-btn">Explore the AI PM course</button>
+    </div>
+
+    <button class="btn-ghost" id="retake-btn">Retake the quiz</button>
+  </section>
+
+  <footer>© 2026 PMpathshala. All rights reserved.</footer>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  var WEB3FORMS_KEY = 'cf83d387-9bb4-4849-a2aa-d982c809155e';
+
+  function nowIST() {
+    return new Date().toLocaleString('en-IN', {
+      timeZone: 'Asia/Kolkata',
+      day: '2-digit', month: 'short', year: 'numeric',
+      hour: '2-digit', minute: '2-digit', second: '2-digit',
+      hour12: true
+    });
+  }
+
+  var QUESTIONS = [
+    {
+      id: "q1", topic: "fund", topicLabel: "AI FUNDAMENTALS",
+      prompt: "A traditional rules-based feature always returns the same output for the same input. Why can't you say the same about a feature built on an LLM?",
+      options: [
+        { id: "a", text: "Because LLMs run on slower servers, so timing varies" },
+        { id: "b", text: "Because LLM outputs are generated probabilistically — the same prompt can sample a different token sequence each run" },
+        { id: "c", text: "Because LLMs only work with internet access, so results depend on connectivity" },
+        { id: "d", text: "Because LLMs store user data and personalize every response" }
+      ],
+      correct: "b",
+      explain: "An LLM predicts the next token from a probability distribution, not a fixed lookup. That's the core mental shift from deterministic to probabilistic software — and it's why AI features need evals and guardrails that traditional QA never had to build."
+    },
+    {
+      id: "q2", topic: "fund", topicLabel: "AI FUNDAMENTALS",
+      prompt: "Which containment relationship is correct?",
+      options: [
+        { id: "a", text: "LLMs contain Deep Learning, which contains Machine Learning, which contains AI" },
+        { id: "b", text: "Machine Learning contains AI, which contains Deep Learning and LLMs" },
+        { id: "c", text: "AI contains Machine Learning, which contains Deep Learning, which contains LLMs" },
+        { id: "d", text: "AI, ML, Deep Learning and LLMs are four unrelated, parallel fields" }
+      ],
+      correct: "c",
+      explain: "AI is the broadest goal (machines doing tasks that need intelligence). ML is one approach to it (learning from data). Deep Learning is ML using neural networks. LLMs are a Deep Learning architecture (transformers) specialized for language. Getting this nesting wrong is a fast way to lose credibility in an AI PM interview."
+    },
+    {
+      id: "q3", topic: "fund", topicLabel: "AI FUNDAMENTALS",
+      prompt: "Independent studies on customer-support LLM deployments have found hallucination rates in roughly what range, even in well-tuned production systems?",
+      options: [
+        { id: "a", text: "Under 1% — modern LLMs rarely hallucinate in narrow domains" },
+        { id: "b", text: "Roughly 15–27%" },
+        { id: "c", text: "Roughly 60–75%" },
+        { id: "d", text: "Hallucination has been fully solved as of 2025" }
+      ],
+      correct: "b",
+      explain: "Even well-scoped, well-tuned customer-support deployments have shown hallucination rates in the 15–27% range in independent audits. This is the number that should inform your shipping bar, not marketing claims about 'near-perfect' accuracy."
+    },
+    {
+      id: "q4", topic: "fund", topicLabel: "AI FUNDAMENTALS",
+      prompt: "What does 'attention' refer to in a transformer-based LLM?",
+      options: [
+        { id: "a", text: "A UI pattern that keeps the user's attention on the chat window" },
+        { id: "b", text: "A mechanism that lets the model weigh how relevant every other token is to the one it's currently processing" },
+        { id: "c", text: "A content-moderation filter that flags attention-grabbing (clickbait) text" },
+        { id: "d", text: "A metric for how long a user session lasts" }
+      ],
+      correct: "b",
+      explain: "Attention is what lets a transformer decide, for every token, how much weight to give every other token in context — it's the mechanism that made long-range language understanding (and therefore modern LLMs) possible."
+    },
+    {
+      id: "q5", topic: "fund", topicLabel: "AI FUNDAMENTALS",
+      prompt: "Your team ships a feature with zero human review of AI-generated outputs because 'the model is 95% accurate in testing.' What's the sharpest objection to raise?",
+      options: [
+        { id: "a", text: "95% isn't possible for any AI system" },
+        { id: "b", text: "Test-set accuracy doesn't capture real-world edge cases, and a 5% failure rate at scale is still thousands of wrong outputs a day" },
+        { id: "c", text: "Accuracy doesn't matter if the UI looks polished" },
+        { id: "d", text: "Human review should never be required for AI features" }
+      ],
+      correct: "b",
+      explain: "A 95% lab number can mask a much worse real-world failure rate, and even at a true 95%, high volume means high absolute error counts. This is exactly the reasoning that should have stopped Air Canada's unsupervised chatbot before it made a legally binding (and wrong) refund promise."
+    },
+    {
+      id: "q6", topic: "judg", topicLabel: "PM JUDGMENT",
+      prompt: "In the 4-Axis Feasibility Check (Desirability, Viability, Technical Feasibility, Data Feasibility), which axis do most first-time AI PMs skip — and pay for later?",
+      options: [
+        { id: "a", text: "Desirability — whether users want it" },
+        { id: "b", text: "Viability — whether it makes business sense" },
+        { id: "c", text: "Data Feasibility — whether the right data exists, in the right volume and quality, to make the model work" },
+        { id: "d", text: "None — all four are checked equally often" }
+      ],
+      correct: "c",
+      explain: "Desirability and viability are instincts every PM already has from non-AI work. Data Feasibility is the one that's new, invisible until you dig in, and the single most common reason AI features die in build — there's no labeled data, or not enough of it, or it's biased in ways no one checked."
+    },
+    {
+      id: "q7", topic: "judg", topicLabel: "PM JUDGMENT",
+      prompt: "What does an AI PRD need to specify that a traditional feature PRD typically doesn't?",
+      options: [
+        { id: "a", text: "A list of competitor features" },
+        { id: "b", text: "An evaluation plan, acceptable failure modes, a fallback/escalation path, and the data the model is grounded in" },
+        { id: "c", text: "A Gantt chart with engineering estimates" },
+        { id: "d", text: "A list of button colors and font sizes" }
+      ],
+      correct: "b",
+      explain: "A traditional PRD assumes the feature either works or has a bug. An AI PRD has to assume the feature will sometimes be wrong by design, so it must define what 'acceptable wrong' looks like, how you'll measure it (evals), and what happens when it fails (fallback to a human, a disclaimer, a confidence threshold)."
+    },
+    {
+      id: "q8", topic: "judg", topicLabel: "PM JUDGMENT",
+      prompt: "An airline's chatbot invented a bereavement-fare policy that didn't exist, told a customer they qualified, and a tribunal later held the airline liable for honoring it. What's the real lesson for an AI PM, beyond 'test more'?",
+      options: [
+        { id: "a", text: "Never use chatbots for customer service" },
+        { id: "b", text: "An unsupervised AI agent making policy-level claims needs a scoped, auditable boundary — not just better prompting — because the company is legally bound by what it says" },
+        { id: "c", text: "The lesson is purely a PR problem, not a product one" },
+        { id: "d", text: "This only applies to airlines, not other industries" }
+      ],
+      correct: "b",
+      explain: "The Air Canada ruling (and the 2026 German court decisions that extended the same reasoning) established that a company is bound by what its AI agent represents to a customer. The fix isn't 'prompt it better' — it's product scoping: never let an unsupervised agent make binding claims outside a tightly defined, auditable boundary."
+    },
+    {
+      id: "q9", topic: "judg", topicLabel: "PM JUDGMENT",
+      prompt: "Your fraud-detection model's recall is high but precision is low. In plain terms, what's actually happening?",
+      options: [
+        { id: "a", text: "It catches most real fraud, but also flags a lot of legitimate transactions as fraud" },
+        { id: "b", text: "It misses most real fraud, but rarely flags legitimate transactions" },
+        { id: "c", text: "It's equally bad at everything" },
+        { id: "d", text: "Precision and recall both measure the same thing, so this isn't possible" }
+      ],
+      correct: "a",
+      explain: "High recall = it finds most of the real positives. Low precision = many of its 'positive' flags are false alarms. For fraud, that trade-off means fewer frauds slip through, at the cost of more legitimate customers getting blocked or annoyed — a tradeoff only a PM can decide is worth it, not an engineering call."
+    },
+    {
+      id: "q10", topic: "judg", topicLabel: "PM JUDGMENT",
+      prompt: "A content-moderation model has a choice: miss some genuinely harmful posts (false negative) or wrongly remove some safe posts (false positive). Which framing best describes the PM's real job here?",
+      options: [
+        { id: "a", text: "Pick whichever number is smaller in the model's test report" },
+        { id: "b", text: "Decide, with legal/trust & safety, which error type is more costly for this specific product and set the model's threshold deliberately — it's a policy decision wearing a metrics costume" },
+        { id: "c", text: "Leave the threshold at whatever the data science team defaults to" },
+        { id: "d", text: "Eliminate both error types entirely before shipping" }
+      ],
+      correct: "b",
+      explain: "Every classification threshold is a tradeoff between false positives and false negatives — you cannot minimize both at once. Choosing where to sit on that curve is a product and policy decision with real consequences, not a number a model spits out on its own."
+    },
+    {
+      id: "q11", topic: "agent", topicLabel: "AGENTIC AI",
+      prompt: "What actually makes a product 'agentic' rather than just 'AI-powered'?",
+      options: [
+        { id: "a", text: "It uses an LLM anywhere in the stack" },
+        { id: "b", text: "It can take multi-step actions toward a goal — planning, calling tools, observing results, and adapting — with limited step-by-step human approval" },
+        { id: "c", text: "It has a chat interface" },
+        { id: "d", text: "It was trained on more data than a non-agentic product" }
+      ],
+      correct: "b",
+      explain: "An AI-powered feature generates an output for a human to use. An agentic one pursues a goal across multiple steps — plan, act, observe, replan — often calling tools or other systems along the way with reduced human-in-the-loop checkpoints. That autonomy is exactly what raises the product-design and trust stakes."
+    },
+    {
+      id: "q12", topic: "agent", topicLabel: "AGENTIC AI",
+      prompt: "On a 'Trust Ladder' for AI autonomy (lowest to highest), what sits on the bottom rung?",
+      options: [
+        { id: "a", text: "Full autonomy — the agent acts with no human visibility at all" },
+        { id: "b", text: "The AI suggests, and a human reviews and approves every action before it executes" },
+        { id: "c", text: "The AI acts first and reports after the fact" },
+        { id: "d", text: "The AI only acts on weekends to limit exposure" }
+      ],
+      correct: "b",
+      explain: "The lowest, safest rung is 'suggest and approve' — the AI proposes, a human stays fully in the loop before anything executes. Products climb the ladder (approve-in-bulk, act-and-notify, full autonomy) only as trust, evals, and the cost of a wrong action justify it — not by default."
+    },
+    {
+      id: "q13", topic: "agent", topicLabel: "AGENTIC AI",
+      prompt: "What is an 'eval' in the context of an AI product, and why does an AI PM need to own defining it?",
+      options: [
+        { id: "a", text: "A one-time code review before launch" },
+        { id: "b", text: "A structured, repeatable test suite that scores model/agent outputs against defined criteria, run continuously to catch regressions and measure quality" },
+        { id: "c", text: "The legal disclaimer shown to users of an AI feature" },
+        { id: "d", text: "A synonym for A/B testing conversion rate" }
+      ],
+      correct: "b",
+      explain: "Evals are the AI-era equivalent of a QA/regression suite — but because model behavior drifts with prompt, data, and model-version changes, they have to run continuously, not just pre-launch. Defining what 'good' looks like for your specific product is a product decision, which is why this can't be fully delegated to engineering."
+    },
+    {
+      id: "q14", topic: "agent", topicLabel: "AGENTIC AI",
+      prompt: "What does the Model Context Protocol (MCP) fundamentally enable for an AI agent?",
+      options: [
+        { id: "a", text: "A standardized way for an agent to discover and call external tools, data sources, and services without custom integration code for each one" },
+        { id: "b", text: "A way to compress model weights for faster inference" },
+        { id: "c", text: "A content policy that restricts what an agent can say" },
+        { id: "d", text: "A pricing model for charging per API call" }
+      ],
+      correct: "a",
+      explain: "MCP standardizes how an agent connects to tools and context sources — think of it as a common plug shape, so an agent doesn't need bespoke integration work for every database, file system, or API it touches. For a PM, this matters because it changes how fast and how cheaply an agentic feature can be extended."
+    },
+    {
+      id: "q15", topic: "agent", topicLabel: "AGENTIC AI",
+      prompt: "Two Indian AI companies took sharply different paths: one raised at unicorn valuation building sovereign, from-scratch models with disciplined scope; another cut a large share of its workforce after overextending across too many product bets. What's the real takeaway for a PM building AI products in 2026?",
+      options: [
+        { id: "a", text: "Only foundation-model companies can succeed in AI" },
+        { id: "b", text: "Scope discipline — picking a narrow, defensible problem and executing it deeply — beats chasing every AI trend at once, even with strong funding" },
+        { id: "c", text: "Workforce cuts are unrelated to product strategy" },
+        { id: "d", text: "India's AI market is too immature to draw any lessons from yet" }
+      ],
+      correct: "b",
+      explain: "Sarvam AI's disciplined, scoped bet on sovereign models stands in contrast to companies that spread themselves across too many AI bets without the evals, data, or focus to back them — a scope-discipline lesson that applies just as much to a single product team as it does to an entire company."
+    }
+  ];
+
+  var TOTAL = QUESTIONS.length;
+
+  var state = {
+    idx: 0,
+    answers: {}, // qid -> { chosen, correct }
+    lead: null
+  };
+
+  var screenEnroll = document.getElementById("screen-enroll");
+  var screenQuiz = document.getElementById("screen-quiz");
+  var screenResults = document.getElementById("screen-results");
+
+  // ── Enrollment ──────────────────────────
+  function validEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
+  function validPhone(v) { return v.replace(/[^0-9]/g, '').length >= 7; }
+
+  document.getElementById("start-btn").addEventListener("click", async function () {
+    var name = document.getElementById('en-name').value.trim();
+    var email = document.getElementById('en-email').value.trim();
+    var phone = document.getElementById('en-phone').value.trim();
+    var experience = document.getElementById('en-experience').value;
+
+    document.getElementById('err-en-name').style.display = 'none';
+    document.getElementById('err-en-email').style.display = 'none';
+    document.getElementById('err-en-phone').style.display = 'none';
+    document.getElementById('err-en-experience').style.display = 'none';
+
+    var valid = true;
+    if (!name) { document.getElementById('err-en-name').style.display = 'block'; valid = false; }
+    if (!validEmail(email)) { document.getElementById('err-en-email').style.display = 'block'; valid = false; }
+    if (!validPhone(phone)) { document.getElementById('err-en-phone').style.display = 'block'; valid = false; }
+    if (!experience) { document.getElementById('err-en-experience').style.display = 'block'; valid = false; }
+    if (!valid) return;
+
+    state.lead = { name: name, email: email, phone: phone, experience: experience };
+
+    var btn = this;
+    btn.disabled = true;
+    btn.textContent = 'Starting Quiz…';
+
+    var timestamp = nowIST();
+    try {
+      await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          access_key: WEB3FORMS_KEY,
+          subject: `🎯 AI PM Quiz Signup: ${name}`,
+          from_name: 'PMpathshala AI PM Readiness Quiz',
+          name: name, email: email, phone: phone,
+          experience: experience,
+          course: 'AI Product Manager (Quiz Lead)',
+          timestamp: timestamp,
+          status: 'QUIZ_STARTED',
+          message: [
+            `🎯 NEW AI PM QUIZ SIGNUP`,
+            `─────────────────────`,
+            `Name       : ${name}`,
+            `Email      : ${email}`,
+            `Phone      : ${phone}`,
+            `Experience : ${experience}`,
+            `Timestamp  : ${timestamp} IST`,
+            `Status     : Started AI PM Readiness Quiz`,
+            `─────────────────────`,
+          ].join('\n'),
+        })
+      });
+    } catch (err) {
+      console.warn('Quiz enrollment Web3Forms (non-blocking):', err);
+    }
+
+    screenEnroll.hidden = true;
+    screenQuiz.hidden = false;
+    renderQuestion();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+
+  document.getElementById("retake-btn").addEventListener("click", function () {
+    state.idx = 0;
+    state.answers = {};
+    screenResults.hidden = true;
+    screenQuiz.hidden = false;
+    renderQuestion();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+
+  document.getElementById("cta-btn").addEventListener("click", function () {
+    try {
+      window.location.href = "index.html#courses";
+    } catch (e) { /* no-op */ }
+  });
+
+  function scoreSoFar() {
+    var n = 0;
+    for (var k in state.answers) { if (state.answers[k].correct) n++; }
+    return n;
+  }
+
+  function renderQuestion() {
+    var q = QUESTIONS[state.idx];
+    var pct = Math.round((state.idx / TOTAL) * 100);
+    document.getElementById("progress-fill").style.width = pct + "%";
+    document.getElementById("progress-label").textContent =
+      "Q" + (state.idx + 1) + " / " + TOTAL + " · " + scoreSoFar() + " ✓";
+
+    document.getElementById("q-topic").textContent = q.topicLabel;
+    document.getElementById("q-topic").className = "qtopic " + q.topic;
+    document.getElementById("q-prompt").textContent = q.prompt;
+
+    var optsWrap = document.getElementById("q-options");
+    optsWrap.innerHTML = "";
+    var explainBox = document.getElementById("q-explain");
+    explainBox.className = "explain";
+    var nextBtn = document.getElementById("next-btn");
+    nextBtn.disabled = true;
+    nextBtn.textContent = "Answer to continue";
+
+    q.options.forEach(function (opt) {
+      var btn = document.createElement("button");
+      btn.className = "opt";
+      btn.type = "button";
+      btn.innerHTML = '<span class="letter">' + opt.id.toUpperCase() + '</span><span>' + opt.text + '</span>';
+      btn.addEventListener("click", function () { handleAnswer(q, opt, btn, optsWrap); });
+      optsWrap.appendChild(btn);
+    });
+  }
+
+  function handleAnswer(q, chosenOpt, chosenBtn, optsWrap) {
+    if (state.answers[q.id]) return; // already answered
+    var isCorrect = chosenOpt.id === q.correct;
+    state.answers[q.id] = { chosen: chosenOpt.id, correct: isCorrect, topic: q.topic };
+
+    var buttons = optsWrap.querySelectorAll(".opt");
+    buttons.forEach(function (b) { b.disabled = true; });
+    chosenBtn.classList.add(isCorrect ? "correct" : "wrong");
+    if (!isCorrect) {
+      buttons.forEach(function (b, i) {
+        if (q.options[i].id === q.correct) b.classList.add("correct");
+      });
+    }
+
+    var explainBox = document.getElementById("q-explain");
+    var verdict = document.getElementById("q-verdict");
+    verdict.textContent = isCorrect ? "Correct." : "Not quite.";
+    verdict.className = "verdict " + (isCorrect ? "ok" : "no");
+    document.getElementById("q-explain-text").textContent = q.explain;
+    explainBox.classList.add("show");
+
+    document.getElementById("progress-label").textContent =
+      "Q" + (state.idx + 1) + " / " + TOTAL + " · " + scoreSoFar() + " ✓";
+
+    var nextBtn = document.getElementById("next-btn");
+    nextBtn.disabled = false;
+    nextBtn.textContent = (state.idx === TOTAL - 1) ? "See my results →" : "Next question →";
+  }
+
+  document.getElementById("next-btn").addEventListener("click", function () {
+    if (state.idx < TOTAL - 1) {
+      state.idx++;
+      renderQuestion();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } else {
+      showResults();
+    }
+  });
+
+  function showResults() {
+    screenQuiz.hidden = true;
+    screenResults.hidden = false;
+
+    var total = scoreSoFar();
+    var pct = Math.round((total / TOTAL) * 100);
+
+    document.getElementById("score-ring").style.setProperty("--pct", pct);
+    document.getElementById("score-num").textContent = total + "/" + TOTAL;
+
+    var band, headline, copy, ctaHeadline;
+    if (total >= 12) {
+      band = "AI PM READY";
+      headline = "You already think like an AI PM.";
+      copy = "Strong instincts across fundamentals, judgment, and agentic concepts. The gap between you and a hire-ready AI PM is now depth and real-world reps, not basics.";
+      ctaHeadline = "Go from ready to interview-proven";
+    } else if (total >= 7) {
+      band = "BUILDING THE BASE";
+      headline = "You've got real foundations — with clear gaps to close.";
+      copy = "You're ahead of most PMs attempting this transition, but a few of the misses above are exactly the kind of gaps that show up in AI PM interviews.";
+      ctaHeadline = "Close the gaps with a structured program";
+    } else {
+      band = "JUST STARTING OUT";
+      headline = "This is the right moment to start — not a red flag.";
+      copy = "Most PMs score here before formal AI PM training — the fundamentals, frameworks, and vocabulary just haven't been taught to you yet in a structured way.";
+      ctaHeadline = "Start your AI PM journey";
+    }
+    document.getElementById("band-label").textContent = band;
+    document.getElementById("band-headline").textContent = headline;
+    document.getElementById("band-copy").textContent = copy;
+    document.getElementById("cta-headline").textContent = ctaHeadline;
+
+    ["fund", "judg", "agent"].forEach(function (topic) {
+      var correctCount = 0, totalCount = 0;
+      QUESTIONS.forEach(function (q) {
+        if (q.topic === topic) {
+          totalCount++;
+          var a = state.answers[q.id];
+          if (a && a.correct) correctCount++;
+        }
+      });
+      var barPct = totalCount ? Math.round((correctCount / totalCount) * 100) : 0;
+      document.getElementById("bd-" + topic + "-n").textContent = correctCount + "/" + totalCount;
+      document.getElementById("bd-" + topic + "-bar").style.width = barPct + "%";
+    });
+
+    var reviewList = document.getElementById("review-list");
+    reviewList.innerHTML = "";
+    QUESTIONS.forEach(function (q, i) {
+      var a = state.answers[q.id];
+      var ok = a && a.correct;
+      var row = document.createElement("div");
+      row.className = "review-item";
+      row.innerHTML =
+        '<span class="mark ' + (ok ? "ok" : "no") + '">' + (ok ? "✓" : "✕") + '</span>' +
+        '<span class="qtext"><strong>Q' + (i + 1) + '.</strong> ' + q.prompt + '</span>';
+      reviewList.appendChild(row);
+    });
+
+    // Fire a completion lead (non-blocking) so you can see score + drop-off separately from the start signal
+    if (state.lead) {
+      try {
+        fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            access_key: WEB3FORMS_KEY,
+            subject: `✅ AI PM Quiz Completed: ${state.lead.name} (${total}/${TOTAL})`,
+            from_name: 'PMpathshala AI PM Readiness Quiz',
+            name: state.lead.name, email: state.lead.email, phone: state.lead.phone,
+            experience: state.lead.experience,
+            score: total + '/' + TOTAL,
+            band: band,
+            timestamp: nowIST(),
+            status: 'QUIZ_COMPLETED',
+            message: [
+              `✅ AI PM QUIZ COMPLETED`,
+              `─────────────────────`,
+              `Name       : ${state.lead.name}`,
+              `Email      : ${state.lead.email}`,
+              `Phone      : ${state.lead.phone}`,
+              `Experience : ${state.lead.experience}`,
+              `Score      : ${total}/${TOTAL} (${band})`,
+              `Timestamp  : ${nowIST()} IST`,
+              `─────────────────────`,
+            ].join('\n'),
+          })
+        }).catch(function (err) { console.warn('Quiz completion Web3Forms (non-blocking):', err); });
+      } catch (err) { /* no-op */ }
+    }
+
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+})();
+</script>
+
+</body></html>
