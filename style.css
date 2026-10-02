@@ -1,7 +1,7 @@
-/* ═══════════════════════════════════════════════════════════════════════
+/* ══════════════════════════════════════════════════════════════════
    PMpathshala — Global Stylesheet
    Theme: Deep Indigo / Violet / Soft Lavender
-   ════════════════════════════════════════════════════════════════════════ */
+   ═══════════════════════════════════════════════ */
 
 @import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Serif+Display:ital@0;1&display=swap');
 
@@ -341,9 +341,9 @@ footer {
   section { padding: 4rem 5%; }
 }
 
-/* ══════════════════════════════════════════════════════
+/* ═════════════════════════════════════════════
    FLAGSHIP REDESIGN — AI PM as flagship course
-   ═════════════════════════════════════════════════════════════════════ */
+   ═════════════════════════════════════════ */
 
 /* ── Status chips (waitlist-open vs closed, distinct from generic .meta-tag) ── */
 .meta-tag-signal {
