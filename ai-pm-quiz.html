@@ -84,6 +84,8 @@
     display: flex;
     align-items: center;
     gap: 8px;
+    text-decoration: none;
+    cursor: pointer;
   }
   .brand-mark {
     width: 46px;
@@ -97,6 +99,15 @@
     flex: none;
   }
   .brand-mark svg { width: 26px; height: 26px; }
+  .brand-word {
+    font-family: 'Sora', sans-serif;
+    font-weight: 800;
+    font-size: 1.1rem;
+    letter-spacing: -0.02em;
+    background: linear-gradient(135deg, var(--indigo), var(--violet));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
   .topbar-sub { font-size: 12px; color: var(--ink3); font-weight: 500; }
 
   /* ---------- progress ---------- */
@@ -108,18 +119,30 @@
   .progress-track {
     flex: 1;
     min-width: 0;
-    height: 6px;
-    border-radius: 999px;
+    display: flex;
+    gap: 5px;
+  }
+  .seg {
+    flex: 1;
+    min-width: 0;
+    height: 14px;
+    border-radius: 7px;
     background: var(--bg3);
     border: 1px solid var(--border2);
-    overflow: hidden;
+    transition: background 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
   }
-  .progress-fill {
-    height: 100%;
+  .seg.current {
     background: linear-gradient(90deg, var(--indigo), var(--violet));
-    border-radius: 999px;
-    transition: width 0.35s ease;
-    width: 0%;
+    border-color: var(--indigo);
+    transform: scaleY(1.25);
+  }
+  .seg.correct {
+    background: var(--emerald);
+    border-color: var(--emerald);
+  }
+  .seg.wrong {
+    background: var(--rose);
+    border-color: var(--rose);
   }
   .score-chip {
     flex: none;
@@ -542,9 +565,10 @@
 <div class="wrap">
 
   <div class="topbar">
-    <div class="brand">
+    <a href="index.html" id="brand-home-link" class="brand">
       <div class="brand-mark"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L7 5v5l5 3 5-3V5L12 2z" fill="rgba(255,255,255,0.9)"/><path d="M7 10v5l5 3V13L7 10z" fill="rgba(255,255,255,0.6)"/><path d="M17 10l-5 3v5l5-3v-5z" fill="rgba(255,255,255,0.75)"/></svg></div>
-    </div>
+      <span class="brand-word">PMpathshala</span>
+    </a>
     <div class="topbar-sub">AI PM Readiness Quiz</div>
   </div>
 
@@ -613,7 +637,7 @@
   <!-- ===================== QUIZ SCREEN ===================== -->
   <section id="screen-quiz" class="narrow" hidden>
     <div class="progress-shell">
-      <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+      <div class="progress-track" id="progress-track"></div>
       <div class="timer-chip" id="timer-chip">⏱ 0:30</div>
       <div class="score-chip" id="progress-label">Q1 / 15</div>
     </div>
@@ -885,6 +909,31 @@
   var timerInterval = null;
   var timeRemaining = TIME_PER_Q;
 
+  function buildSegments() {
+    var track = document.getElementById('progress-track');
+    if (!track) return;
+    track.innerHTML = '';
+    for (var i = 0; i < TOTAL; i++) {
+      var seg = document.createElement('div');
+      seg.className = 'seg';
+      seg.id = 'seg-' + i;
+      track.appendChild(seg);
+    }
+  }
+
+  function updateSegments() {
+    for (var i = 0; i < TOTAL; i++) {
+      var seg = document.getElementById('seg-' + i);
+      if (!seg) continue;
+      var q = QUESTIONS[i];
+      var a = state.answers[q.id];
+      seg.className = 'seg' +
+        (a ? (a.correct ? ' correct' : ' wrong') : (i === state.idx ? ' current' : ''));
+    }
+  }
+
+  buildSegments();
+
   function clearQuizTimer() {
     if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
   }
@@ -915,6 +964,7 @@
   function handleTimeout(q) {
     if (state.answers[q.id]) return; // already answered just before timeout fired
     state.answers[q.id] = { chosen: null, correct: false, topic: q.topic, timedOut: true };
+    updateSegments();
 
     var optsWrap = document.getElementById("q-options");
     var buttons = optsWrap.querySelectorAll(".opt");
@@ -941,6 +991,16 @@
   var screenEnroll = document.getElementById("screen-enroll");
   var screenQuiz = document.getElementById("screen-quiz");
   var screenResults = document.getElementById("screen-results");
+
+  // ── Logo → home, with an abort-confirm while the quiz is in progress ──
+  document.getElementById("brand-home-link").addEventListener("click", function (e) {
+    if (!screenQuiz.hidden) {
+      var ok = confirm("Leave now and abort the quiz? Your answers so far won't be saved, but we do have your details from when you started.");
+      if (!ok) { e.preventDefault(); return; }
+      clearQuizTimer();
+    }
+    // screen-enroll or screen-results: nothing to lose, let the link navigate normally.
+  });
 
   // ── Enrollment ──────────────────────────
   function validEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
@@ -1030,8 +1090,7 @@
 
   function renderQuestion() {
     var q = QUESTIONS[state.idx];
-    var pct = Math.round((state.idx / TOTAL) * 100);
-    document.getElementById("progress-fill").style.width = pct + "%";
+    updateSegments();
     document.getElementById("progress-label").textContent =
       "Q" + (state.idx + 1) + " / " + TOTAL + " · " + scoreSoFar() + " ✓";
 
@@ -1064,6 +1123,7 @@
     clearQuizTimer();
     var isCorrect = chosenOpt.id === q.correct;
     state.answers[q.id] = { chosen: chosenOpt.id, correct: isCorrect, topic: q.topic };
+    updateSegments();
 
     var buttons = optsWrap.querySelectorAll(".opt");
     buttons.forEach(function (b) { b.disabled = true; });
