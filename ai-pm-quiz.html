@@ -338,16 +338,41 @@
     position: relative;
     border-left: 4px solid var(--indigo);
   }
+  .qcard-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
   .qtopic {
     font-size: 11px;
     font-weight: 700;
     letter-spacing: 1px;
     text-transform: uppercase;
-    margin-bottom: 8px;
   }
   .qtopic.fund { color: var(--indigo); }
   .qtopic.judg { color: var(--violet); }
   .qtopic.agent { color: var(--signal-d); }
+  .qdiff {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--ink3);
+    background: var(--bg2);
+    border: 1px solid var(--border2);
+    padding: 3px 9px 3px 7px;
+    border-radius: 999px;
+    flex: none;
+  }
+  .qdiff .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--ink4); flex: none; }
+  .qdiff.conceptual .dot { background: #94a3b8; }
+  .qdiff.moderate .dot { background: #d97706; }
+  .qdiff.realistic .dot { background: var(--violet); }
   .qprompt {
     font-size: 17px;
     line-height: 1.5;
@@ -678,7 +703,10 @@
     </div>
 
     <div class="qcard" id="qcard">
-      <div class="qtopic" id="q-topic">AI FUNDAMENTALS</div>
+      <div class="qcard-head">
+        <div class="qtopic" id="q-topic">AI FUNDAMENTALS</div>
+        <div class="qdiff" id="q-diff"><span class="dot"></span><span id="q-diff-text">Conceptual</span></div>
+      </div>
       <p class="qprompt" id="q-prompt">Loading…</p>
       <div class="options" id="q-options"></div>
       <div class="explain" id="q-explain">
@@ -767,184 +795,184 @@
 
   var QUESTIONS = [
     {
-      id: "q1", topic: "fund", topicLabel: "AI FUNDAMENTALS",
+      id: "q1", topic: "fund", topicLabel: "AI FUNDAMENTALS", difficulty: "conceptual",
       prompt: "A traditional rules-based feature always returns the same output for the same input. Why can't you say the same about a feature built on an LLM?",
       options: [
-        { id: "a", text: "Because LLMs run on slower servers, so timing varies" },
-        { id: "b", text: "Because LLM outputs are generated probabilistically — the same prompt can sample a different token sequence each run" },
-        { id: "c", text: "Because LLMs only work with internet access, so results depend on connectivity" },
-        { id: "d", text: "Because LLMs store user data and personalize every response" }
+        { id: "a", text: "Because LLM outputs are generated probabilistically — the model samples from a distribution over next tokens, so results can vary between runs" },
+        { id: "b", text: "Because LLMs run on shared cloud infrastructure with variable load, so response timing shifts with network and server conditions over time" },
+        { id: "c", text: "Because LLMs quietly fine-tune their own weights after every conversation, so each new session reflects a slightly different, self-updated model" },
+        { id: "d", text: "Because LLMs route each prompt through a different checkpoint behind the scenes, to balance infrastructure load across several data centers" }
       ],
-      correct: "b",
+      correct: "a",
       explain: "An LLM predicts the next token from a probability distribution, not a fixed lookup. That's the core mental shift from deterministic to probabilistic software — and it's why AI features need evals and guardrails that traditional QA never had to build."
     },
     {
-      id: "q2", topic: "fund", topicLabel: "AI FUNDAMENTALS",
-      prompt: "Which containment relationship is correct?",
+      id: "q2", topic: "fund", topicLabel: "AI FUNDAMENTALS", difficulty: "conceptual",
+      prompt: "Your AI assistant keeps giving generic answers because the base model has never seen your company's internal product docs. Which technique lets it answer accurately using that knowledge — without retraining the model?",
       options: [
-        { id: "a", text: "LLMs contain Deep Learning, which contains Machine Learning, which contains AI" },
-        { id: "b", text: "Machine Learning contains AI, which contains Deep Learning and LLMs" },
-        { id: "c", text: "AI contains Machine Learning, which contains Deep Learning, which contains LLMs" },
-        { id: "d", text: "AI, ML, Deep Learning and LLMs are four unrelated, parallel fields" }
+        { id: "a", text: "Raising the temperature setting so the model samples more varied phrasing and sounds a little more confident when it delivers an answer" },
+        { id: "b", text: "Retrieval-Augmented Generation (RAG) — fetch the relevant internal docs at query time and include them in the prompt, so it answers from current content" },
+        { id: "c", text: "Switching to a larger model with more parameters, on the assumption that a bigger model has implicitly memorized company-specific knowledge" },
+        { id: "d", text: "Asking the user to rephrase the question more precisely so the model has a better chance of matching it to something it already knows" }
+      ],
+      correct: "b",
+      explain: "RAG separates 'what the model knows' from 'what it can look up.' Instead of baking your docs into the model's weights — expensive, slow to update — you retrieve the relevant passages at query time and hand them to the model as context, so updating a doc updates the answer instantly, with no retraining."
+    },
+    {
+      id: "q3", topic: "fund", topicLabel: "AI FUNDAMENTALS", difficulty: "moderate",
+      prompt: "A teammate says 'let's just lower the temperature setting to fix the model's accuracy problem.' What does temperature actually control?",
+      options: [
+        { id: "a", text: "How factually accurate the model's claims are — a lower setting is assumed to make it double-check facts before answering a question" },
+        { id: "b", text: "How large the model's context window is — raising it is assumed to let it read and remember more of the conversation at once" },
+        { id: "c", text: "How random or deterministic the token choices are — lower picks the most likely next word more often, higher samples more varied options" },
+        { id: "d", text: "How many tool calls the model is allowed to make per turn before it has to stop and check in with a human reviewer" }
       ],
       correct: "c",
-      explain: "AI is the broadest goal (machines doing tasks that need intelligence). ML is one approach to it (learning from data). Deep Learning is ML using neural networks. LLMs are a Deep Learning architecture (transformers) specialized for language. Getting this nesting wrong is a fast way to lose credibility in an AI PM interview."
+      explain: "Temperature controls sampling randomness, not truthfulness. A low temperature makes output more consistent and focused; a high temperature makes it more varied. But a model can be confidently, consistently wrong at any temperature — accuracy problems need better grounding (RAG, evals), not a temperature tweak."
     },
     {
-      id: "q3", topic: "fund", topicLabel: "AI FUNDAMENTALS",
-      prompt: "Independent studies on customer-support LLM deployments have found hallucination rates in roughly what range, even in well-tuned production systems?",
+      id: "q4", topic: "fund", topicLabel: "AI FUNDAMENTALS", difficulty: "moderate",
+      prompt: "A support chatbot handles long conversations well at first, but after 40+ messages it starts contradicting facts the user mentioned earlier in the same chat. What's the most likely cause?",
       options: [
-        { id: "a", text: "Under 1% — modern LLMs rarely hallucinate in narrow domains" },
-        { id: "b", text: "Roughly 15–27%" },
-        { id: "c", text: "Roughly 60–75%" },
-        { id: "d", text: "Hallucination has been fully solved as of 2025" }
+        { id: "a", text: "The model is deliberately withholding information it decided the user doesn't need, based on earlier signals in the conversation" },
+        { id: "b", text: "The user's internet connection has been dropping packets intermittently, so parts of each message never fully reach the model" },
+        { id: "c", text: "The model's temperature setting increases automatically the longer a conversation runs, making its answers progressively more random" },
+        { id: "d", text: "The conversation has exceeded the model's context window, so earlier turns get dropped or truncated and effectively vanish from view" }
       ],
-      correct: "b",
-      explain: "Even well-scoped, well-tuned customer-support deployments have shown hallucination rates in the 15–27% range in independent audits. This is the number that should inform your shipping bar, not marketing claims about 'near-perfect' accuracy."
+      correct: "d",
+      explain: "Every model has a finite context window — a cap on how much text it can 'see' at once. Once a conversation grows past that limit, the oldest turns get truncated or summarized away, and details mentioned early on effectively vanish from the model's view."
     },
     {
-      id: "q4", topic: "fund", topicLabel: "AI FUNDAMENTALS",
-      prompt: "What does 'attention' refer to in a transformer-based LLM?",
+      id: "q5", topic: "fund", topicLabel: "AI FUNDAMENTALS", difficulty: "realistic",
+      prompt: "Your product's search bar returns results that don't contain the user's exact words but are clearly about the same thing — searching 'cheap laptop' surfaces listings titled 'affordable notebook.' What's powering that?",
       options: [
-        { id: "a", text: "A UI pattern that keeps the user's attention on the chat window" },
-        { id: "b", text: "A mechanism that lets the model weigh how relevant every other token is to the one it's currently processing" },
-        { id: "c", text: "A content-moderation filter that flags attention-grabbing (clickbait) text" },
-        { id: "d", text: "A metric for how long a user session lasts" }
-      ],
-      correct: "b",
-      explain: "Attention is what lets a transformer decide, for every token, how much weight to give every other token in context — it's the mechanism that made long-range language understanding (and therefore modern LLMs) possible."
-    },
-    {
-      id: "q5", topic: "fund", topicLabel: "AI FUNDAMENTALS",
-      prompt: "Your team ships a feature with zero human review of AI-generated outputs because 'the model is 95% accurate in testing.' What's the sharpest objection to raise?",
-      options: [
-        { id: "a", text: "95% isn't possible for any AI system" },
-        { id: "b", text: "Test-set accuracy doesn't capture real-world edge cases, and a 5% failure rate at scale is still thousands of wrong outputs a day" },
-        { id: "c", text: "Accuracy doesn't matter if the UI looks polished" },
-        { id: "d", text: "Human review should never be required for AI features" }
-      ],
-      correct: "b",
-      explain: "A 95% lab number can mask a much worse real-world failure rate, and even at a true 95%, high volume means high absolute error counts. This is exactly the reasoning that should have stopped Air Canada's unsupervised chatbot before it made a legally binding (and wrong) refund promise."
-    },
-    {
-      id: "q6", topic: "judg", topicLabel: "PM JUDGMENT",
-      prompt: "In the 4-Axis Feasibility Check (Desirability, Viability, Technical Feasibility, Data Feasibility), which axis do most first-time AI PMs skip — and pay for later?",
-      options: [
-        { id: "a", text: "Desirability — whether users want it" },
-        { id: "b", text: "Viability — whether it makes business sense" },
-        { id: "c", text: "Data Feasibility — whether the right data exists, in the right volume and quality, to make the model work" },
-        { id: "d", text: "None — all four are checked equally often" }
-      ],
-      correct: "c",
-      explain: "Desirability and viability are instincts every PM already has from non-AI work. Data Feasibility is the one that's new, invisible until you dig in, and the single most common reason AI features die in build — there's no labeled data, or not enough of it, or it's biased in ways no one checked."
-    },
-    {
-      id: "q7", topic: "judg", topicLabel: "PM JUDGMENT",
-      prompt: "What does an AI PRD need to specify that a traditional feature PRD typically doesn't?",
-      options: [
-        { id: "a", text: "A list of competitor features" },
-        { id: "b", text: "An evaluation plan, acceptable failure modes, a fallback/escalation path, and the data the model is grounded in" },
-        { id: "c", text: "A Gantt chart with engineering estimates" },
-        { id: "d", text: "A list of button colors and font sizes" }
-      ],
-      correct: "b",
-      explain: "A traditional PRD assumes the feature either works or has a bug. An AI PRD has to assume the feature will sometimes be wrong by design, so it must define what 'acceptable wrong' looks like, how you'll measure it (evals), and what happens when it fails (fallback to a human, a disclaimer, a confidence threshold)."
-    },
-    {
-      id: "q8", topic: "judg", topicLabel: "PM JUDGMENT",
-      prompt: "An airline's chatbot invented a bereavement-fare policy that didn't exist, told a customer they qualified, and a tribunal later held the airline liable for honoring it. What's the real lesson for an AI PM, beyond 'test more'?",
-      options: [
-        { id: "a", text: "Never use chatbots for customer service" },
-        { id: "b", text: "An unsupervised AI agent making policy-level claims needs a scoped, auditable boundary — not just better prompting — because the company is legally bound by what it says" },
-        { id: "c", text: "The lesson is purely a PR problem, not a product one" },
-        { id: "d", text: "This only applies to airlines, not other industries" }
-      ],
-      correct: "b",
-      explain: "The Air Canada ruling (and the 2026 German court decisions that extended the same reasoning) established that a company is bound by what its AI agent represents to a customer. The fix isn't 'prompt it better' — it's product scoping: never let an unsupervised agent make binding claims outside a tightly defined, auditable boundary."
-    },
-    {
-      id: "q9", topic: "judg", topicLabel: "PM JUDGMENT",
-      prompt: "Your fraud-detection model's recall is high but precision is low. In plain terms, what's actually happening?",
-      options: [
-        { id: "a", text: "It catches most real fraud, but also flags a lot of legitimate transactions as fraud" },
-        { id: "b", text: "It misses most real fraud, but rarely flags legitimate transactions" },
-        { id: "c", text: "It's equally bad at everything" },
-        { id: "d", text: "Precision and recall both measure the same thing, so this isn't possible" }
+        { id: "a", text: "Embeddings — text is converted into vectors that place similar meanings close together, so search matches on meaning rather than exact keywords" },
+        { id: "b", text: "A thesaurus the engineering team manually maintains and updates every time a new product category or slang term enters common use" },
+        { id: "c", text: "The model re-reads every product description live for each search query, comparing it word-by-word against whatever the user just typed" },
+        { id: "d", text: "A spelling-correction algorithm that silently rewrites the query to the closest dictionary word before running a standard keyword search" }
       ],
       correct: "a",
-      explain: "High recall = it finds most of the real positives. Low precision = many of its 'positive' flags are false alarms. For fraud, that trade-off means fewer frauds slip through, at the cost of more legitimate customers getting blocked or annoyed — a tradeoff only a PM can decide is worth it, not an engineering call."
+      explain: "Embeddings turn words and phrases into vectors positioned so similar meanings sit near each other — 'cheap' and 'affordable' end up close together even though they share no letters. That's what lets semantic search, and RAG retrieval, match on intent instead of exact keywords."
     },
     {
-      id: "q10", topic: "judg", topicLabel: "PM JUDGMENT",
-      prompt: "A content-moderation model has a choice: miss some genuinely harmful posts (false negative) or wrongly remove some safe posts (false positive). Which framing best describes the PM's real job here?",
+      id: "q6", topic: "judg", topicLabel: "PM JUDGMENT", difficulty: "conceptual",
+      prompt: "Instead of starting with 'what features should we build,' the Jobs-to-be-Done framework tells a PM to start with which question?",
       options: [
-        { id: "a", text: "Pick whichever number is smaller in the model's test report" },
-        { id: "b", text: "Decide, with legal/trust & safety, which error type is more costly for this specific product and set the model's threshold deliberately — it's a policy decision wearing a metrics costume" },
-        { id: "c", text: "Leave the threshold at whatever the data science team defaults to" },
-        { id: "d", text: "Eliminate both error types entirely before shipping" }
+        { id: "a", text: "\"What would our competitors build next, so we can match or beat their roadmap?\"" },
+        { id: "b", text: "\"What job is the customer really 'hiring' this product to do?\"" },
+        { id: "c", text: "\"What can engineering ship fastest, given the current sprint's capacity?\"" },
+        { id: "d", text: "\"What feature would generate the most press coverage and social buzz?\"" }
       ],
       correct: "b",
-      explain: "Every classification threshold is a tradeoff between false positives and false negatives — you cannot minimize both at once. Choosing where to sit on that curve is a product and policy decision with real consequences, not a number a model spits out on its own."
+      explain: "JTBD reframes the question from features to purpose: people don't want a product, they want a job done. Understanding that underlying job — not the feature wishlist — is what tells you whether you're solving the real problem or just adding noise."
     },
     {
-      id: "q11", topic: "agent", topicLabel: "AGENTIC AI",
+      id: "q7", topic: "judg", topicLabel: "PM JUDGMENT", difficulty: "moderate",
+      prompt: "Feature A and Feature B score almost identically on Reach and Impact. The team is highly confident in Feature A's effort estimate, but Feature B's is a rough guess from an unfamiliar part of the codebase. Under the RICE framework, what should happen to their scores?",
+      options: [
+        { id: "a", text: "Nothing changes — RICE only multiplies Reach, Impact, and Effort, so a rough estimate carries the same weight as a well-researched one" },
+        { id: "b", text: "Feature B should automatically rank higher than Feature A, since an uncertain estimate usually signals more hidden upside once investigated" },
+        { id: "c", text: "Feature B's score should drop relative to Feature A, because RICE multiplies in a Confidence factor that discounts shaky estimates" },
+        { id: "d", text: "Both features should be scored identically, since Reach and Impact are equal and Confidence is meant to even out over a large backlog" }
+      ],
+      correct: "c",
+      explain: "RICE = (Reach × Impact × Confidence) / Effort. Confidence exists exactly for this situation — it pulls down the score of an idea you're less sure about, so a shaky guess doesn't rank the same as a well-understood estimate just because the surface numbers look similar."
+    },
+    {
+      id: "q8", topic: "judg", topicLabel: "PM JUDGMENT", difficulty: "moderate",
+      prompt: "Your product's monthly active users keep climbing, but your team's agreed North Star Metric — 'learners who complete a capstone project' — is flat. What does this gap most likely signal?",
+      options: [
+        { id: "a", text: "The North Star Metric was poorly chosen in the first place and should simply be swapped out for MAU, since MAU is the one actually moving" },
+        { id: "b", text: "Nothing meaningful — North Star Metrics and MAU are designed to move independently, so a gap between them carries no real signal" },
+        { id: "c", text: "The product should pause all growth marketing immediately until MAU comes back down to match the North Star trend line" },
+        { id: "d", text: "Usage is growing, but it isn't converting into the outcome that reflects the product's core value — a sign to find where the funnel leaks" }
+      ],
+      correct: "d",
+      explain: "A North Star Metric exists precisely because activity metrics like MAU can rise while the thing that actually matters stays flat. The gap is a diagnostic signal, not a metric-choice problem — it's telling you to go find the step where people engage but never reach real value."
+    },
+    {
+      id: "q9", topic: "judg", topicLabel: "PM JUDGMENT", difficulty: "realistic",
+      prompt: "A content-moderation model can be tuned to miss more genuinely harmful posts (false negatives) or wrongly remove more safe posts (false positives) — it can't minimize both at once. What's the PM's real job here?",
+      options: [
+        { id: "a", text: "Decide, with legal and trust & safety, which error type is costlier here, and set the threshold deliberately — a policy decision in a metrics costume" },
+        { id: "b", text: "Ask the data science team to keep iterating and report back once both false positives and false negatives have been driven down to zero" },
+        { id: "c", text: "Accept whichever threshold the model ships with by default, since the vendor presumably already tuned it for a reasonable enough balance" },
+        { id: "d", text: "Always minimize false positives over false negatives, since visible user complaints carry more reputational risk than harm nobody reports" }
+      ],
+      correct: "a",
+      explain: "Every classification threshold trades false positives against false negatives — you cannot drive both to zero at once. Choosing where to sit on that curve has real legal, trust, and safety consequences, which makes it a product and policy call, not a number a model picks on its own."
+    },
+    {
+      id: "q10", topic: "judg", topicLabel: "PM JUDGMENT", difficulty: "realistic",
+      prompt: "Your team wants to ship an AI feature with zero human review of its outputs because 'the model tested at 95% accuracy.' What's the sharpest objection to raise before launch?",
+      options: [
+        { id: "a", text: "95% accuracy isn't technically achievable for a production model, so the reported test number must be inflated or measured incorrectly" },
+        { id: "b", text: "A test-set number doesn't capture real-world edge cases, and a true 5% failure rate at scale still means thousands of wrong outputs a day" },
+        { id: "c", text: "Accuracy doesn't really matter here as long as the interface looks polished and confident, since users tend to trust a clean UI regardless" },
+        { id: "d", text: "Human review should never be required at all once a model clears roughly 90% accuracy, since further checking mostly wastes reviewer time" }
+      ],
+      correct: "b",
+      explain: "A clean lab number can hide a much rougher real-world failure rate, and even a genuinely accurate model will still be wrong often enough to matter at scale. This is exactly the reasoning that should stop an unsupervised AI feature with no fallback or review path before it ships, not after it causes a costly, public mistake."
+    },
+    {
+      id: "q11", topic: "agent", topicLabel: "AGENTIC AI", difficulty: "conceptual",
       prompt: "What actually makes a product 'agentic' rather than just 'AI-powered'?",
       options: [
-        { id: "a", text: "It uses an LLM anywhere in the stack" },
-        { id: "b", text: "It can take multi-step actions toward a goal — planning, calling tools, observing results, and adapting — with limited step-by-step human approval" },
-        { id: "c", text: "It has a chat interface" },
-        { id: "d", text: "It was trained on more data than a non-agentic product" }
+        { id: "a", text: "It uses an LLM somewhere in the stack, even if that's just a single call that generates one block of text for a human to read" },
+        { id: "b", text: "It has a conversational chat interface that lets the user type free-form questions instead of clicking through a fixed set of menus" },
+        { id: "c", text: "It can take multi-step actions toward a goal — planning, calling tools, observing results, adapting — with limited human approval" },
+        { id: "d", text: "It was trained on a larger dataset than a comparable non-agentic product, giving it broader general knowledge to draw on" }
       ],
-      correct: "b",
+      correct: "c",
       explain: "An AI-powered feature generates an output for a human to use. An agentic one pursues a goal across multiple steps — plan, act, observe, replan — often calling tools or other systems along the way with reduced human-in-the-loop checkpoints. That autonomy is exactly what raises the product-design and trust stakes."
     },
     {
-      id: "q12", topic: "agent", topicLabel: "AGENTIC AI",
-      prompt: "On a 'Trust Ladder' for AI autonomy (lowest to highest), what sits on the bottom rung?",
-      options: [
-        { id: "a", text: "Full autonomy — the agent acts with no human visibility at all" },
-        { id: "b", text: "The AI suggests, and a human reviews and approves every action before it executes" },
-        { id: "c", text: "The AI acts first and reports after the fact" },
-        { id: "d", text: "The AI only acts on weekends to limit exposure" }
-      ],
-      correct: "b",
-      explain: "The lowest, safest rung is 'suggest and approve' — the AI proposes, a human stays fully in the loop before anything executes. Products climb the ladder (approve-in-bulk, act-and-notify, full autonomy) only as trust, evals, and the cost of a wrong action justify it — not by default."
-    },
-    {
-      id: "q13", topic: "agent", topicLabel: "AGENTIC AI",
-      prompt: "What is an 'eval' in the context of an AI product, and why does an AI PM need to own defining it?",
-      options: [
-        { id: "a", text: "A one-time code review before launch" },
-        { id: "b", text: "A structured, repeatable test suite that scores model/agent outputs against defined criteria, run continuously to catch regressions and measure quality" },
-        { id: "c", text: "The legal disclaimer shown to users of an AI feature" },
-        { id: "d", text: "A synonym for A/B testing conversion rate" }
-      ],
-      correct: "b",
-      explain: "Evals are the AI-era equivalent of a QA/regression suite — but because model behavior drifts with prompt, data, and model-version changes, they have to run continuously, not just pre-launch. Defining what 'good' looks like for your specific product is a product decision, which is why this can't be fully delegated to engineering."
-    },
-    {
-      id: "q14", topic: "agent", topicLabel: "AGENTIC AI",
+      id: "q12", topic: "agent", topicLabel: "AGENTIC AI", difficulty: "conceptual",
       prompt: "What does the Model Context Protocol (MCP) fundamentally enable for an AI agent?",
       options: [
-        { id: "a", text: "A standardized way for an agent to discover and call external tools, data sources, and services without custom integration code for each one" },
-        { id: "b", text: "A way to compress model weights for faster inference" },
-        { id: "c", text: "A content policy that restricts what an agent can say" },
-        { id: "d", text: "A pricing model for charging per API call" }
+        { id: "a", text: "A way to compress a model's weights into a smaller footprint so it runs faster and cheaper during inference, without changing its outputs" },
+        { id: "b", text: "A content policy framework that defines and restricts what an agent is and isn't allowed to say to an end user, across every conversation" },
+        { id: "c", text: "A usage-based pricing model that determines how much a provider charges per tool call or API request an agent makes over a billing period" },
+        { id: "d", text: "A standardized way for an agent to discover and call external tools and data sources, without custom integration code for each one" }
       ],
-      correct: "a",
+      correct: "d",
       explain: "MCP standardizes how an agent connects to tools and context sources — think of it as a common plug shape, so an agent doesn't need bespoke integration work for every database, file system, or API it touches. For a PM, this matters because it changes how fast and how cheaply an agentic feature can be extended."
     },
     {
-      id: "q15", topic: "agent", topicLabel: "AGENTIC AI",
-      prompt: "Two Indian AI companies took sharply different paths: one raised at unicorn valuation building sovereign, from-scratch models with disciplined scope; another cut a large share of its workforce after overextending across too many product bets. What's the real takeaway for a PM building AI products in 2026?",
+      id: "q13", topic: "agent", topicLabel: "AGENTIC AI", difficulty: "moderate",
+      prompt: "An AI agent drafts a full action plan — 'refund this customer, update their subscription, send a confirmation email' — and a human reviews and approves the entire plan once, up front. After that, the agent executes every step on its own, with no further check-ins. Which level of agent autonomy does this describe?",
       options: [
-        { id: "a", text: "Only foundation-model companies can succeed in AI" },
-        { id: "b", text: "Scope discipline — picking a narrow, defensible problem and executing it deeply — beats chasing every AI trend at once, even with strong funding" },
-        { id: "c", text: "Workforce cuts are unrelated to product strategy" },
-        { id: "d", text: "India's AI market is too immature to draw any lessons from yet" }
+        { id: "a", text: "Supervised — a human approves a full plan or batch up front, then the agent runs the whole approved scope with no further check-ins" },
+        { id: "b", text: "No autonomy — a human reviews the agent's suggestion and then performs every single action manually, with the agent never touching a live system" },
+        { id: "c", text: "Assisted — the agent proposes one action at a time and must wait for explicit human approval before carrying out each individual step" },
+        { id: "d", text: "Full autonomy — the agent sets its own goals and plans with no human review of either the plan or its execution at any point" }
+      ],
+      correct: "a",
+      explain: "This is the 'Supervised' tier on the standard agent-autonomy ladder: the shift from approving every single action (Assisted) to approving a whole plan once and letting the agent run it (Supervised). It's a common, practical middle ground — real oversight without re-approving every click."
+    },
+    {
+      id: "q14", topic: "agent", topicLabel: "AGENTIC AI", difficulty: "realistic",
+      prompt: "An airline's chatbot invented a bereavement-fare policy that didn't exist, told a customer they qualified, and a tribunal later held the airline liable for honoring it. What's the real lesson for an AI PM, beyond 'test more'?",
+      options: [
+        { id: "a", text: "Never use chatbots for customer service at all, since any AI-generated response carries an unacceptable legal risk for the company" },
+        { id: "b", text: "An unsupervised agent making policy-level claims needs a scoped, auditable boundary, not just better prompting, since the company is bound by it" },
+        { id: "c", text: "The lesson here is purely a PR and reputation problem to manage, not something that changes how the product itself should be scoped" },
+        { id: "d", text: "This ruling only applies to airlines specifically, since other industries aren't bound by that particular consumer-protection tribunal's decision" }
       ],
       correct: "b",
-      explain: "Sarvam AI's disciplined, scoped bet on sovereign models stands in contrast to companies that spread themselves across too many AI bets without the evals, data, or focus to back them — a scope-discipline lesson that applies just as much to a single product team as it does to an entire company."
+      explain: "The Air Canada ruling established that a company is bound by what its AI agent represents to a customer. The fix isn't 'prompt it better' — it's product scoping: never let an unsupervised agent make binding claims outside a tightly defined, auditable boundary, and set its autonomy level accordingly."
+    },
+    {
+      id: "q15", topic: "agent", topicLabel: "AGENTIC AI", difficulty: "realistic",
+      prompt: "Your support agent can now browse the web, call six internal tools, and chain actions across 10+ steps on its own. The team wants to add three more high-risk tools next sprint — refunds, account deletion, email sending. What should an AI PM insist on first?",
+      options: [
+        { id: "a", text: "Ship the new refund, deletion, and email tools immediately next sprint, since adding more tools straightforwardly makes the agent more useful" },
+        { id: "b", text: "Keep relying on the evals written back when the agent had only one low-risk tool, since those tests already proved the core model behaves reasonably" },
+        { id: "c", text: "A solid eval suite that tests multi-step tool-use failures, plus guardrails on the new high-risk actions, before expanding what the agent can touch" },
+        { id: "d", text: "Remove human review entirely from the support flow, since the agent has been reliable across its existing six tools over the past several sprints" }
+      ],
+      correct: "c",
+      explain: "Every new tool — especially a high-risk one like refunds or account deletion — multiplies the ways a multi-step agent can go wrong in combination. Evals and guardrails need to grow with the agent's capability and blast radius, not stay frozen at whatever covered its very first, simplest version."
     }
   ];
 
@@ -1204,6 +1232,9 @@
 
     document.getElementById("q-topic").textContent = q.topicLabel;
     document.getElementById("q-topic").className = "qtopic " + q.topic;
+    var diffLabels = { conceptual: "Conceptual", moderate: "Moderate", realistic: "Scenario" };
+    document.getElementById("q-diff").className = "qdiff " + q.difficulty;
+    document.getElementById("q-diff-text").textContent = diffLabels[q.difficulty] || q.difficulty;
     document.getElementById("q-prompt").textContent = q.prompt;
 
     var optsWrap = document.getElementById("q-options");
