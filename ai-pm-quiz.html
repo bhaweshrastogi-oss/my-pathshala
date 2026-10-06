@@ -50,6 +50,8 @@
     background: var(--bg);
     color: var(--ink2);
     font-family: 'Sora', Arial, sans-serif;
+    padding-inline: 16px;
+    padding-block: 20px;
     width: 100%;
     overflow-x: hidden;
   }
@@ -174,28 +176,30 @@
     border-color: var(--rose);
   }
 
-  /* ---------- dark page-hero band (continues the homepage's hero) ---------- */
+  /* ---------- dark page-hero card (same column width as everything else) ---------- */
   .page-hero {
     background: linear-gradient(160deg, var(--indigo-dd) 0%, #241f52 45%, var(--violet) 100%);
-    padding: 18px 16px 30px;
+    border-radius: 18px;
+    box-shadow: var(--shadow-md);
+    padding: 20px 20px 22px;
     position: relative;
     overflow: hidden;
   }
   .page-hero::before {
     content: "";
     position: absolute; inset: 0; pointer-events: none;
+    border-radius: inherit;
     background-image:
       linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
       linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
-    background-size: 42px 42px;
+    background-size: 36px 36px;
   }
-  .page-hero .wrap { position: relative; z-index: 2; }
-  .page-hero.compact { padding: 14px 16px; transition: padding 0.25s ease; }
+  .page-hero > * { position: relative; z-index: 2; }
+  .page-hero.compact { padding: 12px 16px; transition: padding 0.2s ease; }
   .page-hero.compact .hero-info { display: none; }
-  .page-content { padding-inline: 16px; padding-block: 20px; }
 
   /* ---------- hero copy (lives inside the dark page-hero) ---------- */
-  .hero-info { min-width: 0; }
+  .hero-info { min-width: 0; margin-top: 16px; }
   .eyebrow {
     display: inline-flex;
     align-items: center;
@@ -205,41 +209,41 @@
     letter-spacing: 1.2px;
     text-transform: uppercase;
     color: #c4b5fd;
-    margin: 0 0 10px;
+    margin: 0 0 8px;
   }
   .hero-info h1 {
-    font-size: 26px;
-    line-height: 1.22;
+    font-size: 21px;
+    line-height: 1.26;
     color: #fff;
-    margin: 0 0 10px;
+    margin: 0 0 8px;
     text-wrap: balance;
     font-weight: 400;
   }
-  .hero-info p { margin: 0 0 18px; font-size: 14.5px; line-height: 1.6; max-width: 48ch; color: rgba(255,255,255,0.75); }
+  .hero-info p { margin: 0 0 14px; font-size: 13.5px; line-height: 1.55; max-width: 52ch; color: rgba(255,255,255,0.75); }
   .meta-row {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 20px;
+    gap: 8px;
+    margin-bottom: 12px;
   }
   .meta-pill {
-    font-size: 12px;
+    font-size: 11.5px;
     font-weight: 600;
     color: rgba(255,255,255,0.88);
     background: rgba(255,255,255,0.08);
     border: 1px solid rgba(255,255,255,0.22);
-    padding: 6px 12px;
+    padding: 5px 11px;
     border-radius: 999px;
   }
   .topic-row {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 7px;
   }
   .topic-tag {
-    font-size: 11.5px;
+    font-size: 11px;
     font-weight: 700;
-    padding: 6px 10px;
+    padding: 5px 9px;
     border-radius: 8px;
     border: 1px solid rgba(255,255,255,0.24);
   }
@@ -542,13 +546,13 @@
   [hidden] { display: none !important; }
 
   @media (max-width: 420px) {
-    .hero-info h1 { font-size: 22px; }
+    .hero-info h1 { font-size: 19px; }
     .qprompt { font-size: 15.5px; }
   }
 
   @media (min-width: 860px) {
-    .page-hero { padding: 28px 5% 46px; }
-    .page-hero.compact { padding: 16px 5%; }
+    .page-hero { padding: 26px 32px 30px; }
+    .page-hero.compact { padding: 14px 24px; }
     .enroll-card { padding: 40px 44px; }
     .score-hero { padding: 40px 44px; }
     .breakdown { grid-template-columns: repeat(3, 1fr); }
@@ -560,8 +564,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
 
-<div class="page-hero">
-  <div class="wrap">
+<div class="wrap">
+
+  <div class="page-hero narrow" id="page-hero">
     <div class="topbar">
       <a href="index.html" id="brand-home-link" class="brand">
         <div class="brand-mark"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L7 5v5l5 3 5-3V5L12 2z" fill="rgba(255,255,255,0.9)"/><path d="M7 10v5l5 3V13L7 10z" fill="rgba(255,255,255,0.6)"/><path d="M17 10l-5 3v5l5-3v-5z" fill="rgba(255,255,255,0.75)"/></svg></div>
@@ -573,7 +578,7 @@
     <div class="hero-info">
       <p class="eyebrow">⬤ 15 Questions · ~8 Minutes</p>
       <h1>How ready are you to think like an AI Product Manager?</h1>
-      <p>Fifteen scenario questions pulled straight from how AI PM interviews are actually run in 2026 — not trivia. You'll be tested on AI fundamentals, PM judgment under uncertainty, and agentic-AI concepts. Each answer comes with a short explanation either way.</p>
+      <p>Scenario questions from how AI PM interviews actually run in 2026 — AI fundamentals, PM judgment, and agentic-AI concepts, each with a short explanation.</p>
 
       <div class="meta-row">
         <span class="meta-pill">Instant score + breakdown</span>
@@ -588,10 +593,6 @@
       </div>
     </div>
   </div>
-</div>
-
-<div class="page-content">
-  <div class="wrap">
 
   <!-- ===================== ENROLLMENT SCREEN ===================== -->
   <section id="screen-enroll" class="narrow">
@@ -698,7 +699,6 @@
   </section>
 
   <footer>© 2026 PMpathshala. All rights reserved.</footer>
-  </div>
 </div>
 
 <script>
