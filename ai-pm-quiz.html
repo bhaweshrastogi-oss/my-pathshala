@@ -50,8 +50,6 @@
     background: var(--bg);
     color: var(--ink2);
     font-family: 'Sora', Arial, sans-serif;
-    padding-inline: 16px;
-    padding-block: 20px;
     width: 100%;
     overflow-x: hidden;
   }
@@ -176,30 +174,28 @@
     border-color: var(--rose);
   }
 
-  /* ---------- dark page-hero card (same column width as everything else) ---------- */
+  /* ---------- dark page-hero band (full-width, continues the homepage's hero) ---------- */
   .page-hero {
     background: linear-gradient(160deg, var(--indigo-dd) 0%, #241f52 45%, var(--violet) 100%);
-    border-radius: 18px;
-    box-shadow: var(--shadow-md);
-    padding: 20px 20px 22px;
+    padding: 18px 16px 20px;
     position: relative;
     overflow: hidden;
   }
   .page-hero::before {
     content: "";
     position: absolute; inset: 0; pointer-events: none;
-    border-radius: inherit;
     background-image:
       linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
       linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
     background-size: 36px 36px;
   }
-  .page-hero > * { position: relative; z-index: 2; }
+  .page-hero .wrap { position: relative; z-index: 2; }
   .page-hero.compact { padding: 12px 16px; transition: padding 0.2s ease; }
   .page-hero.compact .hero-info { display: none; }
+  .page-content { padding-inline: 16px; padding-block: 20px; }
 
   /* ---------- hero copy (lives inside the dark page-hero) ---------- */
-  .hero-info { min-width: 0; margin-top: 16px; }
+  .hero-info { min-width: 0; }
   .eyebrow {
     display: inline-flex;
     align-items: center;
@@ -551,8 +547,8 @@
   }
 
   @media (min-width: 860px) {
-    .page-hero { padding: 26px 32px 30px; }
-    .page-hero.compact { padding: 14px 24px; }
+    .page-hero { padding: 22px 5% 26px; }
+    .page-hero.compact { padding: 14px 5%; }
     .enroll-card { padding: 40px 44px; }
     .score-hero { padding: 40px 44px; }
     .breakdown { grid-template-columns: repeat(3, 1fr); }
@@ -564,9 +560,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
 
-<div class="wrap">
-
-  <div class="page-hero narrow" id="page-hero">
+<div class="page-hero" id="page-hero">
+  <div class="wrap">
     <div class="topbar">
       <a href="index.html" id="brand-home-link" class="brand">
         <div class="brand-mark"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L7 5v5l5 3 5-3V5L12 2z" fill="rgba(255,255,255,0.9)"/><path d="M7 10v5l5 3V13L7 10z" fill="rgba(255,255,255,0.6)"/><path d="M17 10l-5 3v5l5-3v-5z" fill="rgba(255,255,255,0.75)"/></svg></div>
@@ -593,6 +588,10 @@
       </div>
     </div>
   </div>
+</div>
+
+<div class="page-content">
+  <div class="wrap">
 
   <!-- ===================== ENROLLMENT SCREEN ===================== -->
   <section id="screen-enroll" class="narrow">
@@ -699,6 +698,7 @@
   </section>
 
   <footer>© 2026 PMpathshala. All rights reserved.</footer>
+  </div>
 </div>
 
 <script>
