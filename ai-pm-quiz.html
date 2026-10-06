@@ -414,6 +414,30 @@
   .qfoot { margin-top: 16px; }
 
   /* ---------- results screen ---------- */
+  .scorecard-capture { display: flex; flex-direction: column; gap: 16px; }
+  .scorecard-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 2px 2px 0;
+  }
+  .scorecard-brand { display: flex; align-items: center; gap: 8px; }
+  .scorecard-mark {
+    width: 32px; height: 32px; border-radius: 9px;
+    background: linear-gradient(135deg, #6366f1, #7c3aed);
+    display: flex; align-items: center; justify-content: center; flex: none;
+  }
+  .scorecard-mark svg { width: 18px; height: 18px; }
+  .scorecard-brand-word {
+    font-weight: 800; font-size: 0.95rem; letter-spacing: -0.02em;
+    background: linear-gradient(135deg, var(--indigo), var(--violet));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+  .scorecard-meta { text-align: right; }
+  .scorecard-meta #scorecard-name { font-size: 12.5px; font-weight: 700; color: var(--ink); }
+  .scorecard-date { font-size: 11px; color: var(--ink3); margin-top: 2px; }
+
   .score-hero {
     background: linear-gradient(135deg, var(--indigo-dd) 0%, var(--violet) 100%);
     border-radius: 18px;
@@ -470,14 +494,15 @@
   .breakdown {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 10px;
+    gap: 16px;
   }
   .bd-row {
     background: var(--surface);
-    border: 1px solid var(--border);
+    border: 1px solid var(--border2);
     box-shadow: var(--shadow-sm);
     border-radius: 14px;
     padding: 14px 16px;
+    min-width: 0;
   }
   .bd-top {
     display: flex;
@@ -504,11 +529,11 @@
   .cta-card h3 { font-size: 18px; color: var(--ink); margin: 0 0 8px; font-weight: 400; }
   .cta-card p { font-size: 13.5px; line-height: 1.6; margin: 0 0 16px; color: var(--ink2); }
 
-  .review-list { display: flex; flex-direction: column; gap: 8px; }
+  .review-list { display: flex; flex-direction: column; gap: 10px; }
   .review-item {
     display: flex;
-    gap: 10px;
-    align-items: flex-start;
+    flex-direction: column;
+    gap: 6px;
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 12px;
@@ -516,10 +541,16 @@
     font-size: 13px;
     line-height: 1.5;
   }
+  .review-q { display: flex; gap: 10px; align-items: flex-start; }
   .review-item .mark { flex: none; font-weight: 800; width: 18px; }
   .review-item .mark.ok { color: var(--emerald); }
   .review-item .mark.no { color: var(--rose); }
-  .review-item .qtext { color: var(--ink2); }
+  .review-item .qtext { color: var(--ink); font-weight: 600; }
+  .review-answers { margin-left: 28px; display: flex; flex-direction: column; gap: 4px; }
+  .review-line { font-size: 12.5px; line-height: 1.5; }
+  .review-line .label { color: var(--ink3); font-weight: 700; margin-right: 4px; }
+  .review-line.wrong-ans { color: var(--rose); }
+  .review-line.right-ans { color: var(--emerald); }
 
   details.review-wrap { background: transparent; }
   details.review-wrap > summary {
@@ -559,6 +590,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+
+<!-- Used only for the "Download Score Card (PDF)" button on the results screen -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
 <div class="page-hero" id="page-hero">
   <div class="wrap">
@@ -658,29 +693,44 @@
 
   <!-- ===================== RESULTS SCREEN ===================== -->
   <section id="screen-results" class="narrow" hidden>
-    <div class="score-hero">
-      <div class="band-label" id="band-label">AI PM READY</div>
-      <div class="score-ring" id="score-ring" style="--pct:0">
-        <div class="num" id="score-num">0/15</div>
+    <div class="scorecard-capture" id="scorecard-capture">
+      <div class="scorecard-head">
+        <div class="scorecard-brand">
+          <div class="scorecard-mark"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L7 5v5l5 3 5-3V5L12 2z" fill="rgba(255,255,255,0.9)"/><path d="M7 10v5l5 3V13L7 10z" fill="rgba(255,255,255,0.6)"/><path d="M17 10l-5 3v5l5-3v-5z" fill="rgba(255,255,255,0.75)"/></svg></div>
+          <span class="scorecard-brand-word">PMpathshala</span>
+        </div>
+        <div class="scorecard-meta">
+          <div id="scorecard-name">AI PM Readiness Quiz</div>
+          <div class="scorecard-date" id="scorecard-date"></div>
+        </div>
       </div>
-      <h2 id="band-headline">Headline</h2>
-      <p id="band-copy">Copy</p>
+
+      <div class="score-hero">
+        <div class="band-label" id="band-label">AI PM READY</div>
+        <div class="score-ring" id="score-ring" style="--pct:0">
+          <div class="num" id="score-num">0/15</div>
+        </div>
+        <h2 id="band-headline">Headline</h2>
+        <p id="band-copy">Copy</p>
+      </div>
+
+      <div class="breakdown">
+        <div class="bd-row">
+          <div class="bd-top"><span>AI &amp; ML Fundamentals</span><span class="n" id="bd-fund-n">0/5</span></div>
+          <div class="bd-bar"><div class="bd-fill fund" id="bd-fund-bar" style="width:0%"></div></div>
+        </div>
+        <div class="bd-row">
+          <div class="bd-top"><span>PM Judgment</span><span class="n" id="bd-judg-n">0/5</span></div>
+          <div class="bd-bar"><div class="bd-fill judg" id="bd-judg-bar" style="width:0%"></div></div>
+        </div>
+        <div class="bd-row">
+          <div class="bd-top"><span>Agentic AI</span><span class="n" id="bd-agent-n">0/5</span></div>
+          <div class="bd-bar"><div class="bd-fill agent" id="bd-agent-bar" style="width:0%"></div></div>
+        </div>
+      </div>
     </div>
 
-    <div class="breakdown">
-      <div class="bd-row">
-        <div class="bd-top"><span>AI &amp; ML Fundamentals</span><span class="n" id="bd-fund-n">0/5</span></div>
-        <div class="bd-bar"><div class="bd-fill fund" id="bd-fund-bar" style="width:0%"></div></div>
-      </div>
-      <div class="bd-row">
-        <div class="bd-top"><span>PM Judgment</span><span class="n" id="bd-judg-n">0/5</span></div>
-        <div class="bd-bar"><div class="bd-fill judg" id="bd-judg-bar" style="width:0%"></div></div>
-      </div>
-      <div class="bd-row">
-        <div class="bd-top"><span>Agentic AI</span><span class="n" id="bd-agent-n">0/5</span></div>
-        <div class="bd-bar"><div class="bd-fill agent" id="bd-agent-bar" style="width:0%"></div></div>
-      </div>
-    </div>
+    <button class="btn-ghost" id="download-score-btn">⬇ Download Score Card (PDF)</button>
 
     <details class="review-wrap">
       <summary>Review all 15 questions ▾</summary>
@@ -1086,6 +1136,61 @@
     } catch (e) { /* no-op */ }
   });
 
+  // ── Download the results as a PDF score card ──────────────────────
+  document.getElementById("download-score-btn").addEventListener("click", async function () {
+    var btn = this;
+    if (btn.disabled) return;
+
+    if (typeof html2canvas === "undefined" || !window.jspdf) {
+      alert("The PDF tool is still loading — please try again in a moment.");
+      return;
+    }
+
+    var originalLabel = btn.textContent;
+    btn.disabled = true;
+    btn.textContent = "Preparing PDF…";
+
+    try {
+      var node = document.getElementById("scorecard-capture");
+      var canvas = await html2canvas(node, {
+        scale: 2,
+        backgroundColor: "#f8f7ff",
+        useCORS: true
+      });
+
+      var imgData = canvas.toDataURL("image/png");
+      var jsPDF = window.jspdf.jsPDF;
+      var pdf = new jsPDF({ orientation: "portrait", unit: "pt", format: "a4" });
+
+      var pageWidth = pdf.internal.pageSize.getWidth();
+      var pageHeight = pdf.internal.pageSize.getHeight();
+      var margin = 36;
+      var maxWidth = pageWidth - margin * 2;
+      var maxHeight = pageHeight - margin * 2;
+
+      var imgWidth = maxWidth;
+      var imgHeight = (canvas.height / canvas.width) * imgWidth;
+      if (imgHeight > maxHeight) {
+        imgHeight = maxHeight;
+        imgWidth = (canvas.width / canvas.height) * imgHeight;
+      }
+
+      var x = (pageWidth - imgWidth) / 2;
+      var y = margin;
+
+      pdf.addImage(imgData, "PNG", x, y, imgWidth, imgHeight);
+
+      var who = (state.lead && state.lead.name) ? state.lead.name.replace(/[^a-z0-9]+/gi, "-").replace(/(^-|-$)/g, "") : "PMpathshala";
+      pdf.save("AI-PM-Quiz-Score-" + who + ".pdf");
+    } catch (err) {
+      console.error("Score card PDF generation failed:", err);
+      alert("Sorry, we couldn't generate the PDF right now. Please try again.");
+    } finally {
+      btn.disabled = false;
+      btn.textContent = originalLabel;
+    }
+  });
+
   function scoreSoFar() {
     var n = 0;
     for (var k in state.answers) { if (state.answers[k].correct) n++; }
@@ -1196,6 +1301,9 @@
     document.getElementById("band-copy").textContent = copy;
     document.getElementById("cta-headline").textContent = ctaHeadline;
 
+    document.getElementById("scorecard-name").textContent = (state.lead && state.lead.name) ? state.lead.name : "AI PM Readiness Quiz";
+    document.getElementById("scorecard-date").textContent = nowIST() + " IST";
+
     ["fund", "judg", "agent"].forEach(function (topic) {
       var correctCount = 0, totalCount = 0;
       QUESTIONS.forEach(function (q) {
@@ -1215,11 +1323,21 @@
     QUESTIONS.forEach(function (q, i) {
       var a = state.answers[q.id];
       var ok = a && a.correct;
+      var chosenOpt = a && a.chosen ? q.options.filter(function (o) { return o.id === a.chosen; })[0] : null;
+      var correctOpt = q.options.filter(function (o) { return o.id === q.correct; })[0];
+
+      var yourAnswerHtml = chosenOpt
+        ? '<div class="review-line ' + (ok ? "right-ans" : "wrong-ans") + '"><span class="label">Your answer:</span>' + chosenOpt.id.toUpperCase() + '. ' + chosenOpt.text + '</div>'
+        : '<div class="review-line wrong-ans"><span class="label">Your answer:</span>No answer — time ran out</div>';
+      var correctAnswerHtml = ok ? '' :
+        '<div class="review-line right-ans"><span class="label">Correct answer:</span>' + correctOpt.id.toUpperCase() + '. ' + correctOpt.text + '</div>';
+
       var row = document.createElement("div");
       row.className = "review-item";
       row.innerHTML =
-        '<span class="mark ' + (ok ? "ok" : "no") + '">' + (ok ? "✓" : "✕") + '</span>' +
-        '<span class="qtext"><strong>Q' + (i + 1) + '.</strong> ' + q.prompt + '</span>';
+        '<div class="review-q"><span class="mark ' + (ok ? "ok" : "no") + '">' + (ok ? "✓" : "✕") + '</span>' +
+        '<span class="qtext">Q' + (i + 1) + '. ' + q.prompt + '</span></div>' +
+        '<div class="review-answers">' + yourAnswerHtml + correctAnswerHtml + '</div>';
       reviewList.appendChild(row);
     });
 
