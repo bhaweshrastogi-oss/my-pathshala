@@ -50,9 +50,8 @@
     background: var(--bg);
     color: var(--ink2);
     font-family: 'Sora', Arial, sans-serif;
-    padding-inline: 16px;
-    padding-block: 20px;
     width: 100%;
+    overflow-x: hidden;
   }
 
   h1, h2, h3, .display { font-family: 'DM Serif Display', serif; }
@@ -104,11 +103,9 @@
     font-weight: 800;
     font-size: 1.1rem;
     letter-spacing: -0.02em;
-    background: linear-gradient(135deg, var(--indigo), var(--violet));
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: #fff;
   }
-  .topbar-sub { font-size: 12px; color: var(--ink3); font-weight: 500; }
+  .topbar-sub { font-size: 12px; color: rgba(255,255,255,0.65); font-weight: 500; }
 
   /* ---------- progress ---------- */
   .progress-shell {
@@ -177,26 +174,28 @@
     border-color: var(--rose);
   }
 
-  /* ---------- enrollment / intro screen ---------- */
-  .hero {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    box-shadow: var(--shadow-sm);
-    border-radius: 18px;
-    padding: 28px 22px;
+  /* ---------- dark page-hero band (continues the homepage's hero) ---------- */
+  .page-hero {
+    background: linear-gradient(160deg, var(--indigo-dd) 0%, #241f52 45%, var(--violet) 100%);
+    padding: 18px 16px 30px;
     position: relative;
     overflow: hidden;
   }
-  .hero::before {
+  .page-hero::before {
     content: "";
-    position: absolute;
-    top: -40%;
-    right: -20%;
-    width: 220px;
-    height: 220px;
-    background: radial-gradient(circle, rgba(124,58,237,0.12), transparent 70%);
-    pointer-events: none;
+    position: absolute; inset: 0; pointer-events: none;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
+    background-size: 42px 42px;
   }
+  .page-hero .wrap { position: relative; z-index: 2; }
+  .page-hero.compact { padding: 14px 16px; transition: padding 0.25s ease; }
+  .page-hero.compact .hero-info { display: none; }
+  .page-content { padding-inline: 16px; padding-block: 20px; }
+
+  /* ---------- hero copy (lives inside the dark page-hero) ---------- */
+  .hero-info { min-width: 0; }
   .eyebrow {
     display: inline-flex;
     align-items: center;
@@ -205,18 +204,18 @@
     font-weight: 700;
     letter-spacing: 1.2px;
     text-transform: uppercase;
-    color: var(--violet);
+    color: #c4b5fd;
     margin: 0 0 10px;
   }
-  .hero h1 {
+  .hero-info h1 {
     font-size: 26px;
     line-height: 1.22;
-    color: var(--ink);
+    color: #fff;
     margin: 0 0 10px;
     text-wrap: balance;
     font-weight: 400;
   }
-  .hero p { margin: 0 0 18px; font-size: 14.5px; line-height: 1.6; max-width: 48ch; color: var(--ink2); }
+  .hero-info p { margin: 0 0 18px; font-size: 14.5px; line-height: 1.6; max-width: 48ch; color: rgba(255,255,255,0.75); }
   .meta-row {
     display: flex;
     flex-wrap: wrap;
@@ -226,9 +225,9 @@
   .meta-pill {
     font-size: 12px;
     font-weight: 600;
-    color: var(--ink2);
-    background: var(--bg2);
-    border: 1px solid var(--border2);
+    color: rgba(255,255,255,0.88);
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.22);
     padding: 6px 12px;
     border-radius: 999px;
   }
@@ -236,42 +235,39 @@
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
-    margin-bottom: 24px;
   }
   .topic-tag {
     font-size: 11.5px;
     font-weight: 700;
     padding: 6px 10px;
     border-radius: 8px;
-    border: 1px solid var(--border2);
+    border: 1px solid rgba(255,255,255,0.24);
   }
-  .topic-tag.fund { color: var(--indigo); background: rgba(79,70,229,0.06); }
-  .topic-tag.judg { color: var(--violet); background: rgba(124,58,237,0.06); }
-  .topic-tag.agent { color: var(--signal-d); background: rgba(8,145,178,0.06); }
+  .topic-tag.fund { color: #a5b4fc; background: rgba(165,180,252,0.12); }
+  .topic-tag.judg { color: #c4b5fd; background: rgba(196,181,253,0.12); }
+  .topic-tag.agent { color: #67e8f9; background: rgba(103,232,249,0.12); }
 
-  .hero-grid { display: block; }
-  .hero-info { min-width: 0; }
-  .hero-form {
-    min-width: 0;
-    border-top: 1px solid var(--border);
-    padding-top: 22px;
-    margin-top: 4px;
+  /* ---------- enrollment form card (light, sits right below the dark hero) ---------- */
+  .enroll-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-sm);
+    border-radius: 18px;
+    padding: 28px 22px;
+    position: relative;
+    overflow: hidden;
   }
-  @media (min-width: 860px) {
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1.15fr 1fr;
-      gap: 44px;
-      align-items: start;
-    }
-    .hero-form {
-      border-top: none;
-      border-left: 1px solid var(--border);
-      padding-top: 0;
-      padding-left: 36px;
-      margin-top: 0;
-    }
+  .enroll-card::before {
+    content: "";
+    position: absolute;
+    top: -40%;
+    right: -20%;
+    width: 220px;
+    height: 220px;
+    background: radial-gradient(circle, rgba(124,58,237,0.12), transparent 70%);
+    pointer-events: none;
   }
+  .enroll-card > * { position: relative; z-index: 1; }
 
   /* ---------- enrollment form ---------- */
   .form-title { font-size: 13px; font-weight: 700; color: var(--ink); margin: 0 0 14px; text-transform: uppercase; letter-spacing: 0.06em; }
@@ -546,12 +542,14 @@
   [hidden] { display: none !important; }
 
   @media (max-width: 420px) {
-    .hero h1 { font-size: 22px; }
+    .hero-info h1 { font-size: 22px; }
     .qprompt { font-size: 15.5px; }
   }
 
   @media (min-width: 860px) {
-    .hero { padding: 40px 44px; }
+    .page-hero { padding: 28px 5% 46px; }
+    .page-hero.compact { padding: 16px 5%; }
+    .enroll-card { padding: 40px 44px; }
     .score-hero { padding: 40px 44px; }
     .breakdown { grid-template-columns: repeat(3, 1fr); }
     .cta-card { padding: 28px 32px; }
@@ -562,39 +560,43 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
 
-<div class="wrap">
+<div class="page-hero">
+  <div class="wrap">
+    <div class="topbar">
+      <a href="index.html" id="brand-home-link" class="brand">
+        <div class="brand-mark"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L7 5v5l5 3 5-3V5L12 2z" fill="rgba(255,255,255,0.9)"/><path d="M7 10v5l5 3V13L7 10z" fill="rgba(255,255,255,0.6)"/><path d="M17 10l-5 3v5l5-3v-5z" fill="rgba(255,255,255,0.75)"/></svg></div>
+        <span class="brand-word">PMpathshala</span>
+      </a>
+      <div class="topbar-sub">AI PM Readiness Quiz</div>
+    </div>
 
-  <div class="topbar">
-    <a href="index.html" id="brand-home-link" class="brand">
-      <div class="brand-mark"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L7 5v5l5 3 5-3V5L12 2z" fill="rgba(255,255,255,0.9)"/><path d="M7 10v5l5 3V13L7 10z" fill="rgba(255,255,255,0.6)"/><path d="M17 10l-5 3v5l5-3v-5z" fill="rgba(255,255,255,0.75)"/></svg></div>
-      <span class="brand-word">PMpathshala</span>
-    </a>
-    <div class="topbar-sub">AI PM Readiness Quiz</div>
-  </div>
+    <div class="hero-info">
+      <p class="eyebrow">⬤ 15 Questions · ~8 Minutes</p>
+      <h1>How ready are you to think like an AI Product Manager?</h1>
+      <p>Fifteen scenario questions pulled straight from how AI PM interviews are actually run in 2026 — not trivia. You'll be tested on AI fundamentals, PM judgment under uncertainty, and agentic-AI concepts. Each answer comes with a short explanation either way.</p>
 
-  <!-- ===================== ENROLLMENT SCREEN ===================== -->
-  <section id="screen-enroll">
-    <div class="hero hero-grid">
-      <div class="hero-info">
-        <p class="eyebrow">⬤ 15 Questions · ~8 Minutes</p>
-        <h1>How ready are you to think like an AI Product Manager?</h1>
-        <p>Fifteen scenario questions pulled straight from how AI PM interviews are actually run in 2026 — not trivia. You'll be tested on AI fundamentals, PM judgment under uncertainty, and agentic-AI concepts. Each answer comes with a short explanation either way.</p>
-
-        <div class="meta-row">
-          <span class="meta-pill">Instant score + breakdown</span>
-          <span class="meta-pill">Free</span>
-          <span class="meta-pill">⏱ 30s per question</span>
-        </div>
-
-        <div class="topic-row">
-          <span class="topic-tag fund">AI &amp; ML Fundamentals</span>
-          <span class="topic-tag judg">PM Judgment</span>
-          <span class="topic-tag agent">Agentic AI</span>
-        </div>
+      <div class="meta-row">
+        <span class="meta-pill">Instant score + breakdown</span>
+        <span class="meta-pill">Free</span>
+        <span class="meta-pill">⏱ 30s per question</span>
       </div>
 
-      <div class="hero-form">
-        <p class="form-title">Tell us a bit about you to start</p>
+      <div class="topic-row">
+        <span class="topic-tag fund">AI &amp; ML Fundamentals</span>
+        <span class="topic-tag judg">PM Judgment</span>
+        <span class="topic-tag agent">Agentic AI</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="page-content">
+  <div class="wrap">
+
+  <!-- ===================== ENROLLMENT SCREEN ===================== -->
+  <section id="screen-enroll" class="narrow">
+    <div class="enroll-card">
+      <p class="form-title">Tell us a bit about you to start</p>
 
         <div class="field-group">
           <label class="field-label" for="en-name">Full Name *</label>
@@ -630,7 +632,6 @@
 
         <button class="btn-primary" id="start-btn">Proceed to Quiz →</button>
         <div class="form-note">We'll only use this to send you your results and relevant course updates — no spam.</div>
-      </div>
     </div>
   </section>
 
@@ -697,6 +698,7 @@
   </section>
 
   <footer>© 2026 PMpathshala. All rights reserved.</footer>
+  </div>
 </div>
 
 <script>
@@ -991,6 +993,7 @@
   var screenEnroll = document.getElementById("screen-enroll");
   var screenQuiz = document.getElementById("screen-quiz");
   var screenResults = document.getElementById("screen-results");
+  var pageHero = document.querySelector(".page-hero");
 
   // ── Logo → home, with an abort-confirm while the quiz is in progress ──
   document.getElementById("brand-home-link").addEventListener("click", function (e) {
@@ -1063,6 +1066,7 @@
 
     screenEnroll.hidden = true;
     screenQuiz.hidden = false;
+    if (pageHero) pageHero.classList.add("compact");
     renderQuestion();
     window.scrollTo({ top: 0, behavior: "smooth" });
   });
