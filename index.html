@@ -429,10 +429,20 @@
   .courses-grid { grid-template-columns: 1fr; }
   .pricing-grid { grid-template-columns: 1fr; }
 }
+/* Enrol form: country code + phone, experience select */
+.phone-row { display: flex; gap: 0.5rem; }
+.phone-row .phone-cc { flex: 0 0 38%; max-width: 170px; padding-right: 0.4rem; }
+.phone-row input { flex: 1 1 auto; min-width: 0; }
+select.field-input { cursor: pointer; }
 </style>
 </head>
 <body>
  
+
+<div class="announce">
+  <span class="announce-pulse"></span>
+  🚀 AI Product Manager cohort starts <strong>12 December 2026</strong> — Enrolment is open · <a href="#" onclick="openModal('ai');return false;">Enrol now →</a>
+</div>
 
 <!--
 <div class="announce">
@@ -453,6 +463,7 @@
     <li><a href="#curriculum">Curriculum</a></li>
     <li><a href="#instructor">Instructor</a></li>
     <li><a href="#faq">FAQ</a></li>
+    <li><a href="#" class="nav-cta" onclick="openModal('ai');return false;">Enrol Now</a></li>
   </ul>
   <div class="hamburger" id="hamburger" onclick="toggleNav()"><span></span><span></span><span></span></div>
 </nav>
@@ -470,7 +481,7 @@
         Taught by a practitioner who leads agentic AI initiatives at a Fortune-500-serving company — not a course written from research. Learn how AI actually changes discovery, specs, evaluation, and shipping.
       </p>
       <div class="hero-btns">
-        <button class="btn btn-signal btn-lg" onclick="openWaitlist()">Join the AI PM Waitlist</button>
+        <button class="btn btn-signal btn-lg" onclick="openModal('ai')">Enrol Now · Starts 12 Dec</button>
         <a href="ai-pm-quiz.html" class="btn btn-quiz btn-lg">✨ Take the 2-Min Quiz</a>
         <a href="https://wa.me/919667783900?text=Hi,%20I'm%20interested%20in%20the%20AI%20PM%20course" class="btn btn-ghost-white btn-lg" target="_blank">💬 Chat with Us</a>
       </div>
@@ -557,9 +568,9 @@
       <div class="price-plan-label" style="color:rgba(255,255,255,0.5)">8-WEEK LIVE PROGRAM</div>
       <div class="flagship-price-was">₹50,000</div>
       <div class="flagship-price-now">₹35,000</div>
-      <div class="flagship-side-meta">Weekends · 2 PM – 5 PM IST · 40+ live hours</div>
-      <button class="btn btn-signal" onclick="openWaitlist()">Join the Waitlist</button>
-      <div class="flagship-side-note">No payment now — you'll be notified the moment the next cohort opens.</div>
+      <div class="flagship-side-meta">Starts 12 Dec 2026 · Sat &amp; Sun · 2 PM – 5 PM IST · 40+ live hours</div>
+      <button class="btn btn-signal" onclick="openModal('ai')">Enrol Now</button>
+      <div class="flagship-side-note">Only 30 seats · 15-day money-back guarantee.</div>
     </div>
   </div>
 
@@ -746,7 +757,7 @@
       <div class="price-card featured">
         <div class="price-plan-label">FLAGSHIP · 8-Week Live Program</div>
         <div class="price-plan-name">AI Product Manager</div>
-        <div class="price-plan-duration">Weekend cohort · 6 PM – 9 PM IST</div>
+        <div class="price-plan-duration">Starts 12 Dec 2026 · Sat &amp; Sun · 2 PM – 5 PM IST</div>
         <div class="price-amount">
           <span class="price-was">₹50,000</span>
           <span class="price-now">₹35,000</span>
@@ -758,7 +769,7 @@
           <li><span class="perk-check">✓</span> 1:1 mentorship with industry expert</li>
           <li><span class="perk-check">✓</span> 1 year access to recordings</li>
         </ul>
-        <button class="btn btn-signal btn-md" style="width:100%;justify-content:center;" onclick="openWaitlist()">Join the Waitlist</button>
+        <button class="btn btn-signal btn-md" style="width:100%;justify-content:center;" onclick="openModal('ai')">Enrol Now</button>
       </div>
 
       <div class="price-card">
@@ -835,10 +846,10 @@
 <section id="cta">
   <div class="cta-inner">
     <div class="section-label">Join the Cohort</div>
-    <h2 class="section-title">Get on the AI PM Waitlist</h2>
-    <p class="section-sub" style="margin:0 auto">30 seats. One cohort at a time. Tell us you're interested and we'll message you the moment the next batch opens — no payment, no commitment.</p>
+    <h2 class="section-title">Enrol in the AI PM Cohort</h2>
+    <p class="section-sub" style="margin:0 auto">Starts 12 December 2026 · Saturdays &amp; Sundays, 2 PM – 5 PM IST. Only 30 seats — enrol now to reserve yours.</p>
     <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:1rem;margin-top:2rem">
-      <button class="btn btn-signal btn-lg" onclick="openWaitlist()">Join the AI PM Waitlist</button>
+      <button class="btn btn-signal btn-lg" onclick="openModal('ai')">Enrol Now</button>
       <a href="https://wa.me/919667783900" target="_blank" class="btn btn-ghost-white btn-lg">💬 Talk to Us</a>
     </div>
     <div class="cta-tags">
@@ -902,54 +913,6 @@
   </div>
 </div>
  
-<!-- ═══ AI PM WAITLIST MODAL ═══ -->
-<div class="modal-overlay" id="waitlist-overlay" onclick="handleWaitlistOverlayClick(event)">
-  <div class="modal" id="waitlist-modal">
-    <button class="modal-close" onclick="closeWaitlist()">✕</button>
-    <div id="waitlist-form-wrap">
-      <div class="modal-logo">
-        <div class="modal-logo-icon"><svg class="logo-svg" viewBox="0 0 24 24" style="width:18px;height:18px" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L7 5v5l5 3 5-3V5L12 2z" fill="rgba(255,255,255,0.9)"/><path d="M7 10v5l5 3V13L7 10z" fill="rgba(255,255,255,0.6)"/><path d="M17 10l-5 3v5l5-3v-5z" fill="rgba(255,255,255,0.75)"/></svg></div>
-        <span class="modal-logo-text">PMpathshala</span>
-      </div>
-      <span class="flagship-tag" style="margin-bottom:0.8rem">🤖 AI Product Manager</span>
-      <h3>Join the Waitlist</h3>
-      <p class="modal-sub">Be the first to know when the next AI PM cohort opens. No payment, no commitment — just your spot in line.</p>
-
-      <div class="field-group">
-        <label class="field-label">Full Name *</label>
-        <input class="field-input" type="text" id="wl-name" placeholder="Your full name">
-        <div class="field-error" id="err-wl-name">Please enter your full name</div>
-      </div>
-      <div class="field-group">
-        <label class="field-label">Email Address *</label>
-        <input class="field-input" type="email" id="wl-email" placeholder="you@example.com">
-        <div class="field-error" id="err-wl-email">Please enter a valid email</div>
-      </div>
-      <div class="field-group">
-        <label class="field-label">Phone Number *</label>
-        <input class="field-input" type="tel" id="wl-phone" placeholder="+91 98765 43210">
-        <div class="field-error" id="err-wl-phone">Please enter your phone number</div>
-      </div>
-
-      <button class="submit-btn" id="waitlist-submit-btn" onclick="handleWaitlistSubmit()" style="background:linear-gradient(135deg,var(--signal),var(--signal-d));box-shadow:0 4px 18px var(--signal-glow)">
-        <span id="waitlist-submit-text">Join the Waitlist</span>
-      </button>
-      <div class="secure-note">We'll only message you about the AI PM cohort — no spam.</div>
-    </div>
-    <div id="waitlist-success" style="display:none;text-align:center;padding:2rem 0">
-      <div style="font-size:3rem;margin-bottom:1rem">🎉</div>
-      <h4 style="font-family:'DM Serif Display',serif;font-size:1.3rem;color:var(--ink);margin-bottom:0.6rem">You're on the list!</h4>
-      <p style="font-size:0.87rem;color:var(--ink2);line-height:1.75">
-        We'll notify you the moment the next AI PM cohort opens.<br>
-        Have a question in the meantime? We're one message away.
-      </p>
-      <div style="margin-top:1.6rem">
-        <a href="https://wa.me/919667783900" target="_blank" class="btn btn-signal btn-md" style="justify-content:center">💬 Chat with Us</a>
-      </div>
-    </div>
-  </div>
-</div>
-
 <!-- ═══ ENROLL MODAL ═══ -->
 <div class="modal-overlay" id="modal-overlay" onclick="handleOverlayClick(event)">
   <div class="modal" id="modal">
@@ -963,14 +926,14 @@
       <p class="modal-sub">Fill in your details — you'll be taken to a secure PhonePe payment page.</p>
  
       <div class="field-group">
-        <label class="field-label">Select Course *</label>
-        <div class="course-option-card selected" id="opt-basic" onclick="selectCourse('basic')">
-          <input type="radio" name="course" value="basic" checked>
+        <label class="field-label">Course</label>
+        <div class="course-option-card selected" id="opt-ai" onclick="selectCourse('ai')">
+          <input type="radio" name="course" value="ai" checked>
           <div class="co-row">
-             <span class="co-name">Basic to Advanced PM</span>
-              <span class="co-price">₹25,000 <s>₹34,999</s></span>
+             <span class="co-name">AI Product Manager</span>
+              <span class="co-price">₹35,000 <s>₹50,000</s></span>
           </div>
-          <!-- <div class="co-sub">8 Weeks · Weekends 9:30 AM – 12:30 PM · August 22, 2026</div> -->
+          <div class="co-sub">8 Weeks · Starts 12 Dec 2026 · Sat &amp; Sun, 2 PM – 5 PM IST</div>
         </div>
       </div>
  
@@ -985,9 +948,25 @@
         <div class="field-error" id="err-email">Please enter a valid email</div>
       </div>
       <div class="field-group">
-        <label class="field-label">Phone Number *</label>
-        <input class="field-input" type="tel" id="f-phone" placeholder="+91 98765 43210">
+        <label class="field-label" for="f-phone">Phone Number *</label>
+        <div class="phone-row">
+          <select class="field-input phone-cc" id="f-cc" aria-label="Country code"></select>
+          <input class="field-input" type="tel" id="f-phone" inputmode="numeric" autocomplete="tel-national" placeholder="98765 43210">
+        </div>
         <div class="field-error" id="err-phone">Please enter your phone number</div>
+      </div>
+      <div class="field-group">
+        <label class="field-label" for="f-exp">Total Work Experience *</label>
+        <select class="field-input" id="f-exp">
+          <option value="">Select your experience</option>
+          <option>Student / Fresher (0 years)</option>
+          <option>Less than 1 year</option>
+          <option>1 – 3 years</option>
+          <option>3 – 5 years</option>
+          <option>5 – 10 years</option>
+          <option>10+ years</option>
+        </select>
+        <div class="field-error" id="err-exp">Please select your experience</div>
       </div>
  
       <div class="agree-line">
