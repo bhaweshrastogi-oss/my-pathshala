@@ -4,8 +4,10 @@ const { getOrderStatus } = require('../lib/phonepe');
 const { getCourse, COURSES } = require('../lib/courses');
 
 const SUPPORT_EMAIL = 'support@pmpathshala.com';
-// Hosted PNG of the site logo (email clients don't render SVG). Upload logo-email.png to the site root.
+// Hosted PNG of the site logo (email clients don't render SVG). Served from the site root: /logo-email.png
 const LOGO_URL = 'https://pmpathshala.com/logo-email.png';
+// Rendered width in px; height follows the image's own aspect ratio (no stretching/shrinking).
+const LOGO_WIDTH = 180;
 const DEFAULT_FROM = `PMpathshala <${SUPPORT_EMAIL}>`;
 
 async function sendWithResend({ to, subject, html, text, idempotencyKey }) {
@@ -103,12 +105,7 @@ function buildEmail({ name, courseName, startsOn, schedule, amount, orderRef }) 
         <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="width:100%;max-width:600px;background:#ffffff;border-radius:16px;overflow:hidden;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;">
           <tr>
             <td align="center" style="background:#ffffff;padding:22px 28px 18px;">
-              <table role="presentation" cellpadding="0" cellspacing="0" border="0">
-                <tr>
-                  <td style="vertical-align:middle;padding-right:10px;"><img src="${LOGO_URL}" width="44" height="44" alt="" style="display:block;border:0;outline:none;border-radius:11px;"></td>
-                  <td style="vertical-align:middle;font-size:22px;font-weight:700;color:#4f46e5;letter-spacing:-0.01em;">PMpathshala</td>
-                </tr>
-              </table>
+              <a href="https://pmpathshala.com" style="text-decoration:none;"><img src="${LOGO_URL}" width="${LOGO_WIDTH}" alt="PMpathshala" style="display:block;margin:0 auto;width:${LOGO_WIDTH}px;max-width:100%;height:auto;border:0;outline:none;font-size:22px;font-weight:700;color:#4f46e5;"></a>
             </td>
           </tr>
           <tr>
@@ -138,11 +135,6 @@ function buildEmail({ name, courseName, startsOn, schedule, amount, orderRef }) 
               <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-top:6px;">${row('Course', safe.course)}${row('Amount paid', safe.amount)}${row('Order reference', safe.orderRef, true)}
               </table>
               <p style="margin:12px 0 0;font-size:13px;line-height:1.6;color:#6b7280;">Please keep this email for your records.</p>
-            </td>
-          </tr>
-          <tr>
-            <td style="padding:18px 32px 8px;">
-              <p style="margin:0;font-size:14px;line-height:1.65;color:#4b5563;"><strong style="color:#111827;">15-day money-back guarantee:</strong> if you&#8217;ve attended fewer than 3 sessions and aren&#8217;t satisfied, email us to request a full refund.</p>
             </td>
           </tr>
           <tr>
@@ -176,6 +168,7 @@ function buildEmail({ name, courseName, startsOn, schedule, amount, orderRef }) 
     `Order reference: ${orderRef}`,
     '',
     'Please keep this email for your records.',
+    '',
     `Questions? Reply to this email or write to ${SUPPORT_EMAIL}`,
     '',
     '— PMpathshala',
