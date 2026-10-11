@@ -20,8 +20,8 @@ const CFG = {
     },
     ai: {
       name   : 'AI Product Manager',
-      price  : '₹1',
-      amount : 1,
+      price  : '₹35,000',
+      amount : 35000,
       batch  : 'Starts 12 December 2026 · Saturdays & Sundays · 2 PM – 5 PM IST',
     }
   },
