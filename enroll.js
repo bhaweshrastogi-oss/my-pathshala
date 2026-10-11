@@ -1,6 +1,6 @@
 /* ═══════════════════════════════════════════════════════════════════════════
    PMpathshala — enroll.js
-   Handles: form validation · Web3Forms (with timestamp) ·
+   Handles: form validation (country code + phone + experience) · Web3Forms (with timestamp) ·
             PhonePe payment redirect · email confirmation trigger
    ═════════════════════════════════════════════════════════════════ */
 
@@ -17,6 +17,12 @@ const CFG = {
       price  : '₹25000',        
       amount : 25000,            
       // batch  : 'August 22, 2026 · Weekends 2 PM – 5 PM IST',  // commented out — restore when next batch date is set
+    },
+    ai: {
+      name   : 'AI Product Manager',
+      price  : '₹35,000',
+      amount : 35000,
+      batch  : 'Starts 12 December 2026 · Saturdays & Sundays · 2 PM – 5 PM IST',
     }
   },
 
@@ -54,6 +60,7 @@ const CURRICULUM = {
 };
 
 const FAQS = [
+  { q:'When does the AI PM cohort start?', a:'The AI Product Manager cohort starts on Saturday, 12 December 2026. Classes run every Saturday and Sunday, 2 PM – 5 PM IST. Enrolment is open now — use the Enrol button to reserve your seat (30 seats only).' },
   { q:'Do I need prior PM experience?', a:'No — the AI PM course starts with a foundations week covering core PM concepts before it gets into AI-specific material, so you don\'t need to have completed another course first. Some prior exposure to product work helps, but it isn\'t required.' },
   { q:'What are the class timings?',    a:'Both courses run on weekends (Saturday & Sunday). Basic to Advanced PM: 9:30 AM – 12:30 PM IST. AI Product Manager: 2 PM – 5 PM IST. All sessions are recorded and shared within 24 hours.' },
   { q:'Are sessions live or recorded?', a:'Every session is live on Zoom with full interaction — polls, breakouts, Q&A. Recordings are available within 24 hours and remain accessible for 1 year.' },
@@ -110,7 +117,7 @@ renderCurriculum('ai');
 function toggleFaq(i) { document.getElementById('faq-'+i).classList.toggle('open'); }
 
 // ── MODAL CONTROL ──────────────────────────────────────────────────────────────────
-let selectedCourse = 'basic';
+let selectedCourse = 'ai';
 
 function openModal(course) {
   if (course) selectCourse(course);
@@ -139,77 +146,6 @@ function selectCourse(key) {
   if (sp) sp.textContent = '— ' + CFG.courses[key].price;
 }
 
-// ── AI PM WAITLIST (separate from the paid-enrollment modal above —
-//    no course selection, no PhonePe, just a Web3Forms lead capture
-//    with an on-page success state) ─────────────────────────
-function openWaitlist() {
-  document.getElementById('waitlist-overlay').classList.add('open');
-  document.body.style.overflow = 'hidden';
-  document.getElementById('waitlist-form-wrap').style.display = '';
-  document.getElementById('waitlist-success').style.display = 'none';
-}
-
-function closeWaitlist() {
-  document.getElementById('waitlist-overlay').classList.remove('open');
-  document.body.style.overflow = '';
-}
-
-function handleWaitlistOverlayClick(e) {
-  if (e.target.id === 'waitlist-overlay') closeWaitlist();
-}
-
-async function handleWaitlistSubmit() {
-  const name  = document.getElementById('wl-name').value.trim();
-  const email = document.getElementById('wl-email').value.trim();
-  const phone = document.getElementById('wl-phone').value.trim();
-
-  ['wl-name','wl-email','wl-phone'].forEach(f => document.getElementById('err-'+f).style.display = 'none');
-  let valid = true;
-  if (!name)                         { document.getElementById('err-wl-name').style.display  = 'block'; valid = false; }
-  if (!email || !email.includes('@')) { document.getElementById('err-wl-email').style.display = 'block'; valid = false; }
-  if (!phone)                        { document.getElementById('err-wl-phone').style.display = 'block'; valid = false; }
-  if (!valid) return;
-
-  const btn = document.getElementById('waitlist-submit-btn');
-  btn.disabled = true;
-  document.getElementById('waitlist-submit-text').textContent = 'Joining…';
-
-  const timestamp = nowIST();
-
-  try {
-    await fetch('https://api.web3forms.com/submit', {
-      method : 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body   : JSON.stringify({
-        access_key : CFG.web3forms_key,
-        subject    : `🤖 AI PM Waitlist: ${name}`,
-        from_name  : 'PMpathshala AI PM Waitlist',
-        name, email, phone,
-        course     : 'AI Product Manager (Waitlist)',
-        timestamp  : timestamp,
-        status     : 'WAITLIST_JOINED',
-        message    : [
-          `🤖 NEW AI PM WAITLIST SIGNUP`,
-          `─────────────────────`,
-          `Name      : ${name}`,
-          `Email     : ${email}`,
-          `Phone     : ${phone}`,
-          `Timestamp : ${timestamp} IST`,
-          `Status    : Waitlist — no payment, notify when next cohort opens`,
-          `─────────────────────`,
-        ].join('\n'),
-      })
-    });
-  } catch (err) {
-    console.warn('Waitlist Web3Forms (non-blocking):', err);
-  }
-
-  document.getElementById('waitlist-form-wrap').style.display = 'none';
-  document.getElementById('waitlist-success').style.display   = '';
-  btn.disabled = false;
-  document.getElementById('waitlist-submit-text').textContent = 'Join the Waitlist';
-}
-
 // ── HELPERS ──────────────────────────────────────────────────────────────────────────
 function nowIST() {
   return new Date().toLocaleString('en-IN', {
@@ -224,6 +160,43 @@ function generateRef() {
   return 'PMP-' + Date.now().toString(36).toUpperCase() + '-' + Math.random().toString(36).slice(2,5).toUpperCase();
 }
 
+// ── PHONE: COUNTRY CODES + VALIDATION ─────────────────────────────────────────
+// Dial codes offered in the Enrol form. India is the default.
+const COUNTRY_CODES = [
+  ['+91','India'],['+1','USA / Canada'],['+44','United Kingdom'],['+971','UAE'],['+65','Singapore'],
+  ['+61','Australia'],['+64','New Zealand'],['+49','Germany'],['+33','France'],['+31','Netherlands'],
+  ['+353','Ireland'],['+41','Switzerland'],['+46','Sweden'],['+974','Qatar'],['+966','Saudi Arabia'],
+  ['+968','Oman'],['+965','Kuwait'],['+973','Bahrain'],['+60','Malaysia'],['+852','Hong Kong'],
+  ['+81','Japan'],['+82','South Korea'],['+977','Nepal'],['+94','Sri Lanka'],['+880','Bangladesh'],
+  ['+92','Pakistan'],['+27','South Africa'],['+234','Nigeria'],['+254','Kenya'],
+];
+
+(function populateCountryCodes() {
+  const sel = document.getElementById('f-cc');
+  if (!sel || sel.options.length) return;
+  sel.innerHTML = COUNTRY_CODES.map(([code, label]) =>
+    `<option value="${code}"${code === '+91' ? ' selected' : ''}>${code} ${label}</option>`).join('');
+})();
+
+// Returns { ok, digits, message }.
+//  • +91 (India): exactly 10 digits, first digit 6–9 (Indian mobile numbers)
+//  • all other countries: 6–14 digits (E.164 allows at most 15 digits including the country code)
+function validatePhone(countryCode, raw) {
+  const digits = String(raw || '').replace(/[\s\-().]/g, '');
+  if (!digits) return { ok:false, digits, message:'Please enter your phone number' };
+  if (!/^\d+$/.test(digits)) return { ok:false, digits, message:'Phone number can contain digits only' };
+  if (countryCode === '+91') {
+    if (!/^[6-9]\d{9}$/.test(digits)) return { ok:false, digits, message:'Enter a valid 10-digit Indian mobile number' };
+  } else if (digits.length < 6 || digits.length > 14) {
+    return { ok:false, digits, message:'Enter a valid phone number (6–14 digits)' };
+  }
+  return { ok:true, digits, message:'' };
+}
+
+function isValidEmail(v) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
+}
+
 // ── FORM SUBMIT ──────────────────────────────────────────────────────────────────────────
 let enrollData = {};
 
@@ -231,17 +204,28 @@ async function handleSubmit() {
   // Validate
   const name  = document.getElementById('f-name').value.trim();
   const email = document.getElementById('f-email').value.trim();
-  const phone = document.getElementById('f-phone').value.trim();
+  const countryCode = document.getElementById('f-cc').value;
+  const phoneRaw    = document.getElementById('f-phone').value;
+  const experience  = document.getElementById('f-exp').value;
   const agree = document.getElementById('f-agree').checked;
   const course = CFG.courses[selectedCourse];
 
-  ['name','email','phone'].forEach(f => document.getElementById('err-'+f).style.display = 'none');
+  ['name','email','phone','exp'].forEach(f => document.getElementById('err-'+f).style.display = 'none');
   let valid = true;
-  if (!name)                        { document.getElementById('err-name').style.display  = 'block'; valid = false; }
-  if (!email || !email.includes('@')){ document.getElementById('err-email').style.display = 'block'; valid = false; }
-  if (!phone)                       { document.getElementById('err-phone').style.display = 'block'; valid = false; }
-  if (!agree) { alert('Please agree to the Terms of Service and Privacy Policy.'); return; }
+  if (!name)                  { document.getElementById('err-name').style.display  = 'block'; valid = false; }
+  if (!isValidEmail(email))   { document.getElementById('err-email').style.display = 'block'; valid = false; }
+  const ph = validatePhone(countryCode, phoneRaw);
+  if (!ph.ok) {
+    const el = document.getElementById('err-phone');
+    el.textContent = ph.message;
+    el.style.display = 'block';
+    valid = false;
+  }
+  if (!experience)            { document.getElementById('err-exp').style.display   = 'block'; valid = false; }
   if (!valid) return;
+  if (!agree) { alert('Please agree to the Terms of Service and Privacy Policy.'); return; }
+
+  const phone = countryCode + ' ' + ph.digits;   // e.g. "+91 9876543210"
 
   const btn = document.getElementById('form-submit-btn');
   btn.disabled = true;
@@ -250,7 +234,7 @@ async function handleSubmit() {
   const orderRef  = generateRef();
   const timestamp = nowIST();
 
-  enrollData = { name, email, phone, course, orderRef, timestamp };
+  enrollData = { name, email, phone, countryCode, experience, course, courseKey: selectedCourse, orderRef, timestamp };
 
   // ── 1. Push to Web3Forms (with timestamp) ────────────
   // This fires a notification email to Bhawesh immediately on form submission
@@ -263,6 +247,7 @@ async function handleSubmit() {
         subject    : `🎓 New Enrollment Lead: ${course.name} — ${name}`,
         from_name  : 'PMpathshala Enrollment',
         name, email, phone,
+        experience,
         course     : course.name,
         amount     : course.price,
         batch      : course.batch,
@@ -275,6 +260,7 @@ async function handleSubmit() {
           `Name      : ${name}`,
           `Email     : ${email}`,
           `Phone     : ${phone}`,
+          `Experience: ${experience}`,
           `Course    : ${course.name}`,
           `Amount    : ${course.price}`,
           `Batch     : ${course.batch}`,
@@ -582,6 +568,11 @@ async function handlePaymentReturn() {
   }
 
   enrollData = saved;
+  // Restore which course this order was for (selectedCourse resets on page load)
+  if (saved.courseKey && CFG.courses[saved.courseKey]) {
+    selectedCourse = saved.courseKey;
+    enrollData.course = CFG.courses[saved.courseKey];
+  }
   showPayPage();
 
   // SECURITY: the ?payment=success query param alone is not proof of
@@ -616,11 +607,26 @@ async function confirmPaymentSuccess() {
   document.getElementById('pay-success').style.display = 'block';
   document.getElementById('success-email').textContent = email || '';
 
-  // ── Send "Payment Confirmed" notification + student email trigger ──
-  // Web3Forms sends YOU (Bhawesh) an email; the student email flow
-  // is handled by your backend's /api/send-confirmation endpoint.
+  // ── 1. Student confirmation email (HTML) — sent by /api/send-confirmation ──
+  // Independent of the admin notice below, so a Web3Forms hiccup can never
+  // stop the student's email. The server re-verifies the order with PhonePe
+  // and builds the email from its own course registry (lib/courses.js).
   try {
-    // Notify admin
+    await fetch(paymentApiUrl('/api/send-confirmation'), {
+      method : 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body   : JSON.stringify({
+        name,
+        email,
+        phone,
+        course_key: enrollData.courseKey || selectedCourse,
+        orderRef,
+      }),
+    });
+  } catch (e) { console.warn('Student confirmation email request failed:', e); }
+
+  // ── 2. Admin notice to Bhawesh via Web3Forms ──
+  try {
     await fetch('https://api.web3forms.com/submit', {
       method : 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -629,6 +635,7 @@ async function confirmPaymentSuccess() {
         subject    : `✅ PAYMENT CONFIRMED: ${course.name} — ${name}`,
         from_name  : 'PMpathshala Payments',
         name, email, phone,
+        experience : enrollData.experience || '',
         course     : course.name,
         amount     : course.price,
         order_ref  : orderRef,
@@ -641,6 +648,7 @@ async function confirmPaymentSuccess() {
           `Name         : ${name}`,
           `Email        : ${email}`,
           `Phone        : ${phone}`,
+          `Experience   : ${enrollData.experience || '—'}`,
           `Course       : ${course.name}`,
           `Amount       : ${course.price}`,
           `Order Ref    : ${orderRef}`,
@@ -651,27 +659,7 @@ async function confirmPaymentSuccess() {
         ].join('\n'),
       })
     });
-
-    // ── Trigger student confirmation email via backend ────────
-    // Your backend endpoint reads the payload and sends an email
-    // from support@pmpathshala.com using your email provider
-    // (e.g. Resend, SendGrid, Nodemailer+SMTP).
-    // Optional student email: extend /api/send-confirmation (e.g. Resend).
-    await fetch(paymentApiUrl('/api/send-confirmation'), {
-      method : 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body   : JSON.stringify({
-        name,
-        email,
-        phone,
-        course: course.name,
-        amount: course.price,
-        batch: course.batch,
-        orderRef,
-      }),
-    }).catch(() => {}); // non-blocking — confirmation still shows
-
-  } catch(e) { console.warn('Confirmation notifications:', e); }
+  } catch(e) { console.warn('Admin notification:', e); }
 }
 
 
