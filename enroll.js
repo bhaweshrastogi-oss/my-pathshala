@@ -22,6 +22,9 @@ const CFG = {
       name   : 'AI Product Manager',
       price  : '₹40,000',
       amount : 40000,
+      // Personal waitlist link price (server re-checks: lib/courses.js + lib/waitlist.js)
+      waitlistPrice : '₹30,000',
+      waitlistAmount: 30000,
       batch  : 'Starts 12 December 2026 · Saturdays & Sundays · 2 PM – 5 PM IST',
     }
   },
@@ -119,6 +122,47 @@ function toggleFaq(i) { document.getElementById('faq-'+i).classList.toggle('open
 // ── MODAL CONTROL ──────────────────────────────────────────────────────────────────
 let selectedCourse = 'ai';
 
+// ── WAITLIST OFFER (personal link: ?offer=<code>) ──────────────────
+// The code is only a claim; it is verified against the email on submit
+// (/api/verify-offer) and again, authoritatively, in /api/create-payment.
+let offerToken = null;
+(function readOfferFromUrl() {
+  try {
+    const p = new URLSearchParams(window.location.search);
+    const fromUrl = p.get('offer');
+    if (fromUrl) {
+      offerToken = fromUrl.trim().slice(0, 64);
+      sessionStorage.setItem('pm_offer', offerToken);
+      p.delete('offer');
+      const qs = p.toString();
+      window.history.replaceState({}, '', window.location.pathname + (qs ? '?' + qs : '') + window.location.hash);
+    } else {
+      offerToken = sessionStorage.getItem('pm_offer') || null;
+    }
+  } catch (_) {}
+})();
+
+function clearOffer() {
+  offerToken = null;
+  try { sessionStorage.removeItem('pm_offer'); } catch (_) {}
+  renderOfferUI();
+}
+
+// Shows/hides the waitlist banner and the course-card price in the Enrol form.
+function renderOfferUI() {
+  const ai = CFG.courses.ai;
+  const banner = document.getElementById('offer-banner');
+  const price  = document.getElementById('opt-ai-price');
+  if (banner) banner.style.display = offerToken ? '' : 'none';
+  if (price) price.innerHTML = offerToken
+    ? ai.waitlistPrice + ' <s>' + ai.price + '</s>'
+    : ai.price + ' <s>₹50,000</s>';
+}
+document.addEventListener('DOMContentLoaded', function () {
+  renderOfferUI();
+  if (offerToken && new URLSearchParams(window.location.search).get('payment') !== 'success') openModal('ai');
+});
+
 function openModal(course) {
   if (course) selectCourse(course);
   document.getElementById('modal-overlay').classList.add('open');
@@ -211,6 +255,7 @@ async function handleSubmit() {
   const course = CFG.courses[selectedCourse];
 
   ['name','email','phone','exp'].forEach(f => document.getElementById('err-'+f).style.display = 'none');
+  document.getElementById('err-email').textContent = 'Please enter a valid email';
   let valid = true;
   if (!name)                  { document.getElementById('err-name').style.display  = 'block'; valid = false; }
   if (!isValidEmail(email))   { document.getElementById('err-email').style.display = 'block'; valid = false; }
@@ -227,6 +272,34 @@ async function handleSubmit() {
 
   const phone = countryCode + ' ' + ph.digits;   // e.g. "+91 9876543210"
 
+  // Waitlist offer: confirm the link belongs to this email before showing the lower price.
+  let finalCourse = course;
+  let usedOfferToken = null;
+  if (offerToken) {
+    let ok = false;
+    try {
+      const vr = await fetch(paymentApiUrl('/api/verify-offer'), {
+        method : 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body   : JSON.stringify({ email, offer_token: offerToken, course_key: selectedCourse }),
+      });
+      const vd = vr.ok ? await vr.json() : null;
+      ok = !!(vd && vd.valid);
+    } catch (_) {
+      alert('We could not verify your waitlist offer right now. Please check your connection and try again.');
+      return;
+    }
+    if (!ok) {
+      const el = document.getElementById('err-email');
+      el.textContent = 'This waitlist offer is for the email you joined the waitlist with. Use that email — or submit again to continue at ' + course.price + '.';
+      el.style.display = 'block';
+      clearOffer();
+      return;
+    }
+    finalCourse = Object.assign({}, course, { price: course.waitlistPrice, amount: course.waitlistAmount, offer: 'waitlist' });
+    usedOfferToken = offerToken;
+  }
+
   const btn = document.getElementById('form-submit-btn');
   btn.disabled = true;
   document.getElementById('submit-text').textContent = 'Saving…';
@@ -234,7 +307,7 @@ async function handleSubmit() {
   const orderRef  = generateRef();
   const timestamp = nowIST();
 
-  enrollData = { name, email, phone, countryCode, experience, course, courseKey: selectedCourse, orderRef, timestamp };
+  enrollData = { name, email, phone, countryCode, experience, course: finalCourse, courseKey: selectedCourse, offerToken: usedOfferToken, orderRef, timestamp };
 
   // ── 1. Push to Web3Forms (with timestamp) ────────────
   // This fires a notification email to Bhawesh immediately on form submission
@@ -244,13 +317,14 @@ async function handleSubmit() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         access_key : CFG.web3forms_key,
-        subject    : `🎓 New Enrollment Lead: ${course.name} — ${name}`,
+        subject    : `🎓 New Enrollment Lead: ${finalCourse.name} — ${name}`,
         from_name  : 'PMpathshala Enrollment',
         name, email, phone,
         experience,
-        course     : course.name,
-        amount     : course.price,
-        batch      : course.batch,
+        offer      : usedOfferToken ? 'WAITLIST ₹30,000 link' : 'public price',
+        course     : finalCourse.name,
+        amount     : finalCourse.price,
+        batch      : finalCourse.batch,
         order_ref  : orderRef,
         timestamp  : timestamp,   // ← IST timestamp included
         status     : 'LEAD_CAPTURED — Awaiting Payment',
@@ -261,9 +335,10 @@ async function handleSubmit() {
           `Email     : ${email}`,
           `Phone     : ${phone}`,
           `Experience: ${experience}`,
-          `Course    : ${course.name}`,
-          `Amount    : ${course.price}`,
-          `Batch     : ${course.batch}`,
+          `Price Type: ${usedOfferToken ? 'Waitlist link' : 'Public'}`,
+          `Course    : ${finalCourse.name}`,
+          `Amount    : ${finalCourse.price}`,
+          `Batch     : ${finalCourse.batch}`,
           `Order Ref : ${orderRef}`,
           `Timestamp : ${timestamp} IST`,
           `Status    : Lead captured — redirecting to PhonePe`,
@@ -359,6 +434,7 @@ async function initiatePhonePeRedirect() {
         name, email, phone,
         course     : course.name,
         course_key : selectedCourse,
+        offer_token: enrollData.offerToken || undefined,
         timestamp,
         redirect_url: redirectUrl,
       })
@@ -571,7 +647,8 @@ async function handlePaymentReturn() {
   // Restore which course this order was for (selectedCourse resets on page load)
   if (saved.courseKey && CFG.courses[saved.courseKey]) {
     selectedCourse = saved.courseKey;
-    enrollData.course = CFG.courses[saved.courseKey];
+    // Keep the saved (waitlist-priced) course object when an offer was used.
+    if (!saved.offerToken) enrollData.course = CFG.courses[saved.courseKey];
   }
   showPayPage();
 
@@ -620,6 +697,7 @@ async function confirmPaymentSuccess() {
         email,
         phone,
         course_key: enrollData.courseKey || selectedCourse,
+        offer_token: enrollData.offerToken || undefined,
         orderRef,
       }),
     });
