@@ -924,6 +924,9 @@ select.field-input { cursor: pointer; }
       </div>
       <h3>Enrol Now</h3>
       <p class="modal-sub">Fill in your details — you'll be taken to a secure PhonePe payment page.</p>
+      <div id="offer-banner" style="display:none;background:#ecfdf5;border:1px solid #6ee7b7;color:#065f46;border-radius:12px;padding:0.7rem 0.9rem;font-size:0.82rem;line-height:1.5;margin-bottom:1rem;">
+        🎟️ <strong>Waitlist offer applied: ₹30,000</strong> (public price ₹40,000). Enter the email you joined the waitlist with.
+      </div>
  
       <div class="field-group">
         <label class="field-label">Course</label>
@@ -931,7 +934,7 @@ select.field-input { cursor: pointer; }
           <input type="radio" name="course" value="ai" checked>
           <div class="co-row">
              <span class="co-name">AI Product Manager</span>
-              <span class="co-price">₹40,000 <s>₹50,000</s></span>
+              <span class="co-price" id="opt-ai-price">₹40,000 <s>₹50,000</s></span>
           </div>
           <div class="co-sub">8 Weeks · Starts 12 Dec 2026 · Sat &amp; Sun, 2 PM – 5 PM IST</div>
         </div>
