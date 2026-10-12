@@ -2,6 +2,7 @@ const { createCheckoutPayment } = require('../lib/phonepe');
 const { setCorsHeaders, isRedirectAllowed } = require('../lib/cors');
 const { readJsonBody } = require('../lib/readBody');
 const { getCourse } = require('../lib/courses');
+const { resolveAmountPaise } = require('../lib/waitlist');
 
 module.exports = async function handler(req, res) {
   setCorsHeaders(req, res);
@@ -26,6 +27,7 @@ module.exports = async function handler(req, res) {
       phone,
       course,
       course_key: courseKey,
+      offer_token: offerToken,
       redirect_url: redirectUrl,
     } = body;
 
@@ -42,7 +44,18 @@ module.exports = async function handler(req, res) {
       res.statusCode = 400;
       return res.json({ error: 'Unknown or missing course_key' });
     }
-    const amountPaise = courseInfo.amountPaise;
+    // Public price, or the waitlist price if (and only if) offer_token is a
+    // valid code for this email. A bad code is rejected, never silently repriced.
+    let amountPaise;
+    try {
+      amountPaise = resolveAmountPaise(courseInfo, email, offerToken).amountPaise;
+    } catch (err) {
+      if (err.code === 'BAD_OFFER') {
+        res.statusCode = 400;
+        return res.json({ error: 'This waitlist offer link is not valid for the email entered.' });
+      }
+      throw err;
+    }
 
     if (!redirectUrl || !isRedirectAllowed(redirectUrl)) {
       res.statusCode = 400;
