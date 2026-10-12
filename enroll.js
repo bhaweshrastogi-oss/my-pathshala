@@ -23,8 +23,8 @@ const CFG = {
       price  : '₹40,000',
       amount : 40000,
       // Personal waitlist link price (server re-checks: lib/courses.js + lib/waitlist.js)
-      waitlistPrice : '₹30,000',
-      waitlistAmount: 30000,
+      waitlistPrice : '₹1',
+      waitlistAmount: 1,
       batch  : 'Starts 12 December 2026 · Saturdays & Sundays · 2 PM – 5 PM IST',
     }
   },
