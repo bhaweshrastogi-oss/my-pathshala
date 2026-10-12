@@ -2,6 +2,7 @@ const { setCorsHeaders } = require('../lib/cors');
 const { readJsonBody } = require('../lib/readBody');
 const { getOrderStatus } = require('../lib/phonepe');
 const { getCourse, COURSES } = require('../lib/courses');
+const { resolveAmountPaise } = require('../lib/waitlist');
 
 const SUPPORT_EMAIL = 'support@pmpathshala.com';
 // Hosted PNG of the site logo (email clients don't render SVG). Served from the site root: /logo-email.png
@@ -192,7 +193,7 @@ module.exports = async function handler(req, res) {
 
   try {
     const body = await readJsonBody(req);
-    const { name, email, orderRef } = body;
+    const { name, email, orderRef, offer_token: offerToken } = body;
     // Prefer course_key; fall back to matching the course name so a browser
     // still running an older cached enroll.js keeps working.
     const courseKey = body.course_key ||
@@ -216,6 +217,18 @@ module.exports = async function handler(req, res) {
       return res.json({ error: 'Unknown or missing course_key' });
     }
 
+    // Expected price: public, or waitlist price when the code is valid for this email.
+    let expectedPaise;
+    try {
+      expectedPaise = resolveAmountPaise(courseInfo, email, offerToken).amountPaise;
+    } catch (err) {
+      if (err.code === 'BAD_OFFER') {
+        res.statusCode = 400;
+        return res.json({ error: 'invalid offer code' });
+      }
+      throw err;
+    }
+
     // SECURITY: this endpoint is publicly reachable, so it must never send
     // a "payment confirmed" email on the strength of client-supplied data
     // alone. Verify the order actually completed with PhonePe first.
@@ -230,8 +243,8 @@ module.exports = async function handler(req, res) {
       }
       // The amount PhonePe collected must match this course's price, so a
       // completed order for one course can't trigger another course's email.
-      if (typeof status.amount === 'number' && status.amount !== courseInfo.amountPaise) {
-        console.warn('[send-confirmation] amount mismatch, skipping email:', orderRef, status.amount, courseInfo.amountPaise);
+      if (typeof status.amount === 'number' && status.amount !== expectedPaise) {
+        console.warn('[send-confirmation] amount mismatch, skipping email:', orderRef, status.amount, expectedPaise);
         res.statusCode = 200;
         return res.json({ ok: true, skipped: true, reason: 'amount mismatch' });
       }
@@ -253,7 +266,7 @@ module.exports = async function handler(req, res) {
       courseName: courseInfo.name,
       startsOn: courseInfo.startsOn || 'Date will be shared by Bhawesh',
       schedule: courseInfo.schedule || 'Schedule will be shared by Bhawesh',
-      amount: formatRupees(courseInfo.amountPaise),
+      amount: formatRupees(expectedPaise),
       orderRef: String(orderRef).slice(0, 80),
     });
 
