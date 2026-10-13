@@ -3,11 +3,13 @@ const { readJsonBody } = require('../lib/readBody');
 const adminAuth = require('../lib/adminAuth');
 const { makeOfferToken, normaliseEmail } = require('../lib/waitlist');
 const { buildEmail, SEGMENTS } = require('../tools/waitlist-announcement');
+const { buildMarketingEmail } = require('../tools/marketing-email');
 
 /**
  * POST /api/admin-waitlist   (used only by /admin/waitlist.html)
  * Auth:   the pm_admin cookie from /api/admin-page (or x-admin-key header)
- * Body:   { action: 'link' | 'send', name, email, segment: 'waitlist' | 'quiz' }
+ * Body:   { action: 'link' | 'send' | 'preview', name, email, segment: 'waitlist' | 'quiz' | 'marketing', sections }
+ *         (marketing: sections = the email body typed on the page; no personal link is added)
  *
  *  link -> returns the personal ₹30,000 link for that email (nothing is sent)
  *  send -> emails that person their link via Resend (one person per call, so
@@ -41,9 +43,37 @@ module.exports = async function handler(req, res) {
   }
 
   try {
-    const { action, name, email: rawEmail, segment } = await readJsonBody(req).catch(() => ({}));
+    const { action, name, email: rawEmail, segment, sections } = await readJsonBody(req).catch(() => ({}));
+
+    if (action === 'preview') {
+      try { return send(res, 200, { html: buildMarketingEmail({ firstName: 'Asha', sections }).html }); }
+      catch (e) { return send(res, 400, { error: e.message }); }
+    }
+
     const email = normaliseEmail(rawEmail);
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) return send(res, 400, { error: 'Invalid email.' });
+
+    if (action === 'send' && segment === 'marketing') {
+      if (!process.env.RESEND_API_KEY) return send(res, 503, { error: 'RESEND_API_KEY is not set in Vercel.' });
+      const first = (String(name || '').trim().split(/\s+/)[0] || 'there').replace(/[<>\r\n]/g, '').slice(0, 60);
+      let built;
+      try { built = buildMarketingEmail({ firstName: first, sections }); }
+      catch (e) { return send(res, 400, { error: e.message }); }
+      const r = await fetch('https://api.resend.com/emails', {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${process.env.RESEND_API_KEY}`,
+          'Content-Type': 'application/json',
+          'Idempotency-Key': 'marketing-' + crypto.createHash('sha256').update(email + '\n' + built.html).digest('hex').slice(0, 40),
+        },
+        body: JSON.stringify({
+          from: process.env.RESEND_FROM || `PMpathshala <${SUPPORT_EMAIL}>`,
+          to: [email], reply_to: SUPPORT_EMAIL, subject: built.subject, html: built.html, text: built.text,
+        }),
+      });
+      if (!r.ok) return send(res, 502, { error: `Resend ${r.status}: ${(await r.text()).slice(0, 300)}` });
+      return send(res, 200, { email, sent: true });
+    }
 
     const link = `${SITE_URL}/?offer=${makeOfferToken(email, secret)}`;
     if (action === 'link') return send(res, 200, { email, link });
