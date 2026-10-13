@@ -72,12 +72,14 @@ function formatRupees(paise) {
  * Builds the congratulatory enrolment email (HTML + plain-text fallback).
  * Table layout + inline CSS only, so it renders in Gmail, Outlook, Apple Mail.
  */
-function buildEmail({ name, courseName, startsOn, schedule, amount, orderRef }) {
+function buildEmail({ name, courseName, startsOn, schedule, duration, cohortLine, amount, orderRef }) {
   const safe = {
     name: escapeHtml(name),
     course: escapeHtml(courseName),
     startsOn: escapeHtml(startsOn),
     schedule: escapeHtml(schedule),
+    duration: escapeHtml(duration || ''),
+    cohortLine: escapeHtml(cohortLine || ''),
     amount: escapeHtml(amount),
     orderRef: escapeHtml(orderRef),
   };
@@ -118,13 +120,14 @@ function buildEmail({ name, courseName, startsOn, schedule, amount, orderRef }) 
           </tr>
           <tr>
             <td style="padding:30px 32px 8px;">
-              <p style="margin:0 0 16px;font-size:15px;line-height:1.65;color:#374151;">Your payment was successful and your seat in <strong style="color:#111827;">${safe.course}</strong> is confirmed. We&#8217;re delighted to have you in the cohort.</p>
+              <p style="margin:0 0 16px;font-size:15px;line-height:1.65;color:#374151;">Your payment was successful and your seat in our <strong style="color:#111827;">${safe.cohortLine || safe.course}</strong> is confirmed. We&#8217;re delighted to have you in the cohort.</p>
               <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#f5f3ff;border-radius:12px;">
                 <tr>
                   <td style="padding:16px 20px;">
                     <div style="font-size:12px;font-weight:700;letter-spacing:0.08em;color:#6d28d9;text-transform:uppercase;">Classes start</div>
                     <div style="font-size:20px;font-weight:700;color:#111827;margin-top:4px;">${safe.startsOn}</div>
-                    <div style="font-size:14px;color:#4b5563;margin-top:4px;">${safe.schedule}</div>
+                    <div style="font-size:14px;color:#4b5563;margin-top:4px;">${safe.schedule}</div>${safe.duration ? `
+                    <div style="font-size:14px;color:#4b5563;margin-top:4px;">Duration: <strong style="color:#111827;">${safe.duration}</strong></div>` : ''}
                   </td>
                 </tr>
               </table>
@@ -133,7 +136,7 @@ function buildEmail({ name, courseName, startsOn, schedule, amount, orderRef }) 
           <tr>
             <td style="padding:20px 32px 4px;">
               <div style="font-size:12px;font-weight:700;letter-spacing:0.08em;color:#6b7280;text-transform:uppercase;">Your enrolment details</div>
-              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-top:6px;">${row('Course', safe.course)}${row('Amount paid', safe.amount)}${row('Order reference', safe.orderRef, true)}
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-top:6px;">${row('Course', safe.course)}${safe.duration ? row('Duration', safe.duration) : ''}${row('Amount paid', safe.amount)}${row('Order reference', safe.orderRef, true)}
               </table>
               <p style="margin:12px 0 0;font-size:13px;line-height:1.6;color:#6b7280;">Please keep this email for your records.</p>
             </td>
@@ -159,10 +162,11 @@ function buildEmail({ name, courseName, startsOn, schedule, amount, orderRef }) 
   const text = [
     `Congratulations, ${name}!`,
     '',
-    `Your payment was successful and your seat in ${courseName} is confirmed.`,
+    `Your payment was successful and your seat in our ${cohortLine || courseName} is confirmed.`,
     '',
     `Classes start: ${startsOn}`,
     `Schedule: ${schedule}`,
+    ...(duration ? [`Duration: ${duration}`] : []),
     '',
     `Course: ${courseName}`,
     `Amount paid: ${amount}`,
@@ -266,6 +270,8 @@ module.exports = async function handler(req, res) {
       courseName: courseInfo.name,
       startsOn: courseInfo.startsOn || 'Date will be shared by Bhawesh',
       schedule: courseInfo.schedule || 'Schedule will be shared by Bhawesh',
+      duration: courseInfo.duration || '',
+      cohortLine: courseInfo.cohortLine || '',
       amount: formatRupees(expectedPaise),
       orderRef: String(orderRef).slice(0, 80),
     });
