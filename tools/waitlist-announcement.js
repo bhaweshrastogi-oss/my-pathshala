@@ -37,28 +37,28 @@ function esc(s) {
 const SEGMENTS = {
   waitlist: {
     subject: 'Enrolment is open — your ₹30,000 waitlist seat is waiting',
-    preheader: 'You asked to be first. The AI Product Manager cohort is open, and your waitlist price is ₹30,000. Only 30 seats.',
+    preheader: 'You asked to be first. The exclusive 8-week AI Product Management cohort is open, and your waitlist price is ₹30,000. Only 30 seats.',
     pill: 'Waitlist members first',
     headline: 'You asked to be first. Enrolment is now open.',
-    intro: 'you joined the waitlist for our AI Product Manager flagship cohort, so you are hearing this before anyone else. There are only <strong style="color:#111827;">30 seats</strong>, and classes start on <strong style="color:#111827;">Saturday, 12 December 2026</strong>.',
+    intro: 'you joined the waitlist for our exclusive 8-week AI Product Management cohort, so you are hearing this before anyone else. There are only <strong style="color:#111827;">30 seats</strong>, and classes start on <strong style="color:#111827;">Saturday, 12 December 2026</strong>.',
     offer: 'As a waitlist member, you get a price that is not available on the website.',
     offerLabel: 'Your waitlist price',
     emailNote: 'the email address you used to join the waitlist',
     reason: 'you joined the AI PM waitlist at pmpathshala.com',
-    textIntro: 'You joined the waitlist for our AI Product Manager flagship cohort, so you are hearing this before anyone else. There are only 30 seats, and classes start on Saturday, 12 December 2026.',
+    textIntro: 'You joined the waitlist for our exclusive 8-week AI Product Management cohort, so you are hearing this before anyone else. There are only 30 seats, and classes start on Saturday, 12 December 2026.',
     textOffer: 'As a waitlist member, you get a price that is not available on the website.',
   },
   quiz: {
     subject: 'Your next step after the AI PM quiz — a ₹30,000 seat inside',
-    preheader: 'Thanks for taking the AI PM quiz. Enrolment is open, and we are giving you ₹30,000 as a thank-you. Only 30 seats.',
+    preheader: 'Thanks for taking the AI PM quiz. Enrolment for the exclusive 8-week AI Product Management cohort is open, and we are giving you ₹30,000 as a thank-you. Only 30 seats.',
     pill: 'A thank-you for taking the quiz',
     headline: 'You took the AI PM quiz. Here is your next step.',
-    intro: 'thank you for taking the AI PM quiz. Enrolment for our AI Product Manager flagship cohort is now open. There are only <strong style="color:#111827;">30 seats</strong>, and classes start on <strong style="color:#111827;">Saturday, 12 December 2026</strong>.',
+    intro: 'thank you for taking the AI PM quiz. Enrolment for our exclusive 8-week AI Product Management cohort is now open. There are only <strong style="color:#111827;">30 seats</strong>, and classes start on <strong style="color:#111827;">Saturday, 12 December 2026</strong>.',
     offer: 'As a thank-you from PMpathshala for taking the quiz, we are giving you a special price that is not available on the website.',
     offerLabel: 'Your thank-you price',
     emailNote: 'the email address you used for the quiz',
     reason: 'you took the AI PM quiz at pmpathshala.com',
-    textIntro: 'Thank you for taking the AI PM quiz. Enrolment for our AI Product Manager flagship cohort is now open. There are only 30 seats, and classes start on Saturday, 12 December 2026.',
+    textIntro: 'Thank you for taking the AI PM quiz. Enrolment for our exclusive 8-week AI Product Management cohort is now open. There are only 30 seats, and classes start on Saturday, 12 December 2026.',
     textOffer: 'As a thank-you from PMpathshala for taking the quiz, we are giving you a special price that is not available on the website.',
   },
 };
@@ -152,6 +152,10 @@ function buildEmail({ firstName, link, segment }) {
                   <td style="padding:12px 0;border-bottom:1px solid #e5e7f0;font-size:14px;color:#111827;font-weight:600;vertical-align:top;">Every Saturday &amp; Sunday &middot; 2 PM &ndash; 5 PM IST</td>
                 </tr>
                 <tr>
+                  <td style="padding:12px 0;border-bottom:1px solid #e5e7f0;font-size:13px;color:#6b7280;vertical-align:top;">Duration</td>
+                  <td style="padding:12px 0;border-bottom:1px solid #e5e7f0;font-size:14px;color:#111827;font-weight:600;vertical-align:top;">8 weeks</td>
+                </tr>
+                <tr>
                   <td style="padding:12px 0;font-size:13px;color:#6b7280;vertical-align:top;">Seats</td>
                   <td style="padding:12px 0;font-size:14px;color:#111827;font-weight:600;vertical-align:top;">30 only</td>
                 </tr>
@@ -211,6 +215,7 @@ function buildEmail({ firstName, link, segment }) {
     '',
     'Starts: Saturday, 12 December 2026',
     'Schedule: Every Saturday & Sunday, 2 PM – 5 PM IST',
+    'Duration: 8 weeks',
     'Seats: 30 only',
     '',
     `Enrol at ₹30,000: ${link}`,
