@@ -451,7 +451,10 @@ async function initiatePhonePeRedirect() {
       throw new Error('No redirectUrl in response: ' + JSON.stringify(data));
     }
 
-    notifyPaymentInitiated(orderRef, name, email, course, timestamp).catch(() => {});
+    if (!data.orderId) throw new Error('Missing server order reference');
+    enrollData.orderRef = data.orderId;
+    saveEnrollSession();
+    notifyPaymentInitiated(data.orderId, name, email, course, timestamp).catch(() => {});
 
     if (window.PhonePeCheckout) {
       let _pollTimer   = null;
@@ -468,7 +471,7 @@ async function initiatePhonePeRedirect() {
 
         try {
           const statusRes = await fetch(
-            paymentApiUrl('/api/order-status?order_id=' + encodeURIComponent(orderRef))
+            paymentApiUrl('/api/order-status?order_id=' + encodeURIComponent(enrollData.orderRef))
           );
           const statusData = statusRes.ok ? await statusRes.json() : null;
 
@@ -483,14 +486,14 @@ async function initiatePhonePeRedirect() {
             alert(
               statusData && statusData.state === 'FAILED'
                 ? 'Payment failed. Please try again or contact us.'
-                : 'We could not confirm your payment status. Please check your email, or contact us with order ref ' + orderRef + ' before retrying to avoid a duplicate charge.'
+                : 'We could not confirm your payment status. Please check your email, or contact us with order ref ' + enrollData.orderRef + ' before retrying to avoid a duplicate charge.'
             );
           }
         } catch (_e) {
           _concluded = false; // allow retry
           btn.disabled = false;
           btn.innerHTML = '<span>Pay ' + course.price + ' via PhonePe →</span>';
-          alert('We could not confirm your payment status. Please check your email, or contact us with order ref ' + orderRef + ' before retrying to avoid a duplicate charge.');
+          alert('We could not confirm your payment status. Please check your email, or contact us with order ref ' + enrollData.orderRef + ' before retrying to avoid a duplicate charge.');
         }
       }
 
@@ -499,7 +502,7 @@ async function initiatePhonePeRedirect() {
         if (_concluded) { clearInterval(_pollTimer); return; }
         try {
           const r = await fetch(
-            paymentApiUrl('/api/order-status?order_id=' + encodeURIComponent(orderRef))
+            paymentApiUrl('/api/order-status?order_id=' + encodeURIComponent(enrollData.orderRef))
           );
           const d = r.ok ? await r.json() : {};
           if (d.state === 'COMPLETED') await handleConcluded(false);
@@ -634,12 +637,14 @@ async function handlePaymentReturn() {
   const saved = JSON.parse(sessionStorage.getItem('pm_enroll') || '{}');
 
   if (!saved.name) {
-    // sessionStorage lost (e.g. private browsing or cross-tab) — show generic success
+    // A redirect alone cannot prove payment.
     document.getElementById('pay-page').classList.add('show');
     document.body.style.overflow = 'hidden';
     document.getElementById('pay-main').style.display    = 'none';
     document.getElementById('pay-success').style.display = 'block';
-    document.getElementById('success-email').textContent = 'your registered email';
+    document.querySelector('#pay-success h4').textContent = 'Payment verification needed';
+    document.querySelector('#pay-success p').firstChild.textContent = 'We could not verify your payment in this browser. ';
+    document.getElementById('email-delivery-status').textContent = 'Please check your email or contact support with your order reference.';
     return;
   }
 
@@ -676,68 +681,33 @@ async function handlePaymentReturn() {
 }
 
 async function confirmPaymentSuccess() {
-  const { name, email, phone, course, orderRef, timestamp } = enrollData;
+  const { email, orderRef } = enrollData;
 
   // Show success UI
+  document.querySelector('#pay-success h4').textContent = "You're in the Cohort!";
+  document.querySelector('#pay-success p').firstChild.textContent = 'Your enrollment is confirmed.';
   document.getElementById('ps-confirm').classList.add('active');
   document.getElementById('pay-main').style.display    = 'none';
   document.getElementById('pay-success').style.display = 'block';
   document.getElementById('success-email').textContent = email || '';
 
-  // ── 1. Student confirmation email (HTML) — sent by /api/send-confirmation ──
-  // Independent of the admin notice below, so a Web3Forms hiccup can never
-  // stop the student's email. The server re-verifies the order with PhonePe
-  // and builds the email from its own course registry (lib/courses.js).
+  // Retry verified server fulfilment; the webhook also works without this browser.
+  // The server uses the purchaser and course snapshot stored at checkout.
   try {
-    await fetch(paymentApiUrl('/api/send-confirmation'), {
-      method : 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body   : JSON.stringify({
-        name,
-        email,
-        phone,
-        course_key: enrollData.courseKey || selectedCourse,
-        offer_token: enrollData.offerToken || undefined,
-        orderRef,
-      }),
+    const response = await fetch(paymentApiUrl('/api/send-confirmation'), {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ orderRef }),
     });
-  } catch (e) { console.warn('Student confirmation email request failed:', e); }
+    const result = response.ok ? await response.json() : null;
+    if (!result || !result.sent) throw new Error('Confirmation delivery pending');
+    document.getElementById('email-delivery-status').textContent = 'A confirmation email has been sent to ' + email + '.';
+  } catch (e) {
+    document.getElementById('email-delivery-status').textContent = 'Payment received. Your confirmation email is pending; contact support with your order reference if it does not arrive.';
+    console.warn('Student confirmation email request failed:', e);
+  }
 
-  // ── 2. Admin notice to Bhawesh via Web3Forms ──
-  try {
-    await fetch('https://api.web3forms.com/submit', {
-      method : 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body   : JSON.stringify({
-        access_key : CFG.web3forms_key,
-        subject    : `✅ PAYMENT CONFIRMED: ${course.name} — ${name}`,
-        from_name  : 'PMpathshala Payments',
-        name, email, phone,
-        experience : enrollData.experience || '',
-        course     : course.name,
-        amount     : course.price,
-        order_ref  : orderRef,
-        timestamp  : timestamp,
-        confirmed_at: nowIST(),
-        status     : 'PAYMENT_CONFIRMED ✅',
-        message    : [
-          `✅ PAYMENT CONFIRMED`,
-          `══════════════════════════`,
-          `Name         : ${name}`,
-          `Email        : ${email}`,
-          `Phone        : ${phone}`,
-          `Experience   : ${enrollData.experience || '—'}`,
-          `Course       : ${course.name}`,
-          `Amount       : ${course.price}`,
-          `Order Ref    : ${orderRef}`,
-          `Lead Time    : ${timestamp} IST`,
-          `Confirmed At : ${nowIST()} IST`,
-          `══════════════════════════`,
-          `ACTION: Send WhatsApp & batch joining instructions to student.`,
-        ].join('\n'),
-      })
-    });
-  } catch(e) { console.warn('Admin notification:', e); }
+  // Payment notices are sent server-side by verified fulfilment only.
+
 }
 
 

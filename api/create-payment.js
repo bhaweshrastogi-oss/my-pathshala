@@ -1,3 +1,4 @@
+const orders = require('../lib/orders');
 const { createCheckoutPayment } = require('../lib/phonepe');
 const { setCorsHeaders, isRedirectAllowed } = require('../lib/cors');
 const { readJsonBody } = require('../lib/readBody');
@@ -21,19 +22,24 @@ module.exports = async function handler(req, res) {
     const body = await readJsonBody(req).catch(() => ({}));
 
     const {
-      order_id: orderId,
       name,
       email,
       phone,
-      course,
       course_key: courseKey,
       offer_token: offerToken,
       redirect_url: redirectUrl,
     } = body;
 
-    if (!orderId || typeof orderId !== 'string') {
+    if (!orders.configured() || !process.env.RESEND_API_KEY || !process.env.ADMIN_NOTIFICATION_EMAIL ||
+        !process.env.PHONEPE_WEBHOOK_USERNAME || !process.env.PHONEPE_WEBHOOK_PASSWORD) {
+      res.statusCode = 503;
+      return res.json({ error: 'Checkout is temporarily unavailable. Please contact support.' });
+    }
+    if (typeof email !== 'string' || email.length > 254 || !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email.trim()) ||
+        typeof name !== 'string' || !name.trim() || name.length > 100 ||
+        typeof phone !== 'string' || phone.length > 40) {
       res.statusCode = 400;
-      return res.json({ error: 'order_id required' });
+      return res.json({ error: 'Valid name, email and phone required' });
     }
 
     // SECURITY: amount is never trusted from the client. It's looked up
@@ -65,17 +71,15 @@ module.exports = async function handler(req, res) {
       });
     }
 
-    const safeOrderId = String(orderId).replace(/[^a-zA-Z0-9_-]/g, '').slice(0, 63);
-    if (safeOrderId.length < 4) {
-      res.statusCode = 400;
-      return res.json({ error: 'order_id invalid after sanitization' });
-    }
+    const order = await orders.createOrder({ name: name.trim(), email: email.trim().toLowerCase(),
+      phone, courseKey, course: { ...courseInfo }, amountPaise });
+    const safeOrderId = order.id;
 
     const metaInfo = {
       udf1: String(name || '').slice(0, 256),
       udf2: String(email || '').slice(0, 256),
       udf3: String(phone || '').slice(0, 256),
-      udf4: String(course || courseInfo.name || '').slice(0, 256),
+      udf4: String(courseInfo.name).slice(0, 256),
     };
 
     const pp = await createCheckoutPayment({
@@ -88,14 +92,14 @@ module.exports = async function handler(req, res) {
     res.statusCode = 200;
     return res.json({
       redirectUrl: pp.redirectUrl,
-      orderId: pp.orderId,
+      orderId: safeOrderId,
       state: pp.state,
     });
   } catch (e) {
     console.error('[create-payment]', e);
     res.statusCode = 500;
     return res.json({
-      error: e.message || 'Payment initiation failed',
+      error: 'Payment initiation failed. Please contact support.',
     });
   }
 };

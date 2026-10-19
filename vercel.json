@@ -1,0 +1,8 @@
+{
+  "functions": {
+    "api/phonepe-callback.js": { "maxDuration": 60 },
+    "api/send-confirmation.js": { "maxDuration": 60 },
+    "api/reconcile-payments.js": { "maxDuration": 300 }
+  },
+  "crons": [{ "path": "/api/reconcile-payments", "schedule": "0 3 * * *" }]
+}
